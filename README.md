@@ -1,36 +1,54 @@
-# Former - Dynamic Form Builder 📝
+<div align="center">
+  <img src="client/public/logo.png" alt="Former Logo" width="120" />
+  <h1>Former</h1>
+  <p><strong>The Intelligent, Secure, and Dynamic Form Builder</strong></p>
+</div>
 
-Former is a full-stack, dynamic form builder application that allows users to design, configure, publish, and share web forms, as well as collect and analyze responses in real-time.
+Former is a modern, full-stack application that allows you to instantly generate forms using AI, securely collect responses with Google Auth and Cloudflare Turnstile, and enforce advanced data validation rules.
 
-## ✨ Features
+---
 
-- **Drag-and-Drop Form Builder:** Interactively build forms by adding, reordering, and removing fields (Text, Email, Number, Textarea, Dropdown, Checkbox, Radio, Date).
-- **Live Preview & Public Form Page:** Instantly preview your form within the dashboard, and share a standalone, public `f/[id]` link for respondents to fill out.
-- **Dynamic Field Configuration:** Toggle requirement rules and easily configure multi-choice options dynamically.
-- **Responses Dashboard:** A dedicated dashboard to view the total number of submissions and a live data table of collected responses.
-- **Zero-Setup Backend:** Powered by `mongodb-memory-server` allowing you to spin up the full stack backend without needing any cloud database credentials out-of-the-box.
+## ✨ Core Features
+
+### 🤖 AI-Powered Form Generation
+Skip the manual work. Describe what you need (e.g., *"A feedback survey for a local coffee shop"*), and the built-in **Groq API (Llama 3.1)** will instantly generate a complete, well-structured form with all the necessary fields and options.
+
+### 🛡️ Advanced Form Security & Anti-Bot Protection
+- **Cloudflare Turnstile:** Invisible, frictionless bot protection integrated directly into the authentication flows.
+- **Google OAuth Gate:** Optionally require respondents to log in with Google before filling out a public form.
+- **Duplicate Prevention:** The system actively prevents the same verified Google account from submitting a form multiple times.
+
+### 📋 Drag-and-Drop Builder & Custom Validation
+- **Rich Field Types:** Support for Text, Email, Number, Textarea, Dropdown, Checkbox, Radio, and Date fields.
+- **Advanced Field Requirements:** Enforce strict data integrity using Custom Regex Patterns (e.g., `^\d{10}$` for phone numbers), Min/Max character lengths, and custom error messages.
+- **Interactive UI:** Smooth drag-and-drop reordering powered by `dnd-kit`.
+
+### 📊 Real-Time Response Dashboard
+Monitor submissions live. View submission counts, respondent identities (if Google Auth was required), and exportable data tables for every form you publish.
+
+---
 
 ## 🛠 Tech Stack
 
-**Frontend:**
-- [Next.js (App Router)](https://nextjs.org/)
-- React & TypeScript
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Shadcn UI](https://ui.shadcn.com/)
-- [dnd-kit](https://dndkit.com/) (Drag and Drop)
-- Lucide Icons
+**Frontend (Client)**
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Tailwind CSS & Shadcn UI
+- **Interactions:** dnd-kit (Drag & Drop)
+- **Security:** `@marsidev/react-turnstile` (Cloudflare) & `@react-oauth/google`
 
-**Backend:**
-- Node.js & [Express.js](https://expressjs.com/)
-- [Mongoose](https://mongoosejs.com/) (MongoDB ODM)
-- `mongodb-memory-server` (In-memory persistent local DB)
+**Backend (Server)**
+- **Runtime:** Node.js & Express.js
+- **Database:** MongoDB via Mongoose
+- **AI Integration:** Groq SDK (`llama-3.1-8b-instant`)
+- **Authentication:** JWT (JSON Web Tokens) & bcryptjs
+
+---
 
 ## 🚀 Getting Started
 
-To run this application locally, you will need to start both the `client` (frontend) and `server` (backend).
+Former uses a **Zero-Setup Backend** via `mongodb-memory-server`. You don't need to configure a cloud database to run this locally!
 
 ### 1. Start the Backend Server
-
 Navigate to the `server` directory, install dependencies, and start the development server:
 
 ```bash
@@ -40,8 +58,23 @@ npm run dev
 ```
 *The backend will automatically start an in-memory MongoDB instance and run on `http://localhost:5001`.*
 
-### 2. Start the Frontend Client
+### 2. Configure Local Environment Variables
+In the `client` directory, create a `.env.local` file with your security keys:
+```env
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=your_turnstile_site_key
+NEXT_PUBLIC_API_URL=http://127.0.0.1:5001/api
+```
 
+In the `server` directory, create a `.env` file:
+```env
+JWT_SECRET=super_secret_key
+GROQ_API_KEY=your_groq_api_key
+TURNSTILE_SECRET_KEY=your_turnstile_secret_key
+MONGODB_URI=your_mongodb_uri # Optional: For persistent cloud storage
+```
+
+### 3. Start the Frontend Client
 Open a new terminal window, navigate to the `client` directory, install dependencies, and start the Next.js app:
 
 ```bash
@@ -51,11 +84,19 @@ npm run dev
 ```
 *The frontend will be accessible at `http://localhost:3001`.*
 
-## 💡 How to Use
+---
 
-1. Open `http://localhost:3001` in your browser.
-2. In the **Build** tab, click fields in the left sidebar to add them. Drag them to reorder.
-3. In the **Settings** tab, mark any required fields and set your form title.
-4. Click the **Publish** button to save the form to the database.
-5. In the **Share** tab, copy the generated link and visit it to submit test responses!
-6. View the captured data in the **Responses** tab.
+## 🚀 Deployment Guide
+
+### Backend (Render)
+1. Create a new Web Service on Render pointing to the `server` directory.
+2. Build Command: `npm install && npm run build`
+3. Start Command: `npm start`
+4. Add your `GROQ_API_KEY`, `TURNSTILE_SECRET_KEY`, `JWT_SECRET`, and optionally `MONGODB_URI` to the environment variables.
+
+### Frontend (Vercel)
+1. Import the project to Vercel and set the Root Directory to `client`.
+2. Add your environment variables: `NEXT_PUBLIC_API_URL` (pointing to your Render URL), `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, and `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
+3. **Important Post-Deployment Steps:**
+   - Update your **Google Cloud Console** Authorized Origins and Redirect URIs with your new `.vercel.app` domain.
+   - Add your new `.vercel.app` domain to your **Cloudflare Turnstile** dashboard.
