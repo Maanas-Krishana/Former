@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from '@/components/AuthProvider';
 import { Turnstile } from '@marsidev/react-turnstile';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 export default function Signup() {
   const [name, setName] = useState('');
@@ -33,6 +34,28 @@ export default function Signup() {
         window.location.href = '/dashboard';
       } else {
         setError(data.message || 'Signup failed');
+      }
+    } catch (err) {
+      setError('Network error');
+    }
+  };
+
+  const handleGoogleAuth = async (credential: string) => {
+    setError('');
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5001/api'}/auth/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: credential, turnstileToken })
+      });
+
+      const data = await res.json();
+      
+      if (res.ok) {
+        login(data.token, data.user);
+        window.location.href = '/dashboard';
+      } else {
+        setError(data.message || 'Google authentication failed');
       }
     } catch (err) {
       setError('Network error');
@@ -84,7 +107,31 @@ export default function Signup() {
             </div>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 flex flex-col items-center space-y-4 border-t pt-6">
+            <div className="relative w-full flex items-center justify-center">
+              <div className="border-t w-full absolute border-gray-200"></div>
+              <span className="bg-white px-4 text-xs text-gray-500 relative z-10 font-medium">Or continue with</span>
+            </div>
+
+            {!turnstileToken ? (
+              <p className="text-xs text-center text-gray-500">Please verify you are human to enable Google sign-up.</p>
+            ) : (
+              <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || 'placeholder-id'}>
+                <GoogleLogin
+                  onSuccess={credentialResponse => {
+                    if (credentialResponse.credential) {
+                      handleGoogleAuth(credentialResponse.credential);
+                    }
+                  }}
+                  onError={() => {
+                    setError("Google Authentication Failed");
+                  }}
+                />
+              </GoogleOAuthProvider>
+            )}
+          </div>
+
+          <div className="mt-6 text-center border-t pt-4">
             <a href="/login" className="text-indigo-600 hover:text-indigo-500 text-sm font-medium">
               Already have an account? Sign in
             </a>

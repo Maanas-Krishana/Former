@@ -18,8 +18,11 @@ export interface IFormField {
 export interface IForm extends Document {
   userId?: mongoose.Types.ObjectId;
   title: string;
+  description?: string;
+  logoUrl?: string;
   themeColor?: string;
   requireGoogleSignIn: boolean;
+  published: boolean;
   views: number;
   fields: IFormField[];
   createdAt: Date;
@@ -44,8 +47,11 @@ const formFieldSchema = new Schema({
 const formSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User' },
   title: { type: String, required: true },
+  description: { type: String, default: '' },
+  logoUrl: { type: String, default: '' },
   themeColor: { type: String, default: 'indigo' },
   requireGoogleSignIn: { type: Boolean, default: false },
+  published: { type: Boolean, default: true },
   views: { type: Number, default: 0 },
   fields: [formFieldSchema],
 }, { timestamps: true });

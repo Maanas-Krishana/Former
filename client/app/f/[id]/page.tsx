@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
+import { Star } from 'lucide-react';
 
 const THEME_COLORS: Record<string, any> = {
   'indigo': { bg: 'bg-indigo-600', hover: 'hover:bg-indigo-700', text: 'text-indigo-600', ring: 'focus:border-indigo-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 focus:ring-indigo-500' },
@@ -116,11 +117,14 @@ export default function PublicForm({ params }: { params: { id: string } }) {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#F6F4EE] flex items-center justify-center p-4">
-        <div className="max-w-xl w-full bg-white rounded-xl shadow-sm border p-12 text-center">
+      <div className="min-h-screen bg-[#F6F4EE] flex flex-col items-center justify-center p-4 space-y-6">
+        <div className="max-w-xl w-full bg-white rounded-xl shadow-sm border p-6 sm:p-12 text-center">
           <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">✓</div>
           <h1 className="text-3xl font-bold text-gray-800 mb-4">Thank You!</h1>
           <p className="text-gray-500">Your response has been recorded successfully.</p>
+        </div>
+        <div className="text-center text-xs text-gray-400 font-medium">
+          This form is made by former proudly in India
         </div>
       </div>
     );
@@ -130,12 +134,27 @@ export default function PublicForm({ params }: { params: { id: string } }) {
     return <div className="min-h-screen bg-[#F6F4EE] flex items-center justify-center">Loading...</div>;
   }
 
+  if (form.published === false) {
+    return (
+      <div className="min-h-screen bg-[#F6F4EE] flex flex-col items-center justify-center p-4 space-y-6">
+        <div className="max-w-xl w-full bg-white rounded-xl shadow-sm border p-6 sm:p-12 text-center">
+          <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl">⚠️</div>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">Form Inactive</h1>
+          <p className="text-gray-500">This form is no longer accepting responses.</p>
+        </div>
+        <div className="text-center text-xs text-gray-400 font-medium">
+          This form is made by former proudly in India
+        </div>
+      </div>
+    );
+  }
+
   const theme = THEME_COLORS[form.themeColor || 'indigo'] || THEME_COLORS['indigo'];
 
   if (form.requireGoogleSignIn && !verifiedEmail) {
     return (
-      <div className="min-h-screen bg-[#F6F4EE] py-12 px-4 flex justify-center items-center">
-        <div className="max-w-md w-full bg-white rounded-xl shadow-sm border p-8 text-center space-y-6">
+      <div className="min-h-screen bg-[#F6F4EE] py-12 px-4 flex flex-col justify-center items-center space-y-6">
+        <div className="max-w-md w-full bg-white rounded-xl shadow-sm border p-6 sm:p-8 text-center space-y-6">
           <div className="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">🔒</div>
           <h1 className="text-2xl font-bold text-gray-800">Sign in to continue</h1>
           <p className="text-gray-500 text-sm">The creator of this form requires you to verify your identity with Google before submitting.</p>
@@ -155,15 +174,26 @@ export default function PublicForm({ params }: { params: { id: string } }) {
             </GoogleOAuthProvider>
           </div>
         </div>
+        <div className="text-center text-xs text-gray-400 font-medium">
+          This form is made by former proudly in India
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F6F4EE] py-12 px-4 flex justify-center items-start">
-      <div className="max-w-3xl w-full bg-white rounded-xl shadow-sm border p-8 space-y-8">
-        <div className="text-center mb-8 border-b pb-6">
-          <h1 className="text-3xl font-bold text-gray-800">{form.title}</h1>
+    <div className="min-h-screen bg-[#F6F4EE] py-6 sm:py-12 px-4 flex flex-col justify-center items-center space-y-6">
+      <div className="max-w-3xl w-full bg-white rounded-xl shadow-sm border p-4 sm:p-8 space-y-8">
+        <div className="text-center mb-8 border-b pb-6 space-y-3">
+          <div className="flex items-center justify-center space-x-3">
+            {form.logoUrl && (
+              <img src={form.logoUrl} alt="Logo" className="w-12 h-12 object-contain rounded-md" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
+            )}
+            <h1 className="text-3xl font-bold text-gray-800">{form.title}</h1>
+          </div>
+          {form.description && (
+            <p className="text-sm text-gray-500 max-w-md mx-auto">{form.description}</p>
+          )}
         </div>
 
         <form onSubmit={submitResponse} className="space-y-6">
@@ -200,7 +230,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                 />
               )}
 
-              {field.type === 'dropdown' && (
+              {['dropdown', 'select'].includes(field.type) && (
                 <select 
                   required={field.required}
                   value={answers[field.id] || ''}
@@ -277,6 +307,25 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   )}
                 </div>
               )}
+
+              {field.type === 'rating' && (
+                <div className="flex items-center space-x-2 pt-1">
+                  {[1, 2, 3, 4, 5].map((star) => {
+                    const ratingValue = answers[field.id] || 0;
+                    const isFilled = ratingValue >= star;
+                    return (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => handleInputChange(field.id, star)}
+                        className="focus:outline-none transition-transform hover:scale-110"
+                      >
+                        <Star className={`w-8 h-8 ${isFilled ? 'text-amber-400 fill-amber-400' : 'text-gray-300 fill-transparent'} transition-colors`} />
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           ))}
 
@@ -290,6 +339,9 @@ export default function PublicForm({ params }: { params: { id: string } }) {
             </Button>
           </div>
         </form>
+      </div>
+      <div className="text-center text-xs text-gray-400 font-medium">
+        This form is made by former proudly in India
       </div>
     </div>
   );

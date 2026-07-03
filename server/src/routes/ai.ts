@@ -11,10 +11,11 @@ The JSON must be an object with two keys: "title" (string, a good title for the 
 
 Each field object MUST have these properties:
 - "id": a unique string (e.g., "name_field", "q1", etc)
-- "type": MUST be one of: "text", "email", "number", "textarea", "select", "radio", "checkbox", "date", "file"
+- "type": MUST be one of: "text", "email", "number", "textarea", "select", "radio", "checkbox", "date", "file", "rating"
 - "label": the question or label for the field (string)
 - "required": boolean
 - "options": (ONLY for "select", "radio", or "checkbox" types) an array of string options.
+- rating type represents a 1-5 star rating scale.
 
 Example Prompt: "A quick feedback form for a restaurant"
 Example Output:
@@ -68,6 +69,38 @@ router.post('/generate', requireAuth, async (req, res) => {
   } catch (error) {
     console.error("AI Generation Error:", error);
     res.status(500).json({ message: 'Failed to generate form' });
+  }
+});
+
+router.post('/summarize', requireAuth, async (req, res) => {
+  try {
+    const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+    const { formTitle, fields, responses } = req.body;
+    if (!responses || !fields) return res.status(400).json({ message: 'Fields and responses are required' });
+
+    const summaryPrompt = `
+    You are an expert data analyst AI. Summarize the following form submission responses.
+    Form Title: ${formTitle}
+    Form Fields: ${JSON.stringify(fields.map((f: any) => ({ id: f.id, label: f.label, type: f.type })))}
+    Responses Data: ${JSON.stringify(responses.map((r: any) => r.answers))}
+
+    Provide a professional, bulleted summary highlighting key insights, trends, distribution of ratings/selections if any, and actionable recommendations.
+    Output format should be clean markdown. Keep it concise but insightful.
+    `;
+
+    const completion = await groq.chat.completions.create({
+      messages: [
+        { role: 'user', content: summaryPrompt }
+      ],
+      model: 'llama-3.1-8b-instant',
+      temperature: 0.5,
+    });
+
+    const summary = completion.choices[0]?.message?.content || "No summary generated.";
+    res.json({ summary });
+  } catch (error) {
+    console.error("AI Summary Error:", error);
+    res.status(500).json({ message: 'Failed to generate summary' });
   }
 });
 
