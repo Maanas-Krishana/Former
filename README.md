@@ -100,3 +100,19 @@ npm run dev
 3. **Important Post-Deployment Steps:**
    - Update your **Google Cloud Console** Authorized Origins and Redirect URIs with your new `.vercel.app` domain.
    - Add your new `.vercel.app` domain to your **Cloudflare Turnstile** dashboard.
+
+---
+
+## ⚡ What's New in Version 2.0 (v2.0)
+
+Version 2.0 introduces powerful new features focused on user engagement, authentication flexibility, and deep data insights:
+
+1. **🎨 SaaS Landing Page:** A fully revamped, modern SaaS home page (`/`) featuring elegant typography, ambient backdrop-blur details, and live-interactive mockup previews.
+2. **🔐 One-Click Google Authentication:** Seamless Google login and registration verified via token verification endpoints on the backend.
+3. **🔄 Persistent PWA Session Recovery:** Automatic cookie fallback system that prevents user logouts when PWA applications are terminated on mobile devices.
+4. **📊 Groq AI Response Summaries:** Generate structured summaries, trends, and action lists from form responses at the click of a button in the responses dashboard.
+5. **📁 CSV Data Exporting:** Download form submission tables immediately into `.csv` format.
+6. **📂 Quick Form Duplication:** Instantly clone form structures and configurations directly from the dashboard card tools.
+7. **🌐 Iframe Website Embeds:** Easy-to-use HTML code snippet generators under the **Share** tab to embed forms on external sites.
+8. **🕰️ Smart Greetings & Profile Management:** Custom time-based dashboard greetings and a custom profile popup card to update usernames and passwords.
+
