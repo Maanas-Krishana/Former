@@ -928,7 +928,7 @@ export default function FormBuilder() {
                       </div>
                     ) : (
                       <p className="text-sm text-gray-500">
-                        Click "Analyze with AI" to summarize the submissions and extract trends and actionable recommendations.
+                        Click &quot;Analyze with AI&quot; to summarize the submissions and extract trends and actionable recommendations.
                       </p>
                     )}
                   </div>
