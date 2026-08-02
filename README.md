@@ -2,6 +2,10 @@
   <img src="client/public/logo.png" alt="Former Logo" width="120" />
   <h1>Former</h1>
   <p><strong>The Intelligent, Secure, and Dynamic Form Builder</strong></p>
+  
+  <p>
+    <a href="https://former-six.vercel.app"><strong>🌐 Live App: former-six.vercel.app</strong></a>
+  </p>
 </div>
 
 Former is a modern, full-stack application that allows you to instantly generate forms using AI, securely collect responses with Google Auth and Cloudflare Turnstile, and enforce advanced data validation rules.
@@ -10,21 +14,27 @@ Former is a modern, full-stack application that allows you to instantly generate
 
 ## ✨ Core Features
 
-### 🤖 AI-Powered Form Generation
-Skip the manual work. Describe what you need (e.g., *"A feedback survey for a local coffee shop"*), and the built-in **Groq API (Llama 3.1)** will instantly generate a complete, well-structured form with all the necessary fields and options.
+### 🤖 AI-Powered Form Generation & Insights
+- **Instant AI Form Builder:** Describe what you need (e.g., *"A feedback survey for a local coffee shop"*), and the built-in **Groq API (Llama 3.1)** generates a complete, well-structured form.
+- **AI Response Analysis:** Summarize submission trends, key insights, and actionable recommendations in one click right inside your form dashboard.
 
-### 🛡️ Advanced Form Security & Anti-Bot Protection
-- **Cloudflare Turnstile:** Invisible, frictionless bot protection integrated directly into the authentication flows.
+### 🌗 Comprehensive Light & Dark Mode
+- Built-in theme switcher with client-side hydration protection.
+- Native Light mode default with sleek Dark mode support across Landing Page, Dashboard, Form Builder, Public Form Views, and Modal Dialogs.
+
+### 🛡️ Advanced Security & Anti-Bot Protection
+- **Cloudflare Turnstile:** Invisible, frictionless bot protection integrated directly into authentication flows.
 - **Google OAuth Gate:** Optionally require respondents to log in with Google before filling out a public form.
-- **Duplicate Prevention:** The system actively prevents the same verified Google account from submitting a form multiple times.
+- **Duplicate Submission Prevention:** Prevents the same verified Google account from submitting a form multiple times.
 
 ### 📋 Drag-and-Drop Builder & Custom Validation
-- **Rich Field Types:** Support for Text, Email, Number, Textarea, Dropdown, Checkbox, Radio, and Date fields.
-- **Advanced Field Requirements:** Enforce strict data integrity using Custom Regex Patterns (e.g., `^\d{10}$` for phone numbers), Min/Max character lengths, and custom error messages.
-- **Interactive UI:** Smooth drag-and-drop reordering powered by `dnd-kit`.
+- **Rich Field Types:** Text, Email, Number, Textarea, Dropdown, Checkbox, Radio, Date, File Upload, and Star Rating fields.
+- **Advanced Data Requirements:** Enforce strict data integrity using Custom Regex Patterns (e.g., `^\d{10}$` for phone numbers), Min/Max character lengths, and custom error messages.
+- **Interactive Builder Header:** Raised, highlighted pill tabs for quick switching between `Build`, `Settings`, `Share`, and `Responses`.
 
-### 📊 Real-Time Response Dashboard
-Monitor submissions live. View submission counts, respondent identities (if Google Auth was required), and exportable data tables for every form you publish.
+### 📊 Real-Time Response Dashboard & Exporting
+- Monitor live submission counts, form views, and conversion rates.
+- Interactive response tables with direct `.csv` data exporting.
 
 ---
 
@@ -32,13 +42,14 @@ Monitor submissions live. View submission counts, respondent identities (if Goog
 
 **Frontend (Client)**
 - **Framework:** Next.js 14 (App Router)
-- **Styling:** Tailwind CSS & Shadcn UI
-- **Interactions:** dnd-kit (Drag & Drop)
-- **Security:** `@marsidev/react-turnstile` (Cloudflare) & `@react-oauth/google`
+- **Styling:** Tailwind CSS, Vanilla CSS & Shadcn UI
+- **Theme Management:** `next-themes` (Light/Dark mode)
+- **Interactions:** `@dnd-kit` (Drag & Drop)
+- **Security:** `@marsidev/react-turnstile` & `@react-oauth/google`
 
 **Backend (Server)**
 - **Runtime:** Node.js & Express.js
-- **Database:** MongoDB via Mongoose
+- **Database:** MongoDB via Mongoose (Supports `mongodb-memory-server` for zero-setup local dev)
 - **AI Integration:** Groq SDK (`llama-3.1-8b-instant`)
 - **Authentication:** JWT (JSON Web Tokens) & bcryptjs
 
@@ -59,7 +70,7 @@ npm run dev
 *The backend will automatically start an in-memory MongoDB instance and run on `http://localhost:5001`.*
 
 ### 2. Configure Local Environment Variables
-In the `client` directory, create a `.env.local` file with your security keys:
+In the `client` directory, create a `.env.local` file with your keys:
 ```env
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=your_turnstile_site_key
@@ -86,33 +97,19 @@ npm run dev
 
 ---
 
-## 🚀 Deployment Guide
+## 🚀 Production Deployment
 
-### Backend (Render)
-1. Create a new Web Service on Render pointing to the `server` directory.
-2. Build Command: `npm install && npm run build`
-3. Start Command: `npm start`
-4. Add your `GROQ_API_KEY`, `TURNSTILE_SECRET_KEY`, `JWT_SECRET`, and optionally `MONGODB_URI` to the environment variables.
-
-### Frontend (Vercel)
-1. Import the project to Vercel and set the Root Directory to `client`.
-2. Add your environment variables: `NEXT_PUBLIC_API_URL` (pointing to your Render URL), `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, and `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
-3. **Important Post-Deployment Steps:**
-   - Update your **Google Cloud Console** Authorized Origins and Redirect URIs with your new `.vercel.app` domain.
-   - Add your new `.vercel.app` domain to your **Cloudflare Turnstile** dashboard.
+- **Production App URL:** [https://former-six.vercel.app](https://former-six.vercel.app)
+- **Frontend Host:** Vercel (Root directory: `client`)
+- **Backend Host:** Render (Root directory: `server`)
 
 ---
 
-## ⚡ What's New in Version 2.0 (v2.0)
+## ⚡ Recent Updates (v2.1)
 
-Version 2.0 introduces powerful new features focused on user engagement, authentication flexibility, and deep data insights:
-
-1. **🎨 SaaS Landing Page:** A fully revamped, modern SaaS home page (`/`) featuring elegant typography, ambient backdrop-blur details, and live-interactive mockup previews.
-2. **🔐 One-Click Google Authentication:** Seamless Google login and registration verified via token verification endpoints on the backend.
-3. **🔄 Persistent PWA Session Recovery:** Automatic cookie fallback system that prevents user logouts when PWA applications are terminated on mobile devices.
-4. **📊 Groq AI Response Summaries:** Generate structured summaries, trends, and action lists from form responses at the click of a button in the responses dashboard.
-5. **📁 CSV Data Exporting:** Download form submission tables immediately into `.csv` format.
-6. **📂 Quick Form Duplication:** Instantly clone form structures and configurations directly from the dashboard card tools.
-7. **🌐 Iframe Website Embeds:** Easy-to-use HTML code snippet generators under the **Share** tab to embed forms on external sites.
-8. **🕰️ Smart Greetings & Profile Management:** Custom time-based dashboard greetings and a custom profile popup card to update usernames and passwords.
+1. **🌗 Native Light/Dark Mode:** Seamless theme toggling with curated dark mode colors across public form views (`/f/[id]`), inputs, modals, and settings.
+2. **🎯 Compact Auth Cards:** Redesigned Sign in (`/login`) and Sign up (`/signup`) cards with a precision `max-w-[390px]` layout aligning inputs perfectly with the Cloudflare Turnstile frame.
+3. **📌 Highlighted & Raised Navigation Tabs:** Raised interactive pills with shadow and accent color highlights for the `Build`, `Settings`, `Share`, and `Responses` header tabs.
+4. **💬 Custom App Dialogs & Toast Notifications:** Replaced native browser alerts with in-app styled modal dialogs and toast notifications.
+5. **📱 Enhanced Public Form Aesthetics:** Interactive radio and checkbox cards, star rating micro-animations, and responsive field groups.
 
