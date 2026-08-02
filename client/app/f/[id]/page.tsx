@@ -182,24 +182,24 @@ export default function PublicForm({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#F6F4EE] py-6 sm:py-12 px-4 flex flex-col justify-center items-center space-y-6">
-      <div className="max-w-3xl w-full bg-white rounded-xl shadow-sm border p-4 sm:p-8 space-y-8">
-        <div className="text-center mb-8 border-b pb-6 space-y-3">
+    <div className="min-h-screen bg-[#F6F4EE] dark:bg-zinc-950 text-gray-900 dark:text-gray-100 py-6 sm:py-12 px-4 flex flex-col justify-center items-center space-y-6 transition-colors duration-200">
+      <div className="max-w-3xl w-full bg-white dark:bg-zinc-900 rounded-xl shadow-sm border dark:border-zinc-800 p-4 sm:p-8 space-y-8">
+        <div className="text-center mb-8 border-b dark:border-zinc-800 pb-6 space-y-3">
           <div className="flex items-center justify-center space-x-3">
             {form.logoUrl && (
               <img src={form.logoUrl} alt="Logo" className="w-12 h-12 object-contain rounded-md" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
             )}
-            <h1 className="text-3xl font-bold text-gray-800">{form.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-white">{form.title}</h1>
           </div>
           {form.description && (
-            <p className="text-sm text-gray-500 max-w-md mx-auto">{form.description}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">{form.description}</p>
           )}
         </div>
 
         <form onSubmit={submitResponse} className="space-y-6">
           {form.fields.map((field: any) => (
             <div key={field.id} className="space-y-2">
-              <Label className="text-base font-medium text-gray-800">
+              <Label className="text-base font-medium text-gray-800 dark:text-gray-200">
                 {field.label} {field.required && <span className="text-red-500">*</span>}
               </Label>
               
@@ -214,7 +214,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   maxLength={field.validation?.maxLength}
                   pattern={field.type === 'text' ? field.validation?.pattern : undefined}
                   title={field.validation?.customError || (field.validation?.pattern ? `Please match the required format.` : undefined)}
-                  className={`w-full bg-gray-50 border-gray-200 ${theme.ring}`} 
+                  className={`w-full bg-gray-50 dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 ${theme.ring}`} 
                 />
               )}
 
@@ -226,7 +226,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   onChange={(e) => handleInputChange(field.id, e.target.value)}
                   minLength={field.validation?.minLength}
                   maxLength={field.validation?.maxLength}
-                  className={`w-full flex min-h-[100px] rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm focus-visible:outline-none ${theme.ring}`} 
+                  className={`w-full flex min-h-[100px] rounded-md border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus-visible:outline-none ${theme.ring}`} 
                 />
               )}
 
@@ -235,7 +235,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   required={field.required}
                   value={answers[field.id] || ''}
                   onChange={(e) => handleInputChange(field.id, e.target.value)}
-                  className={`w-full flex h-10 items-center justify-between rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm focus:outline-none ${theme.ring}`}
+                  className={`w-full flex h-10 items-center justify-between rounded-md border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:outline-none ${theme.ring}`}
                 >
                   <option value="">Select an option</option>
                   {field.options?.map((opt: string, i: number) => (

@@ -16,6 +16,7 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { SortableField } from './SortableField';
 import { useAuth } from './AuthProvider';
+import { useModal } from './ModalProvider';
 import { QRCodeSVG } from 'qrcode.react';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -63,6 +64,7 @@ export default function FormBuilder() {
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
   const [previewRatings, setPreviewRatings] = useState<Record<string, number>>({});
   const { token, logout, user } = useAuth();
+  const { toast } = useModal();
 
   useEffect(() => {
     if (!token && typeof window !== 'undefined' && localStorage.getItem('token') === null) {
@@ -301,29 +303,29 @@ export default function FormBuilder() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#F6F4EE]">
+    <div className="flex flex-col h-screen bg-[#F6F4EE] dark:bg-zinc-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
       {/* Top Header */}
-      <header className="bg-white border-b px-4 sm:px-6 py-4 flex items-center justify-between">
+      <header className="bg-white dark:bg-zinc-900 border-b dark:border-zinc-800 px-4 sm:px-6 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-3 sm:space-x-6 flex-1 min-w-0">
           <a href="/dashboard" className="flex items-center space-x-2 flex-shrink-0">
             <img src="/logo.png" alt="Former Logo" className="w-7 h-7 object-contain rounded-md" />
-            <span className="text-xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors hidden md:block">Former</span>
+            <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors hidden md:block">Former</span>
           </a>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto flex-1">
             <TabsList className="bg-transparent border-b-0 h-auto p-0 space-x-4 sm:space-x-6 flex items-center">
-              <TabsTrigger value="build" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 flex items-center">
+              <TabsTrigger value="build" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 dark:text-gray-400 flex items-center">
                 <Layout className="w-4 h-4 sm:mr-1.5" />
                 <span className="hidden sm:inline">Build</span>
               </TabsTrigger>
-              <TabsTrigger value="settings" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 flex items-center">
+              <TabsTrigger value="settings" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 dark:text-gray-400 flex items-center">
                 <Settings className="w-4 h-4 sm:mr-1.5" />
                 <span className="hidden sm:inline">Settings</span>
               </TabsTrigger>
-              <TabsTrigger value="share" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 flex items-center">
+              <TabsTrigger value="share" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 dark:text-gray-400 flex items-center">
                 <Share2 className="w-4 h-4 sm:mr-1.5" />
                 <span className="hidden sm:inline">Share</span>
               </TabsTrigger>
-              <TabsTrigger value="responses" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 flex items-center">
+              <TabsTrigger value="responses" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 dark:text-gray-400 flex items-center">
                 <BarChart2 className="w-4 h-4 sm:mr-1.5" />
                 <span className="hidden sm:inline">Responses</span>
               </TabsTrigger>
@@ -333,7 +335,7 @@ export default function FormBuilder() {
         <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
           <ThemeToggle />
           <span className="text-sm text-gray-500 dark:text-gray-400 hidden lg:inline">Hello, {user?.name?.split(' ')[0] || 'User'}</span>
-          <Button variant="outline" size="sm" onClick={() => setActiveTab(activeTab === 'preview' ? 'build' : 'preview')} className="text-gray-600 font-medium px-2.5 sm:px-3">
+          <Button variant="outline" size="sm" onClick={() => setActiveTab(activeTab === 'preview' ? 'build' : 'preview')} className="text-gray-600 dark:text-gray-300 dark:border-zinc-700 font-medium px-2.5 sm:px-3">
             <Eye className="w-4 h-4 md:mr-2" />
             <span className="hidden md:inline">{activeTab === 'preview' ? 'Exit Preview' : 'Preview'}</span>
           </Button>
@@ -348,7 +350,7 @@ export default function FormBuilder() {
               <span className="hidden md:inline">{isSaving ? "Publishing..." : "Publish"}</span>
             </Button>
           )}
-          <Button variant="ghost" size="sm" onClick={() => { logout(); window.location.href = '/login'; }} className="text-red-600 hover:text-red-700 hover:bg-red-50 font-medium px-2.5 sm:px-3">
+          <Button variant="ghost" size="sm" onClick={() => { logout(); window.location.href = '/login'; }} className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-950/40 font-medium px-2.5 sm:px-3">
             <LogOut className="w-4 h-4 lg:mr-2" />
             <span className="hidden lg:inline">Logout</span>
           </Button>
@@ -361,7 +363,7 @@ export default function FormBuilder() {
         {/* Mobile Sidebar backdrop */}
         {activeTab === "build" && showSidebar && (
           <div 
-            className="fixed inset-0 bg-black/30 z-30 md:hidden"
+            className="fixed inset-0 bg-black/50 z-30 md:hidden"
             onClick={() => setShowSidebar(false)}
           />
         )}
@@ -369,15 +371,9 @@ export default function FormBuilder() {
         {/* Left Sidebar - Elements */}
         {activeTab === "build" && (
           <div className={cn(
-            "fixed inset-y-0 left-0 z-40 w-64 bg-white border-r overflow-y-auto p-4 flex flex-col transition-transform duration-200 md:relative md:translate-x-0",
+            "fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-zinc-900 border-r dark:border-zinc-800 overflow-y-auto p-4 flex flex-col transition-transform duration-200 md:relative md:translate-x-0",
             showSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"
           )}>
-            <div className="flex items-center justify-between mb-4 md:mb-0">
-              <h2 className="text-sm font-semibold text-gray-800 uppercase tracking-wider">Add Fields</h2>
-              <Button variant="ghost" size="icon" onClick={() => setShowSidebar(false)} className="md:hidden h-8 w-8">
-                <X className="w-4 h-4" />
-              </Button>
-            </div>
             <div className="space-y-2 mt-2">
               {FIELD_TYPES.map((field) => {
                 const Icon = field.icon;
@@ -388,9 +384,9 @@ export default function FormBuilder() {
                       addField(field.type);
                       setShowSidebar(false);
                     }}
-                    className="flex items-center w-full p-3 border rounded-md bg-white hover:bg-[#F6F4EE] hover:border-indigo-500 hover:ring-1 hover:ring-indigo-500 transition-all text-left text-sm font-medium text-gray-700 shadow-sm group"
+                    className="flex items-center w-full p-3 border dark:border-zinc-800 rounded-md bg-white dark:bg-zinc-950 hover:bg-[#F6F4EE] dark:hover:bg-zinc-800 hover:border-indigo-500 transition-all text-left text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm group"
                   >
-                    <Icon className="w-4 h-4 mr-3 text-gray-400 group-hover:text-indigo-500" />
+                    <Icon className="w-4 h-4 mr-3 text-gray-400 dark:text-gray-500 group-hover:text-indigo-500 dark:group-hover:text-indigo-400" />
                     {field.label}
                   </button>
                 );
@@ -400,7 +396,7 @@ export default function FormBuilder() {
         )}
 
         {/* Canvas Area */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-[#F6F4EE] flex flex-col items-center">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-[#F6F4EE] dark:bg-zinc-950 flex flex-col items-center">
           {activeTab === "build" && (
             <>
               {/* Mobile Sidebar Toggle */}
@@ -411,10 +407,10 @@ export default function FormBuilder() {
                 <Plus className="w-4 h-4 mr-2" /> Add Form Fields
               </Button>
 
-              <div className="max-w-3xl w-full h-fit bg-white rounded-xl shadow-sm border p-4 sm:p-8 space-y-6">
+              <div className="max-w-3xl w-full h-fit bg-white dark:bg-zinc-900 rounded-xl shadow-sm border dark:border-zinc-800 p-4 sm:p-8 space-y-6">
               
               {/* Form Header */}
-              <div className="text-center mb-8 border-b pb-6 space-y-3">
+              <div className="text-center mb-8 border-b dark:border-zinc-800 pb-6 space-y-3">
                 <div className="flex items-center justify-center space-x-3">
                   {logoUrl && (
                     <img src={logoUrl} alt="Logo" className="w-12 h-12 object-contain rounded-md" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
@@ -422,23 +418,23 @@ export default function FormBuilder() {
                   <Input 
                     value={formTitle} 
                     onChange={(e) => setFormTitle(e.target.value)} 
-                    className="text-2xl font-bold text-center border-transparent hover:border-gray-200 focus:border-teal-500 focus:ring-teal-500 px-0 h-auto py-2 shadow-none w-auto min-w-[200px]"
+                    className="text-2xl font-bold text-center text-gray-900 dark:text-white border-transparent hover:border-gray-200 dark:hover:border-zinc-700 focus:border-teal-500 focus:ring-teal-500 px-0 h-auto py-2 shadow-none w-auto min-w-[200px] bg-transparent"
                   />
                 </div>
                 <Input 
                   placeholder="Form description (optional)"
                   value={formDescription}
                   onChange={(e) => setFormDescription(e.target.value)}
-                  className="text-gray-500 text-sm text-center border-transparent hover:border-gray-200 focus:border-teal-500 focus:ring-teal-500 px-0 h-auto py-1 shadow-none"
+                  className="text-gray-500 dark:text-gray-400 text-sm text-center border-transparent hover:border-gray-200 dark:hover:border-zinc-700 focus:border-teal-500 focus:ring-teal-500 px-0 h-auto py-1 shadow-none bg-transparent"
                 />
               </div>
 
               {/* Form Fields Canvas */}
               <div className="space-y-4">
                 {fields.length === 0 ? (
-                  <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-lg">
-                    <Layout className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500 font-medium">Click on fields in the sidebar to add them</p>
+                  <div className="text-center py-12 border-2 border-dashed border-gray-200 dark:border-zinc-800 rounded-lg">
+                    <Layout className="w-12 h-12 text-gray-300 dark:text-zinc-700 mx-auto mb-3" />
+                    <p className="text-gray-500 dark:text-gray-400 font-medium">Click on fields in the sidebar to add them</p>
                   </div>
                 ) : (
                   <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -446,27 +442,42 @@ export default function FormBuilder() {
                       {fields.map((field, index) => (
                         <SortableField key={field.id} id={field.id}>
                           {(dragHandleProps: any) => (
-                            <div className="group relative border border-transparent hover:border-gray-200 p-4 rounded-lg bg-white transition-all">
+                            <div className="group relative border border-transparent hover:border-gray-200 dark:hover:border-zinc-800 p-4 rounded-lg bg-white dark:bg-zinc-900 transition-all">
                               <div className="flex items-start">
-                                <div {...dragHandleProps} className="mt-2 mr-3 opacity-0 group-hover:opacity-100 cursor-grab hover:text-indigo-500 text-gray-400">
+                                <div {...dragHandleProps} className="mt-2 mr-3 opacity-0 group-hover:opacity-100 cursor-grab hover:text-indigo-500 text-gray-400 dark:text-gray-500">
                                   <GripVertical className="w-5 h-5" />
                                 </div>
-                                <div className="flex-1 space-y-2">
-                                  <div className="flex items-center space-x-2">
+                                <div className="flex-1 space-y-3">
+                                  <div className="flex items-center justify-between">
                                     <Input 
-                                      value={field.label}
+                                      value={field.label} 
                                       onChange={(e) => {
                                         const newFields = [...fields];
                                         newFields[index].label = e.target.value;
                                         setFields(newFields);
                                       }}
-                                      className="font-medium text-gray-700 border-transparent hover:border-gray-200 focus:border-indigo-500 shadow-none px-2 h-8 flex-1"
+                                      className="font-medium text-gray-800 dark:text-gray-100 border-transparent hover:border-gray-200 dark:hover:border-zinc-700 focus:border-indigo-500 px-1 py-0 h-auto text-base bg-transparent"
                                     />
-                                    <Button variant="ghost" size="icon" onClick={() => removeField(field.id)} className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50 flex-shrink-0">
-                                      <Trash2 className="w-4 h-4" />
-                                    </Button>
+                                    <div className="flex items-center space-x-2">
+                                      <label className="flex items-center text-xs text-gray-500 dark:text-gray-400 cursor-pointer">
+                                        <input 
+                                          type="checkbox" 
+                                          checked={field.required || false}
+                                          onChange={(e) => {
+                                            const newFields = [...fields];
+                                            newFields[index].required = e.target.checked;
+                                            setFields(newFields);
+                                          }}
+                                          className="mr-1 rounded border-gray-300 dark:border-zinc-700"
+                                        />
+                                        Required
+                                      </label>
+                                      <Button variant="ghost" size="icon" onClick={() => removeField(field.id)} className="h-8 w-8 text-gray-400 hover:text-red-500">
+                                        <Trash2 className="w-4 h-4" />
+                                      </Button>
+                                    </div>
                                   </div>
-                                  
+
                                   {/* Field Preview based on type */}
                                   <div className="px-2 pt-1 overflow-hidden w-full">
                                     {['text', 'email', 'number'].includes(field.type) && (
@@ -478,7 +489,7 @@ export default function FormBuilder() {
                                           newFields[index].placeholder = e.target.value;
                                           setFields(newFields);
                                         }}
-                                        className="bg-gray-50 border-gray-200 text-gray-500 text-sm focus:border-indigo-500 w-full" 
+                                        className="bg-gray-50 dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-800 dark:text-gray-100 text-sm focus:border-indigo-500 w-full" 
                                       />
                                     )}
                                     {field.type === 'textarea' && (
@@ -490,16 +501,16 @@ export default function FormBuilder() {
                                           setFields(newFields);
                                         }}
                                         placeholder="Placeholder text (click to edit)" 
-                                        className="w-full flex min-h-[80px] rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:border-indigo-500" 
+                                        className="w-full flex min-h-[80px] rounded-md border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 ring-offset-background focus-visible:outline-none focus-visible:border-indigo-500" 
                                       />
                                     )}
                                     {['dropdown', 'select', 'checkbox', 'radio'].includes(field.type) && (
                                        <div className="space-y-2 mt-2 w-full">
-                                         <div className="text-xs font-semibold text-gray-500 uppercase">Options</div>
+                                         <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Options</div>
                                          {field.options?.map((opt: string, oIndex: number) => (
                                            <div key={oIndex} className="flex items-center space-x-2">
-                                             {field.type === 'checkbox' && <div className="h-4 w-4 rounded border border-gray-300 bg-white flex-shrink-0"></div>}
-                                             {field.type === 'radio' && <div className="h-4 w-4 rounded-full border border-gray-300 bg-white flex-shrink-0"></div>}
+                                             {field.type === 'checkbox' && <div className="h-4 w-4 rounded border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 flex-shrink-0"></div>}
+                                             {field.type === 'radio' && <div className="h-4 w-4 rounded-full border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 flex-shrink-0"></div>}
                                              {['dropdown', 'select'].includes(field.type) && <div className="text-xs text-gray-400 w-4 text-center">{oIndex + 1}.</div>}
                                              <Input 
                                                value={opt}
@@ -508,7 +519,7 @@ export default function FormBuilder() {
                                                  newFields[index].options[oIndex] = e.target.value;
                                                  setFields(newFields);
                                                }}
-                                               className="h-8 text-sm bg-white border-gray-200 w-full"
+                                               className="h-8 text-sm bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 w-full"
                                              />
                                              <Button variant="ghost" size="icon" onClick={() => {
                                                const newFields = [...fields];
@@ -519,25 +530,16 @@ export default function FormBuilder() {
                                              </Button>
                                            </div>
                                          ))}
-                                         <Button variant="outline" size="sm" onClick={() => {
+                                         <Button variant="ghost" size="sm" onClick={() => {
                                            const newFields = [...fields];
+                                           if (!newFields[index].options) newFields[index].options = [];
                                            newFields[index].options.push(`Option ${newFields[index].options.length + 1}`);
                                            setFields(newFields);
-                                         }} className="h-8 text-xs text-indigo-600 border-indigo-200 bg-indigo-50 hover:bg-indigo-100">
-                                           <Plus className="w-3 h-3 mr-1" /> Add Option
+                                         }} className="text-xs text-indigo-600 dark:text-indigo-400 p-0 h-auto">
+                                           + Add Option
                                          </Button>
                                        </div>
-                                     )}
-                                     {field.type === 'date' && <Input type="date" disabled className="bg-gray-50 w-full" />}
-                                     {field.type === 'file' && <Input type="file" disabled className="bg-gray-50 w-full" />}
-                                     {field.type === 'rating' && (
-                                       <div className="flex items-center space-x-1 mt-2">
-                                         {[1, 2, 3, 4, 5].map((star) => (
-                                           <Star key={star} className="w-5 h-5 text-amber-400 fill-amber-400" />
-                                         ))}
-                                         <span className="text-xs text-gray-400 ml-2">(Star Rating)</span>
-                                       </div>
-                                     )}
+                                    )}
                                   </div>
                                 </div>
                               </div>
@@ -555,35 +557,35 @@ export default function FormBuilder() {
         )}
           
           {activeTab === "preview" && (
-            <div className="max-w-3xl w-full h-fit bg-white rounded-xl shadow-sm border p-4 sm:p-8 space-y-8">
-              <div className="text-center mb-8 border-b pb-6 space-y-3">
+            <div className="max-w-3xl w-full h-fit bg-white dark:bg-zinc-900 rounded-xl shadow-sm border dark:border-zinc-800 p-4 sm:p-8 space-y-8">
+              <div className="text-center mb-8 border-b dark:border-zinc-800 pb-6 space-y-3">
                 <div className="flex items-center justify-center space-x-3">
                   {logoUrl && (
                     <img src={logoUrl} alt="Logo" className="w-12 h-12 object-contain rounded-md" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
                   )}
-                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">{formTitle}</h2>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">{formTitle}</h2>
                 </div>
                 {formDescription && (
-                  <p className="text-sm text-gray-500 max-w-md mx-auto">{formDescription}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">{formDescription}</p>
                 )}
               </div>
               <div className="space-y-6">
                 {fields.length === 0 ? (
-                  <p className="text-center text-gray-500">No fields added yet.</p>
+                  <p className="text-center text-gray-500 dark:text-gray-400">No fields added yet.</p>
                 ) : (
                   fields.map((field) => (
                     <div key={field.id} className="space-y-2">
-                      <Label className="text-base font-medium text-gray-800">
+                      <Label className="text-base font-medium text-gray-800 dark:text-gray-200">
                         {field.label} {field.required && <span className="text-red-500">*</span>}
                       </Label>
                       {['text', 'email', 'number'].includes(field.type) && (
-                        <Input type={field.type} placeholder={field.placeholder} className="w-full" />
+                        <Input type={field.type} placeholder={field.placeholder} className="w-full bg-gray-50 dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100" />
                       )}
                       {field.type === 'textarea' && (
-                        <textarea placeholder={field.placeholder} className="w-full flex min-h-[100px] rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500" />
+                        <textarea placeholder={field.placeholder} className="w-full flex min-h-[100px] rounded-md border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500" />
                       )}
                       {['dropdown', 'select'].includes(field.type) && (
-                        <select className="w-full flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <select className="w-full flex h-10 items-center justify-between rounded-md border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                           <option value="">Select an option</option>
                           {field.options?.map((opt: string, i: number) => (
                             <option key={i} value={opt}>{opt}</option>
@@ -594,8 +596,8 @@ export default function FormBuilder() {
                         <div className="space-y-2 pt-1">
                           {field.options?.map((opt: string, i: number) => (
                             <div key={i} className="flex items-center space-x-2">
-                              <input type="checkbox" id={`${field.id}-${i}`} className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                              <label htmlFor={`${field.id}-${i}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{opt}</label>
+                              <input type="checkbox" id={`${field.id}-${i}`} className="h-4 w-4 rounded border-gray-300 dark:border-zinc-700 text-indigo-600 focus:ring-indigo-500" />
+                              <label htmlFor={`${field.id}-${i}`} className="text-sm font-medium leading-none text-gray-700 dark:text-gray-300 peer-disabled:cursor-not-allowed peer-disabled:opacity-70">{opt}</label>
                             </div>
                           ))}
                         </div>
@@ -810,47 +812,47 @@ export default function FormBuilder() {
           )}
 
           {activeTab === "share" && (
-            <div className="max-w-3xl w-full h-fit bg-white rounded-xl shadow-sm border p-6 sm:p-12 text-center space-y-6">
-              <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="max-w-3xl w-full h-fit bg-white dark:bg-zinc-900 rounded-xl shadow-sm border dark:border-zinc-800 p-6 sm:p-12 text-center space-y-6">
+              <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Share2 className="w-8 h-8" />
               </div>
-              <h2 className="text-3xl font-bold text-gray-800">Share Your Form</h2>
+              <h2 className="text-3xl font-bold text-gray-800 dark:text-white">Share Your Form</h2>
               {!formId ? (
-                <div className="p-8 border rounded-xl bg-gray-50 text-gray-500">
+                <div className="p-8 border dark:border-zinc-800 rounded-xl bg-gray-50 dark:bg-zinc-950 text-gray-500 dark:text-gray-400">
                   You must publish the form before you can share it.
                 </div>
               ) : (
                 <div className="space-y-8">
-                  <p className="text-gray-500 max-w-md mx-auto">Your form is live and ready to collect responses. Share the QR code or copy the link below.</p>
+                  <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">Your form is live and ready to collect responses. Share the QR code or copy the link below.</p>
                   
                   <div className="flex justify-center">
-                    <div className="p-4 bg-white border-2 border-gray-100 rounded-2xl shadow-sm inline-block">
+                    <div className="p-4 bg-white rounded-2xl shadow-sm border border-gray-100 inline-block">
                       <QRCodeSVG value={`${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001'}/f/${formId}`} size={200} />
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-2 max-w-lg mx-auto bg-gray-50 p-2 rounded-lg border">
-                    <Input readOnly value={`${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001'}/f/${formId}`} className="bg-transparent border-0 font-mono text-sm focus-visible:ring-0 shadow-none" />
+                  <div className="flex items-center space-x-2 max-w-lg mx-auto bg-gray-50 dark:bg-zinc-950 p-2 rounded-lg border dark:border-zinc-800">
+                    <Input readOnly value={`${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001'}/f/${formId}`} className="bg-transparent border-0 font-mono text-sm text-gray-900 dark:text-gray-100 focus-visible:ring-0 shadow-none" />
                     <Button onClick={() => {
                       navigator.clipboard.writeText(`${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001'}/f/${formId}`);
-                      alert("Link copied to clipboard!");
-                    }} className="bg-indigo-600 hover:bg-indigo-700 flex-shrink-0">Copy Link</Button>
+                      toast("Link copied to clipboard!", "success");
+                    }} className="bg-indigo-600 hover:bg-indigo-700 text-white flex-shrink-0">Copy Link</Button>
                   </div>
 
-                  <div className="border-t pt-8 space-y-4 text-left max-w-lg mx-auto">
-                    <h3 className="font-bold text-gray-800 text-base">Embed in your Website</h3>
-                    <p className="text-xs text-gray-500 leading-normal">Copy the code snippet below to seamlessly embed this live form inside any HTML page, React app, WordPress, or site builder.</p>
-                    <div className="flex items-center space-x-2 bg-gray-50 p-2 rounded-lg border">
+                  <div className="border-t dark:border-zinc-800 pt-8 space-y-4 text-left max-w-lg mx-auto">
+                    <h3 className="font-bold text-gray-800 dark:text-white text-base">Embed in your Website</h3>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 leading-normal">Copy the code snippet below to seamlessly embed this live form inside any HTML page, React app, WordPress, or site builder.</p>
+                    <div className="flex items-center space-x-2 bg-gray-50 dark:bg-zinc-950 p-2 rounded-lg border dark:border-zinc-800">
                       <Input 
                         readOnly 
                         value={`<iframe src="${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001'}/f/${formId}" width="100%" height="600px" frameborder="0" style="border:none; border-radius:12px;">Loading...</iframe>`} 
-                        className="bg-transparent border-0 font-mono text-xs focus-visible:ring-0 shadow-none truncate" 
+                        className="bg-transparent border-0 font-mono text-xs text-gray-900 dark:text-gray-100 focus-visible:ring-0 shadow-none truncate" 
                       />
                       <Button onClick={() => {
                         const embedCode = `<iframe src="${typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3001'}/f/${formId}" width="100%" height="600px" frameborder="0" style="border:none; border-radius:12px;">Loading...</iframe>`;
                         navigator.clipboard.writeText(embedCode);
-                        alert("Embed code copied to clipboard!");
-                      }} className="bg-teal-600 hover:bg-teal-700 text-xs py-2 px-3 h-9 flex-shrink-0">Copy Code</Button>
+                        toast("Embed code copied to clipboard!", "success");
+                      }} className="bg-teal-600 hover:bg-teal-700 text-white text-xs py-2 px-3 h-9 flex-shrink-0">Copy Code</Button>
                     </div>
                   </div>
                 </div>
@@ -859,45 +861,45 @@ export default function FormBuilder() {
           )}
 
           {activeTab === "responses" && (
-            <div className="max-w-4xl w-full h-fit bg-white rounded-xl shadow-sm border p-8">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4 border-b pb-4">
-                <h2 className="text-2xl font-bold">Form Responses</h2>
+            <div className="max-w-4xl w-full h-fit bg-white dark:bg-zinc-900 rounded-xl shadow-sm border dark:border-zinc-800 p-8">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4 border-b dark:border-zinc-800 pb-4">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Form Responses</h2>
                 {responses.length > 0 && (
-                  <Button onClick={exportToCSV} variant="outline" className="flex items-center space-x-2 border-gray-300">
+                  <Button onClick={exportToCSV} variant="outline" className="flex items-center space-x-2 border-gray-300 dark:border-zinc-700 dark:text-gray-200">
                     <Download className="w-4 h-4" />
                     <span>Export CSV</span>
                   </Button>
                 )}
               </div>
               {!formId ? (
-                <div className="text-center p-12 border rounded-xl bg-gray-50 text-gray-500">
+                <div className="text-center p-12 border dark:border-zinc-800 rounded-xl bg-gray-50 dark:bg-zinc-950 text-gray-500 dark:text-gray-400">
                   You must publish the form before you can view responses.
                 </div>
               ) : isLoadingResponses ? (
-                <div className="text-center p-12 text-gray-500">Loading responses...</div>
+                <div className="text-center p-12 text-gray-500 dark:text-gray-400">Loading responses...</div>
               ) : responses.length === 0 ? (
-                <div className="text-center p-12 border rounded-xl bg-gray-50 text-gray-500">
+                <div className="text-center p-12 border dark:border-zinc-800 rounded-xl bg-gray-50 dark:bg-zinc-950 text-gray-500 dark:text-gray-400">
                   No responses yet. Share your form link! <br />
-                  <span className="font-mono text-xs mt-2 inline-block bg-white p-2 rounded border break-all max-w-full">
+                  <span className="font-mono text-xs mt-2 inline-block bg-white dark:bg-zinc-900 p-2 rounded border dark:border-zinc-800 text-gray-800 dark:text-gray-200 break-all max-w-full">
                     {typeof window !== 'undefined' ? `${window.location.origin}/f/${formId}` : `https://former-six.vercel.app/f/${formId}`}
                   </span>
                 </div>
               ) : (
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 w-full">
-                    <div className="p-4 sm:p-6 border rounded-xl flex flex-col items-center justify-center bg-gray-50">
-                      <div className="text-3xl sm:text-4xl font-bold text-teal-600 mb-2">{responses.length}</div>
-                      <div className="text-sm text-gray-500 font-medium text-center">Total Submissions</div>
+                    <div className="p-4 sm:p-6 border dark:border-zinc-800 rounded-xl flex flex-col items-center justify-center bg-gray-50 dark:bg-zinc-950">
+                      <div className="text-3xl sm:text-4xl font-bold text-teal-600 dark:text-teal-400 mb-2">{responses.length}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400 font-medium text-center">Total Submissions</div>
                     </div>
-                    <div className="p-4 sm:p-6 border rounded-xl flex flex-col items-center justify-center bg-gray-50">
-                      <div className="text-3xl sm:text-4xl font-bold text-blue-600 mb-2">{formViews}</div>
-                      <div className="text-sm text-gray-500 font-medium text-center">Total Views</div>
+                    <div className="p-4 sm:p-6 border dark:border-zinc-800 rounded-xl flex flex-col items-center justify-center bg-gray-50 dark:bg-zinc-950">
+                      <div className="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">{formViews}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400 font-medium text-center">Total Views</div>
                     </div>
-                    <div className="p-4 sm:p-6 border rounded-xl flex flex-col items-center justify-center bg-gray-50">
-                      <div className="text-3xl sm:text-4xl font-bold text-purple-600 mb-2">
+                    <div className="p-4 sm:p-6 border dark:border-zinc-800 rounded-xl flex flex-col items-center justify-center bg-gray-50 dark:bg-zinc-950">
+                      <div className="text-3xl sm:text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">
                         {formViews > 0 ? Math.round((responses.length / formViews) * 100) : 0}%
                       </div>
-                      <div className="text-sm text-gray-500 font-medium text-center">Conversion Rate</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400 font-medium text-center">Conversion Rate</div>
                     </div>
                   </div>
 
