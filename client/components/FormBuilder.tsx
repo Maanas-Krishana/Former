@@ -876,7 +876,9 @@ export default function FormBuilder() {
               ) : responses.length === 0 ? (
                 <div className="text-center p-12 border rounded-xl bg-gray-50 text-gray-500">
                   No responses yet. Share your form link! <br />
-                  <span className="font-mono text-xs mt-2 inline-block bg-white p-2 rounded border break-all max-w-full">http://localhost:3001/f/{formId}</span>
+                  <span className="font-mono text-xs mt-2 inline-block bg-white p-2 rounded border break-all max-w-full">
+                    {typeof window !== 'undefined' ? `${window.location.origin}/f/${formId}` : `https://former-six.vercel.app/f/${formId}`}
+                  </span>
                 </div>
               ) : (
                 <>
