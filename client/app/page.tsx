@@ -71,8 +71,8 @@ export default function Home() {
               <div className="w-3 h-3 rounded-full bg-red-400" />
               <div className="w-3 h-3 rounded-full bg-yellow-400" />
               <div className="w-3 h-3 rounded-full bg-green-400" />
-              <div className="flex-1 bg-gray-50 rounded-lg py-1 px-4 text-xs text-gray-400 font-mono text-center max-w-md mx-auto border truncate">
-                http://localhost:3001/dashboard
+              <div className="flex-1 bg-gray-50 dark:bg-zinc-800 rounded-lg py-1 px-4 text-xs text-gray-400 dark:text-gray-500 font-mono text-center max-w-md mx-auto border dark:border-zinc-700 truncate">
+                https://former-six.vercel.app/dashboard
               </div>
             </div>
             
