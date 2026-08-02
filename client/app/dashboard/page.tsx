@@ -7,9 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Plus, FileText, Settings, Trash2, Sparkles, Loader2, Copy } from 'lucide-react';
 import { useAuth } from '@/components/AuthProvider';
+import { useModal } from '@/components/ModalProvider';
 
 export default function Dashboard() {
   const { token, user, logout } = useAuth();
+  const { confirm, toast } = useModal();
   const router = useRouter();
   const [forms, setForms] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -94,7 +96,15 @@ export default function Dashboard() {
   }, [token]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this form?")) return;
+    const isConfirmed = await confirm({
+      title: "Delete Form",
+      message: "Are you sure you want to delete this form? This action cannot be undone.",
+      confirmText: "Delete",
+      variant: "danger",
+    });
+
+    if (!isConfirmed) return;
+
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5001/api'}/forms/${id}`, {
         method: 'DELETE',
@@ -102,9 +112,13 @@ export default function Dashboard() {
       });
       if (res.ok) {
         setForms(forms.filter(f => f._id !== id));
+        toast("Form deleted successfully", "success");
+      } else {
+        toast("Failed to delete form", "destructive");
       }
     } catch (err) {
       console.error(err);
+      toast("Error deleting form", "destructive");
     }
   };
 
@@ -128,12 +142,13 @@ export default function Dashboard() {
       if (res.ok) {
         const newForm = await res.json();
         setForms([newForm, ...forms]);
+        toast("Form duplicated", "success");
       } else {
-        alert("Failed to duplicate form.");
+        toast("Failed to duplicate form", "destructive");
       }
     } catch (err) {
       console.error(err);
-      alert("Error duplicating form.");
+      toast("Error duplicating form", "destructive");
     }
   };
 
@@ -158,7 +173,7 @@ export default function Dashboard() {
       const formData = await formRes.json();
       router.push(`/builder?id=${formData._id}`);
     } catch (err) {
-      alert("Failed to generate form. Please try again.");
+      toast("Failed to generate form. Please try again.", "destructive");
       setIsGenerating(false);
     }
   };

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/components/AuthProvider";
 import { PWARegister } from "@/components/PWARegister";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ModalProvider } from "@/components/ModalProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -41,11 +42,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={cn("font-sans", inter.variable)}>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuthProvider>
-            <PWARegister />
-            {children}
-          </AuthProvider>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <ModalProvider>
+            <AuthProvider>
+              <PWARegister />
+              {children}
+            </AuthProvider>
+          </ModalProvider>
         </ThemeProvider>
       </body>
     </html>
