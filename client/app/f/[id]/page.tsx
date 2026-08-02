@@ -198,35 +198,35 @@ export default function PublicForm({ params }: { params: { id: string } }) {
 
         <form onSubmit={submitResponse} className="space-y-6">
           {form.fields.map((field: any) => (
-            <div key={field.id} className="space-y-2">
-              <Label className="text-base font-medium text-gray-800 dark:text-gray-200">
-                {field.label} {field.required && <span className="text-red-500">*</span>}
+            <div key={field.id} className="space-y-2 p-4 sm:p-5 rounded-xl border border-gray-100 dark:border-zinc-800/80 bg-gray-50/50 dark:bg-zinc-950/40 hover:border-gray-200 dark:hover:border-zinc-800 transition-colors">
+              <Label className="text-base font-semibold text-gray-800 dark:text-gray-200 block mb-1">
+                {field.label} {field.required && <span className="text-red-500 font-bold ml-0.5">*</span>}
               </Label>
               
               {['text', 'email', 'number'].includes(field.type) && (
                 <Input 
                   type={field.type} 
                   required={field.required}
-                  placeholder={field.placeholder} 
+                  placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`} 
                   value={answers[field.id] || ''}
                   onChange={(e) => handleInputChange(field.id, e.target.value)}
                   minLength={field.validation?.minLength}
                   maxLength={field.validation?.maxLength}
                   pattern={field.type === 'text' ? field.validation?.pattern : undefined}
                   title={field.validation?.customError || (field.validation?.pattern ? `Please match the required format.` : undefined)}
-                  className={`w-full bg-gray-50 dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 ${theme.ring}`} 
+                  className={`w-full h-11 bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-sm ${theme.ring}`} 
                 />
               )}
 
               {field.type === 'textarea' && (
                 <textarea 
                   required={field.required}
-                  placeholder={field.placeholder} 
+                  placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`} 
                   value={answers[field.id] || ''}
                   onChange={(e) => handleInputChange(field.id, e.target.value)}
                   minLength={field.validation?.minLength}
                   maxLength={field.validation?.maxLength}
-                  className={`w-full flex min-h-[100px] rounded-md border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus-visible:outline-none ${theme.ring}`} 
+                  className={`w-full flex min-h-[110px] rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 shadow-sm focus-visible:outline-none ${theme.ring}`} 
                 />
               )}
 
@@ -235,9 +235,9 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   required={field.required}
                   value={answers[field.id] || ''}
                   onChange={(e) => handleInputChange(field.id, e.target.value)}
-                  className={`w-full flex h-10 items-center justify-between rounded-md border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:outline-none ${theme.ring}`}
+                  className={`w-full flex h-11 items-center justify-between rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none ${theme.ring}`}
                 >
-                  <option value="">Select an option</option>
+                  <option value="">Select an option...</option>
                   {field.options?.map((opt: string, i: number) => (
                     <option key={i} value={opt}>{opt}</option>
                   ))}
@@ -246,37 +246,59 @@ export default function PublicForm({ params }: { params: { id: string } }) {
 
               {field.type === 'checkbox' && (
                 <div className="space-y-2 pt-1">
-                  {field.options?.map((opt: string, i: number) => (
-                    <div key={i} className="flex items-center space-x-2">
-                      <input 
-                        type="checkbox" 
-                        id={`${field.id}-${i}`} 
-                        checked={(answers[field.id] || []).includes(opt)}
-                        onChange={(e) => handleCheckboxChange(field.id, opt, e.target.checked)}
-                        className={`h-4 w-4 rounded border-gray-300 ${theme.text} ${theme.ring}`} 
-                      />
-                      <label htmlFor={`${field.id}-${i}`} className="text-sm font-medium leading-none">{opt}</label>
-                    </div>
-                  ))}
+                  {field.options?.map((opt: string, i: number) => {
+                    const isChecked = (answers[field.id] || []).includes(opt);
+                    return (
+                      <label 
+                        key={i} 
+                        htmlFor={`${field.id}-${i}`}
+                        className={`flex items-center space-x-3 p-3 rounded-lg border transition-all cursor-pointer ${
+                          isChecked 
+                            ? 'bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700 shadow-sm' 
+                            : 'bg-white/60 dark:bg-zinc-950/60 border-gray-200/80 dark:border-zinc-800/80 hover:bg-white dark:hover:bg-zinc-900'
+                        }`}
+                      >
+                        <input 
+                          type="checkbox" 
+                          id={`${field.id}-${i}`} 
+                          checked={isChecked}
+                          onChange={(e) => handleCheckboxChange(field.id, opt, e.target.checked)}
+                          className={`h-4.5 w-4.5 rounded border-gray-300 dark:border-zinc-700 cursor-pointer ${theme.text} ${theme.ring}`} 
+                        />
+                        <span className="text-sm font-medium text-gray-800 dark:text-gray-200 select-none">{opt}</span>
+                      </label>
+                    );
+                  })}
                 </div>
               )}
 
               {field.type === 'radio' && (
                 <div className="space-y-2 pt-1">
-                  {field.options?.map((opt: string, i: number) => (
-                    <div key={i} className="flex items-center space-x-2">
-                      <input 
-                        type="radio" 
-                        name={field.id} 
-                        id={`${field.id}-${i}`} 
-                        required={field.required}
-                        checked={answers[field.id] === opt}
-                        onChange={() => handleInputChange(field.id, opt)}
-                        className={`h-4 w-4 border-gray-300 ${theme.text} ${theme.ring}`} 
-                      />
-                      <label htmlFor={`${field.id}-${i}`} className="text-sm font-medium leading-none">{opt}</label>
-                    </div>
-                  ))}
+                  {field.options?.map((opt: string, i: number) => {
+                    const isSelected = answers[field.id] === opt;
+                    return (
+                      <label 
+                        key={i} 
+                        htmlFor={`${field.id}-${i}`}
+                        className={`flex items-center space-x-3 p-3 rounded-lg border transition-all cursor-pointer ${
+                          isSelected 
+                            ? 'bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700 shadow-sm' 
+                            : 'bg-white/60 dark:bg-zinc-950/60 border-gray-200/80 dark:border-zinc-800/80 hover:bg-white dark:hover:bg-zinc-900'
+                        }`}
+                      >
+                        <input 
+                          type="radio" 
+                          name={field.id} 
+                          id={`${field.id}-${i}`} 
+                          required={field.required}
+                          checked={isSelected}
+                          onChange={() => handleInputChange(field.id, opt)}
+                          className={`h-4.5 w-4.5 border-gray-300 dark:border-zinc-700 cursor-pointer ${theme.text} ${theme.ring}`} 
+                        />
+                        <span className="text-sm font-medium text-gray-800 dark:text-gray-200 select-none">{opt}</span>
+                      </label>
+                    );
+                  })}
                 </div>
               )}
 
@@ -286,7 +308,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   required={field.required}
                   value={answers[field.id] || ''}
                   onChange={(e) => handleInputChange(field.id, e.target.value)}
-                  className={`w-full bg-gray-50 border-gray-200 ${theme.ring}`} 
+                  className={`w-full h-11 bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-sm ${theme.ring}`} 
                 />
               )}
 
@@ -296,11 +318,11 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                     type="file" 
                     required={field.required && !answers[field.id]}
                     onChange={(e) => handleFileChange(field.id, e)}
-                    className={`w-full bg-gray-50 border-gray-200 ${theme.ring}`} 
+                    className={`w-full h-11 bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-sm ${theme.ring}`} 
                   />
                   {answers[field.id] && (
                     <div className="mt-2 text-sm">
-                      <a href={answers[field.id]} target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline">
+                      <a href={answers[field.id]} target="_blank" rel="noreferrer" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
                         File successfully uploaded (View)
                       </a>
                     </div>
@@ -309,7 +331,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
               )}
 
               {field.type === 'rating' && (
-                <div className="flex items-center space-x-2 pt-1">
+                <div className="flex items-center space-x-2 pt-1.5 p-2 bg-white dark:bg-zinc-950 rounded-lg border border-gray-200/80 dark:border-zinc-800/80 w-fit">
                   {[1, 2, 3, 4, 5].map((star) => {
                     const ratingValue = answers[field.id] || 0;
                     const isFilled = ratingValue >= star;
@@ -318,9 +340,9 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                         key={star}
                         type="button"
                         onClick={() => handleInputChange(field.id, star)}
-                        className="focus:outline-none transition-transform hover:scale-110"
+                        className="focus:outline-none transition-transform hover:scale-110 p-1"
                       >
-                        <Star className={`w-8 h-8 ${isFilled ? 'text-amber-400 fill-amber-400' : 'text-gray-300 fill-transparent'} transition-colors`} />
+                        <Star className={`w-7 h-7 ${isFilled ? 'text-amber-400 fill-amber-400 drop-shadow-sm' : 'text-gray-300 dark:text-zinc-700 fill-transparent'} transition-colors`} />
                       </button>
                     );
                   })}
@@ -329,19 +351,19 @@ export default function PublicForm({ params }: { params: { id: string } }) {
             </div>
           ))}
 
-          <div className="pt-6 border-t mt-8">
+          <div className="pt-6 border-t dark:border-zinc-800 mt-8">
             <Button 
               type="submit"
               disabled={isSubmitting || form.fields.length === 0} 
-              className={`w-full text-white py-6 text-lg ${theme.bg} ${theme.hover}`}
+              className={`w-full text-white py-6 text-base font-semibold rounded-xl shadow-md transition-all ${theme.bg} ${theme.hover}`}
             >
               {isSubmitting ? 'Submitting...' : 'Submit Response'}
             </Button>
           </div>
         </form>
       </div>
-      <div className="text-center text-xs text-gray-400 font-medium">
-        This form is made by former proudly in India
+      <div className="text-center text-xs text-gray-400 dark:text-gray-500 font-medium tracking-wide">
+        Powered by <span className="font-bold text-gray-600 dark:text-gray-400">Former</span> • Made with ❤️ in India
       </div>
     </div>
   );
