@@ -7,7 +7,11 @@ import { requireAuth, AuthRequest } from '../middleware/auth';
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-readynest-key-change-me';
 
-async function verifyTurnstile(token: string) {
+async function verifyTurnstile(token: string, req?: express.Request) {
+  // Mobile applications (React Native / Swift / Kotlin) don't use Cloudflare Turnstile web widget.
+  const isMobile = req?.headers['x-client-type'] === 'mobile' || req?.headers['user-agent']?.includes('FormerMobile');
+  if (isMobile) return true;
+
   if (!token) return false;
   const formData = new URLSearchParams();
   formData.append('secret', process.env.TURNSTILE_SECRET_KEY || '');
@@ -30,7 +34,7 @@ router.post('/signup', async (req, res) => {
   try {
     const { name, email, password, turnstileToken } = req.body;
 
-    const isValidHuman = await verifyTurnstile(turnstileToken);
+    const isValidHuman = await verifyTurnstile(turnstileToken, req);
     if (!isValidHuman) return res.status(400).json({ message: 'Human verification failed' });
 
     const existingUser = await User.findOne({ email });
@@ -57,7 +61,7 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password, turnstileToken } = req.body;
 
-    const isValidHuman = await verifyTurnstile(turnstileToken);
+    const isValidHuman = await verifyTurnstile(turnstileToken, req);
     if (!isValidHuman) return res.status(400).json({ message: 'Human verification failed' });
 
     const user = await User.findOne({ email });
@@ -83,7 +87,7 @@ router.post('/google', async (req, res) => {
   try {
     const { token: googleToken, turnstileToken } = req.body;
 
-    const isValidHuman = await verifyTurnstile(turnstileToken);
+    const isValidHuman = await verifyTurnstile(turnstileToken, req);
     if (!isValidHuman) return res.status(400).json({ message: 'Human verification failed' });
 
     const googleVerifyRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${googleToken}`);
