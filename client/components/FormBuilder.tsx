@@ -17,6 +17,7 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSo
 import { SortableField } from './SortableField';
 import { useAuth } from './AuthProvider';
 import { QRCodeSVG } from 'qrcode.react';
+import { ThemeToggle } from './ThemeToggle';
 
 // Field types definitions
 const FIELD_TYPES = [
@@ -330,7 +331,8 @@ export default function FormBuilder() {
           </Tabs>
         </div>
         <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
-          <span className="text-sm text-gray-500 hidden lg:inline">Hello, {user?.name?.split(' ')[0] || 'User'}</span>
+          <ThemeToggle />
+          <span className="text-sm text-gray-500 dark:text-gray-400 hidden lg:inline">Hello, {user?.name?.split(' ')[0] || 'User'}</span>
           <Button variant="outline" size="sm" onClick={() => setActiveTab(activeTab === 'preview' ? 'build' : 'preview')} className="text-gray-600 font-medium px-2.5 sm:px-3">
             <Eye className="w-4 h-4 md:mr-2" />
             <span className="hidden md:inline">{activeTab === 'preview' ? 'Exit Preview' : 'Preview'}</span>
