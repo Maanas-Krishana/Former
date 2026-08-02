@@ -312,33 +312,53 @@ export default function FormBuilder() {
             <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors hidden md:block">Former</span>
           </a>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto flex-1">
-            <TabsList className="bg-gray-100/70 dark:bg-zinc-800/60 p-1.5 rounded-xl space-x-1 flex items-center border dark:border-zinc-800/80">
+            <TabsList className="bg-gray-100 dark:bg-zinc-800/80 p-1.5 rounded-xl space-x-1 flex items-center border dark:border-zinc-800">
               <TabsTrigger 
                 value="build" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer",
+                  activeTab === "build" 
+                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-md -translate-y-[1px] border border-gray-200/90 dark:border-zinc-700" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                )}
               >
-                <Layout className="w-4 h-4 sm:mr-1.5" />
+                <Layout className="w-4 h-4" />
                 <span className="hidden sm:inline">Build</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="settings" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer",
+                  activeTab === "settings" 
+                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-md -translate-y-[1px] border border-gray-200/90 dark:border-zinc-700" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                )}
               >
-                <Settings className="w-4 h-4 sm:mr-1.5" />
+                <Settings className="w-4 h-4" />
                 <span className="hidden sm:inline">Settings</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="share" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer",
+                  activeTab === "share" 
+                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-md -translate-y-[1px] border border-gray-200/90 dark:border-zinc-700" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                )}
               >
-                <Share2 className="w-4 h-4 sm:mr-1.5" />
+                <Share2 className="w-4 h-4" />
                 <span className="hidden sm:inline">Share</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="responses" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer",
+                  activeTab === "responses" 
+                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-md -translate-y-[1px] border border-gray-200/90 dark:border-zinc-700" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                )}
               >
-                <BarChart2 className="w-4 h-4 sm:mr-1.5" />
+                <BarChart2 className="w-4 h-4" />
                 <span className="hidden sm:inline">Responses</span>
               </TabsTrigger>
             </TabsList>
