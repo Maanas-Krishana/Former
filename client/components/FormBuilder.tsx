@@ -312,20 +312,32 @@ export default function FormBuilder() {
             <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors hidden md:block">Former</span>
           </a>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto flex-1">
-            <TabsList className="bg-transparent border-b-0 h-auto p-0 space-x-4 sm:space-x-6 flex items-center">
-              <TabsTrigger value="build" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 dark:text-gray-400 flex items-center">
+            <TabsList className="bg-gray-100/70 dark:bg-zinc-800/60 p-1.5 rounded-xl space-x-1 flex items-center border dark:border-zinc-800/80">
+              <TabsTrigger 
+                value="build" 
+                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+              >
                 <Layout className="w-4 h-4 sm:mr-1.5" />
                 <span className="hidden sm:inline">Build</span>
               </TabsTrigger>
-              <TabsTrigger value="settings" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 dark:text-gray-400 flex items-center">
+              <TabsTrigger 
+                value="settings" 
+                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+              >
                 <Settings className="w-4 h-4 sm:mr-1.5" />
                 <span className="hidden sm:inline">Settings</span>
               </TabsTrigger>
-              <TabsTrigger value="share" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 dark:text-gray-400 flex items-center">
+              <TabsTrigger 
+                value="share" 
+                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+              >
                 <Share2 className="w-4 h-4 sm:mr-1.5" />
                 <span className="hidden sm:inline">Share</span>
               </TabsTrigger>
-              <TabsTrigger value="responses" className="data-[state=active]:border-b-2 data-[state=active]:border-teal-600 data-[state=active]:text-teal-600 dark:data-[state=active]:text-teal-400 rounded-none bg-transparent pb-2 px-0 shadow-none font-medium text-sm text-gray-500 dark:text-gray-400 flex items-center">
+              <TabsTrigger 
+                value="responses" 
+                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+              >
                 <BarChart2 className="w-4 h-4 sm:mr-1.5" />
                 <span className="hidden sm:inline">Responses</span>
               </TabsTrigger>
