@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Plus, FileText, Settings, Trash2, Sparkles, Loader2, Copy } from 'lucide-react';
 import { useAuth } from '@/components/AuthProvider';
 import { useModal } from '@/components/ModalProvider';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 export default function Dashboard() {
   const { token, user, logout } = useAuth();
@@ -185,7 +186,8 @@ export default function Dashboard() {
           <img src="/logo.png" alt="Former Logo" className="w-8 h-8 object-contain rounded-md" />
           <h1 className="text-xl font-bold text-indigo-600 tracking-tight">Former</h1>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-3 sm:space-x-4">
+          <ThemeToggle />
           <button 
             onClick={() => {
               setNewUsername(user?.name || '');
@@ -199,8 +201,8 @@ export default function Dashboard() {
           >
             {(user?.name || 'U').charAt(0).toUpperCase()}
           </button>
-          <span className="text-sm font-medium text-gray-700 hidden xs:inline">Hello, {user?.name || 'User'}</span>
-          <Button variant="ghost" size="sm" onClick={() => { logout(); window.location.href = '/login'; }} className="text-red-600 hover:text-red-700">
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-200 hidden xs:inline">Hello, {user?.name || 'User'}</span>
+          <Button variant="ghost" size="sm" onClick={() => { logout(); window.location.href = '/login'; }} className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300">
             Logout
           </Button>
         </div>
