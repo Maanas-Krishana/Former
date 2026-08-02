@@ -63,13 +63,13 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-[#F6F4EE] dark:bg-zinc-950 text-gray-900 dark:text-gray-100 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
-      <div className="sm:mx-auto sm:w-full sm:max-w-[360px] flex flex-col items-center">
+      <div className="sm:mx-auto sm:w-full sm:max-w-[390px] flex flex-col items-center">
         <img src="/logo.png" alt="Former Logo" className="w-14 h-14 object-contain rounded-xl shadow-sm mb-2" />
         <h2 className="mt-2 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Sign in to Former</h2>
       </div>
 
-      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-[360px]">
-        <div className="bg-white dark:bg-zinc-900 py-6 px-5 sm:px-6 shadow-md rounded-2xl border border-gray-200/80 dark:border-zinc-800">
+      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-[390px]">
+        <div className="bg-white dark:bg-zinc-900 py-6 px-6 sm:px-8 shadow-md rounded-2xl border border-gray-200/80 dark:border-zinc-800">
           <form className="space-y-4" onSubmit={handleLogin}>
             {error && <div className="text-red-500 dark:text-red-400 text-xs font-medium text-center bg-red-50 dark:bg-red-950/40 p-2 rounded-lg border border-red-200 dark:border-red-900">{error}</div>}
             
