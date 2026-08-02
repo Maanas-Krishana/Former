@@ -180,11 +180,11 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F6F4EE]">
-      <header className="bg-white border-b px-4 sm:px-8 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-[#F6F4EE] dark:bg-zinc-950 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+      <header className="bg-white dark:bg-zinc-900 border-b dark:border-zinc-800 px-4 sm:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push('/dashboard')}>
           <img src="/logo.png" alt="Former Logo" className="w-8 h-8 object-contain rounded-md" />
-          <h1 className="text-xl font-bold text-indigo-600 tracking-tight">Former</h1>
+          <h1 className="text-xl font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">Former</h1>
         </div>
         <div className="flex items-center space-x-3 sm:space-x-4">
           <ThemeToggle />
@@ -209,13 +209,13 @@ export default function Dashboard() {
       </header>
 
       <main className="max-w-6xl mx-auto py-8 px-4 sm:py-12 sm:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8 border-b pb-6">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8 border-b dark:border-zinc-800 pb-6">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-indigo-600 mb-1">
+            <h2 className="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-1">
               Hi {user?.name || 'User'}, {getGreeting()}!
             </h2>
-            <h3 className="text-3xl font-extrabold text-gray-900">My Forms</h3>
-            <p className="text-gray-500 mt-1">Manage and view responses for your forms.</p>
+            <h3 className="text-3xl font-extrabold text-gray-900 dark:text-white">My Forms</h3>
+            <p className="text-gray-500 dark:text-gray-400 mt-1">Manage and view responses for your forms.</p>
           </div>
           
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
@@ -224,7 +224,7 @@ export default function Dashboard() {
                 placeholder="E.g. Create a feedback survey for a coffee shop..." 
                 value={aiPrompt}
                 onChange={(e) => setAiPrompt(e.target.value)}
-                className="pl-10 h-10 w-full lg:w-[350px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
+                className="pl-10 h-10 w-full lg:w-[350px] border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm"
                 onKeyDown={(e) => e.key === 'Enter' && handleGenerateAI()}
               />
               <Sparkles className="absolute left-3 top-2.5 h-5 w-5 text-indigo-400" />
@@ -233,51 +233,51 @@ export default function Dashboard() {
               {isGenerating ? <Loader2 className="h-5 w-5 mr-2 animate-spin" /> : <Sparkles className="h-5 w-5 mr-2" />}
               {isGenerating ? "Generating..." : "Generate with AI"}
             </Button>
-            <div className="text-gray-300 font-light hidden lg:block">|</div>
-            <Button onClick={() => window.location.href = '/builder'} variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 bg-white w-full sm:w-auto">
+            <div className="text-gray-300 dark:text-zinc-700 font-light hidden lg:block">|</div>
+            <Button onClick={() => window.location.href = '/builder'} variant="outline" className="border-gray-300 dark:border-zinc-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-800 bg-white dark:bg-zinc-900 w-full sm:w-auto">
               <Plus className="w-4 h-4 mr-2" /> Blank Form
             </Button>
           </div>
         </div>
 
         {loading ? (
-          <div className="text-center py-12 text-gray-500">Loading forms...</div>
+          <div className="text-center py-12 text-gray-500 dark:text-gray-400">Loading forms...</div>
         ) : forms.length === 0 ? (
-          <div className="bg-white rounded-xl border border-dashed border-gray-300 p-12 text-center">
-            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FileText className="w-8 h-8 text-gray-400" />
+          <div className="bg-white dark:bg-zinc-900 rounded-xl border border-dashed border-gray-300 dark:border-zinc-800 p-12 text-center">
+            <div className="w-16 h-16 bg-gray-50 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FileText className="w-8 h-8 text-gray-400 dark:text-gray-500" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No forms created yet</h3>
-            <p className="text-gray-500 mb-6">Create your first form to start collecting responses.</p>
-            <Button onClick={() => window.location.href = '/builder'} className="bg-indigo-600 hover:bg-indigo-700">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">No forms created yet</h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-6">Create your first form to start collecting responses.</p>
+            <Button onClick={() => window.location.href = '/builder'} className="bg-indigo-600 hover:bg-indigo-700 text-white">
               Create Form
             </Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {forms.map(form => (
-              <div key={form._id} className="bg-white rounded-xl border p-6 hover:shadow-md transition-shadow group flex flex-col">
+              <div key={form._id} className="bg-white dark:bg-zinc-900 rounded-xl border dark:border-zinc-800 p-6 hover:shadow-md transition-shadow group flex flex-col">
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600">
+                  <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-950/60 rounded-lg flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div className="flex items-center space-x-1">
-                    <Button variant="ghost" size="icon" onClick={() => handleDuplicate(form)} className="text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 h-8 w-8 transition-colors" title="Duplicate">
+                    <Button variant="ghost" size="icon" onClick={() => handleDuplicate(form)} className="text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 h-8 w-8 transition-colors" title="Duplicate">
                       <Copy className="w-4 h-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDelete(form._id)} className="text-gray-400 hover:text-red-600 hover:bg-red-50 h-8 w-8 transition-colors" title="Delete">
+                    <Button variant="ghost" size="icon" onClick={() => handleDelete(form._id)} className="text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/50 h-8 w-8 transition-colors" title="Delete">
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-2">{form.title}</h3>
-                <p className="text-sm text-gray-500 mb-6">Created {new Date(form.createdAt).toLocaleDateString()}</p>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-2">{form.title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">Created {new Date(form.createdAt).toLocaleDateString()}</p>
                 
-                <div className="mt-auto pt-4 border-t flex items-center justify-between">
-                  <a href={`/builder?id=${form._id}`} className="text-sm font-medium text-gray-600 hover:text-gray-900">
+                <div className="mt-auto pt-4 border-t dark:border-zinc-800 flex items-center justify-between">
+                  <a href={`/builder?id=${form._id}`} className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
                     Manage
                   </a>
-                  <a href={`/f/${form._id}`} target="_blank" rel="noreferrer" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                  <a href={`/f/${form._id}`} target="_blank" rel="noreferrer" className="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
                     View Live
                   </a>
                 </div>
@@ -289,40 +289,42 @@ export default function Dashboard() {
 
       {/* Profile Modal */}
       {showProfileModal && (
-        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl shadow-lg border p-6 sm:p-8 max-w-md w-full space-y-6">
-            <div className="flex items-center justify-between border-b pb-4">
-              <h3 className="text-xl font-bold text-gray-900">Manage Profile</h3>
-              <button onClick={() => setShowProfileModal(false)} className="text-gray-400 hover:text-gray-600 text-lg font-bold">×</button>
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-lg border dark:border-zinc-800 p-6 sm:p-8 max-w-md w-full space-y-6">
+            <div className="flex items-center justify-between border-b dark:border-zinc-800 pb-4">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Manage Profile</h3>
+              <button onClick={() => setShowProfileModal(false)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-lg font-bold">×</button>
             </div>
             
-            {profileMsg && <div className="p-3 bg-green-50 border border-green-200 text-green-700 text-sm rounded-lg">{profileMsg}</div>}
-            {profileErr && <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">{profileErr}</div>}
+            {profileMsg && <div className="p-3 bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 text-sm rounded-lg">{profileMsg}</div>}
+            {profileErr && <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm rounded-lg">{profileErr}</div>}
 
             <div className="space-y-4">
               <div className="space-y-1">
-                <Label>Username (Name)</Label>
+                <Label className="dark:text-gray-200">Username (Name)</Label>
                 <Input 
                   value={newUsername} 
                   onChange={(e) => setNewUsername(e.target.value)} 
                   placeholder="Your Name"
+                  className="bg-white dark:bg-zinc-800 border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-gray-100"
                 />
               </div>
 
               <div className="space-y-1">
-                <Label>New Password (Optional)</Label>
+                <Label className="dark:text-gray-200">New Password (Optional)</Label>
                 <Input 
                   type="password"
                   value={newPassword} 
                   onChange={(e) => setNewPassword(e.target.value)} 
                   placeholder="••••••••"
+                  className="bg-white dark:bg-zinc-800 border-gray-300 dark:border-zinc-700 text-gray-900 dark:text-gray-100"
                 />
-                <p className="text-xs text-gray-400">Leave blank if you do not want to change your password.</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500">Leave blank if you do not want to change your password.</p>
               </div>
             </div>
 
-            <div className="flex items-center justify-end space-x-3 pt-4 border-t">
-              <Button variant="ghost" onClick={() => setShowProfileModal(false)}>Cancel</Button>
+            <div className="flex items-center justify-end space-x-3 pt-4 border-t dark:border-zinc-800">
+              <Button variant="ghost" onClick={() => setShowProfileModal(false)} className="dark:text-gray-300">Cancel</Button>
               <Button onClick={handleUpdateProfile} className="bg-indigo-600 hover:bg-indigo-700 text-white">Save Changes</Button>
             </div>
           </div>
