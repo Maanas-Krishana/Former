@@ -644,68 +644,68 @@ export default function FormBuilder() {
           )}
 
           {activeTab === "settings" && (
-            <div className="max-w-3xl w-full h-fit bg-white rounded-xl shadow-sm border p-4 sm:p-8 space-y-6">
-              <h2 className="text-2xl font-bold mb-6">Form Settings</h2>
+            <div className="max-w-3xl w-full h-fit bg-white dark:bg-zinc-900 rounded-xl shadow-sm border dark:border-zinc-800 p-4 sm:p-8 space-y-6">
+              <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Form Settings</h2>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label>Form Title</Label>
+                  <Label className="text-gray-800 dark:text-gray-200">Form Title</Label>
                   <Input 
                     value={formTitle} 
                     onChange={(e) => setFormTitle(e.target.value)} 
-                    className="max-w-md focus:border-indigo-500"
+                    className="max-w-md focus:border-indigo-500 bg-gray-50 dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label>Form Description</Label>
+                  <Label className="text-gray-800 dark:text-gray-200">Form Description</Label>
                   <textarea 
                     value={formDescription} 
                     onChange={(e) => setFormDescription(e.target.value)} 
                     placeholder="Enter description for your form..."
-                    className="w-full max-w-md flex min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                    className="w-full max-w-md flex min-h-[80px] rounded-md border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-950 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label>Form Logo Image URL</Label>
+                  <Label className="text-gray-800 dark:text-gray-200">Form Logo Image URL</Label>
                   <Input 
                     value={logoUrl} 
                     onChange={(e) => setLogoUrl(e.target.value)} 
                     placeholder="https://example.com/logo.png"
-                    className="max-w-md focus:border-indigo-500"
+                    className="max-w-md focus:border-indigo-500 bg-gray-50 dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100"
                   />
-                  <p className="text-xs text-gray-500">Provide an absolute image URL for your organization/form logo.</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Provide an absolute image URL for your organization/form logo.</p>
                 </div>
                 
                 <div className="space-y-2 pt-4">
-                  <Label>Theme Color</Label>
-                  <p className="text-sm text-gray-500 mb-2">Choose an accent color for your published form.</p>
+                  <Label className="text-gray-800 dark:text-gray-200">Theme Color</Label>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Choose an accent color for your published form.</p>
                   <div className="flex items-center space-x-3">
                     {THEME_COLORS.map(color => (
                       <button
                         key={color.id}
                         onClick={() => setThemeColor(color.id)}
-                        className={`w-8 h-8 rounded-full ${color.bg} ${themeColor === color.id ? 'ring-2 ring-offset-2 ring-gray-900' : 'ring-1 ring-black/10'} transition-all`}
+                        className={`w-8 h-8 rounded-full ${color.bg} ${themeColor === color.id ? 'ring-2 ring-offset-2 ring-gray-900 dark:ring-white dark:ring-offset-zinc-900' : 'ring-1 ring-black/10 dark:ring-white/20'} transition-all`}
                         title={color.id}
                       />
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-6 border-t mt-6">
-                  <h3 className="text-lg font-medium mb-4">Field Requirements</h3>
+                <div className="pt-6 border-t dark:border-zinc-800 mt-6">
+                  <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-white">Field Requirements</h3>
                   <div className="space-y-4">
                     {fields.length === 0 ? (
-                      <p className="text-gray-500 text-sm">Add fields in the Build tab to manage their settings here.</p>
+                      <p className="text-gray-500 dark:text-gray-400 text-sm">Add fields in the Build tab to manage their settings here.</p>
                     ) : fields.map((field, index) => (
-                      <div key={field.id} className="flex flex-col p-4 border rounded-lg bg-gray-50 hover:border-gray-300 transition-colors">
+                      <div key={field.id} className="flex flex-col p-4 border dark:border-zinc-800 rounded-lg bg-gray-50 dark:bg-zinc-950 hover:border-gray-300 dark:hover:border-zinc-700 transition-colors">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="font-medium text-gray-800">{field.label}</p>
-                            <p className="text-xs text-gray-500 uppercase">{field.type}</p>
+                            <p className="font-medium text-gray-800 dark:text-gray-200">{field.label}</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 uppercase">{field.type}</p>
                           </div>
-                          <div className="flex items-center space-x-3 bg-white px-4 py-2 rounded-md border shadow-sm">
-                            <Label htmlFor={`req-${field.id}`} className="text-sm cursor-pointer font-medium text-gray-700">Required</Label>
+                          <div className="flex items-center space-x-3 bg-white dark:bg-zinc-900 px-4 py-2 rounded-md border dark:border-zinc-800 shadow-sm">
+                            <Label htmlFor={`req-${field.id}`} className="text-sm cursor-pointer font-medium text-gray-700 dark:text-gray-300">Required</Label>
                             <input 
                               type="checkbox" 
                               id={`req-${field.id}`}
@@ -715,20 +715,20 @@ export default function FormBuilder() {
                                 newFields[index].required = e.target.checked;
                                 setFields(newFields);
                               }}
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
+                              className="h-4 w-4 rounded border-gray-300 dark:border-zinc-700 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                             />
                           </div>
                         </div>
                         
                         {(field.type === 'text' || field.type === 'textarea') && (
-                          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t pt-4">
+                          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t dark:border-zinc-800 pt-4">
                             <div>
-                              <Label className="text-xs text-gray-500 mb-1 block">Min Length</Label>
+                              <Label className="text-xs text-gray-500 dark:text-gray-400 mb-1 block">Min Length</Label>
                               <Input 
                                 type="number" 
                                 min={0}
                                 placeholder="E.g. 10" 
-                                className="h-8 text-sm"
+                                className="h-8 text-sm bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100"
                                 value={field.validation?.minLength || ''}
                                 onChange={(e) => {
                                   const newFields = [...fields];
@@ -739,12 +739,12 @@ export default function FormBuilder() {
                               />
                             </div>
                             <div>
-                              <Label className="text-xs text-gray-500 mb-1 block">Max Length</Label>
+                              <Label className="text-xs text-gray-500 dark:text-gray-400 mb-1 block">Max Length</Label>
                               <Input 
                                 type="number" 
                                 min={0}
                                 placeholder="E.g. 50" 
-                                className="h-8 text-sm"
+                                className="h-8 text-sm bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100"
                                 value={field.validation?.maxLength || ''}
                                 onChange={(e) => {
                                   const newFields = [...fields];
@@ -758,10 +758,10 @@ export default function FormBuilder() {
                             {field.type === 'text' && (
                               <>
                                 <div>
-                                  <Label className="text-xs text-gray-500 mb-1 block">Regex Pattern (Optional)</Label>
+                                  <Label className="text-xs text-gray-500 dark:text-gray-400 mb-1 block">Regex Pattern (Optional)</Label>
                                   <Input 
                                     placeholder="E.g. ^\d{10}$" 
-                                    className="h-8 text-sm font-mono"
+                                    className="h-8 text-sm font-mono bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100"
                                     value={field.validation?.pattern || ''}
                                     onChange={(e) => {
                                       const newFields = [...fields];
@@ -772,10 +772,10 @@ export default function FormBuilder() {
                                   />
                                 </div>
                                 <div>
-                                  <Label className="text-xs text-gray-500 mb-1 block">Custom Error Message</Label>
+                                  <Label className="text-xs text-gray-500 dark:text-gray-400 mb-1 block">Custom Error Message</Label>
                                   <Input 
                                     placeholder="E.g. Must be 10 digits" 
-                                    className="h-8 text-sm"
+                                    className="h-8 text-sm bg-white dark:bg-zinc-900 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100"
                                     value={field.validation?.customError || ''}
                                     onChange={(e) => {
                                       const newFields = [...fields];
@@ -795,15 +795,15 @@ export default function FormBuilder() {
                 </div>
 
                 <div>
-                  <Label className="text-base font-semibold text-gray-800 mb-4 block">Security</Label>
-                  <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg">
+                  <Label className="text-base font-semibold text-gray-800 dark:text-gray-200 mb-4 block">Security</Label>
+                  <div className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg">
                     <div>
-                      <h4 className="text-sm font-medium text-gray-800">Require Google Sign-In</h4>
-                      <p className="text-xs text-gray-500">Respondents must log in with Google to fill out this form. Prevents spam.</p>
+                      <h4 className="text-sm font-medium text-gray-800 dark:text-gray-200">Require Google Sign-In</h4>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Respondents must log in with Google to fill out this form. Prevents spam.</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input type="checkbox" className="sr-only peer" checked={requireGoogleSignIn} onChange={(e) => setRequireGoogleSignIn(e.target.checked)} />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+                      <div className="w-11 h-6 bg-gray-200 dark:bg-zinc-800 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-900 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 dark:after:border-zinc-700 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
                     </label>
                   </div>
                 </div>
