@@ -312,33 +312,53 @@ export default function FormBuilder() {
             <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors hidden md:block">Former</span>
           </a>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto flex-1">
-            <TabsList className="bg-gray-100/70 dark:bg-zinc-800/60 p-1.5 rounded-xl space-x-1 flex items-center border dark:border-zinc-800/80">
+            <TabsList className="bg-gray-100 dark:bg-zinc-800/80 p-1.5 rounded-xl space-x-1 flex items-center border dark:border-zinc-800">
               <TabsTrigger 
                 value="build" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer",
+                  activeTab === "build" 
+                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-md -translate-y-[1px] border border-gray-200/90 dark:border-zinc-700" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                )}
               >
-                <Layout className="w-4 h-4 sm:mr-1.5" />
+                <Layout className="w-4 h-4" />
                 <span className="hidden sm:inline">Build</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="settings" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer",
+                  activeTab === "settings" 
+                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-md -translate-y-[1px] border border-gray-200/90 dark:border-zinc-700" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                )}
               >
-                <Settings className="w-4 h-4 sm:mr-1.5" />
+                <Settings className="w-4 h-4" />
                 <span className="hidden sm:inline">Settings</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="share" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer",
+                  activeTab === "share" 
+                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-md -translate-y-[1px] border border-gray-200/90 dark:border-zinc-700" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                )}
               >
-                <Share2 className="w-4 h-4 sm:mr-1.5" />
+                <Share2 className="w-4 h-4" />
                 <span className="hidden sm:inline">Share</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="responses" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 transition-all duration-200 flex items-center data-[state=active]:bg-white dark:data-[state=active]:bg-zinc-900 data-[state=active]:text-indigo-600 dark:data-[state=active]:text-indigo-400 data-[state=active]:font-bold data-[state=active]:shadow-md data-[state=active]:-translate-y-[1px] data-[state=active]:border data-[state=active]:border-gray-200/80 dark:data-[state=active]:border-zinc-700/80"
+                className={cn(
+                  "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer",
+                  activeTab === "responses" 
+                    ? "bg-white dark:bg-zinc-900 text-indigo-600 dark:text-indigo-400 font-bold shadow-md -translate-y-[1px] border border-gray-200/90 dark:border-zinc-700" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                )}
               >
-                <BarChart2 className="w-4 h-4 sm:mr-1.5" />
+                <BarChart2 className="w-4 h-4" />
                 <span className="hidden sm:inline">Responses</span>
               </TabsTrigger>
             </TabsList>
@@ -916,13 +936,13 @@ export default function FormBuilder() {
                   </div>
 
                   {/* AI Summary Insights */}
-                  <div className="mb-8 p-6 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 border border-indigo-100 rounded-xl space-y-4 shadow-sm">
+                  <div className="mb-8 p-6 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/40 dark:to-purple-950/40 border border-indigo-100 dark:border-indigo-900/60 rounded-xl space-y-4 shadow-sm">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full">
                       <div className="flex items-center space-x-2">
-                        <div className="p-1.5 bg-indigo-100 text-indigo-700 rounded-lg flex-shrink-0">
+                        <div className="p-1.5 bg-indigo-100 dark:bg-indigo-900/80 text-indigo-700 dark:text-indigo-300 rounded-lg flex-shrink-0">
                           <Sparkles className="w-5 h-5" />
                         </div>
-                        <h3 className="font-bold text-gray-800 text-lg leading-tight">AI Response Analysis</h3>
+                        <h3 className="font-bold text-gray-800 dark:text-white text-lg leading-tight">AI Response Analysis</h3>
                       </div>
                       <Button 
                         onClick={generateAISummary} 
@@ -941,19 +961,19 @@ export default function FormBuilder() {
                       </Button>
                     </div>
                     {aiSummary ? (
-                      <div className="text-sm text-gray-700 leading-relaxed bg-white border border-indigo-50 p-5 rounded-lg whitespace-pre-line shadow-inner max-h-[300px] overflow-y-auto">
+                      <div className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed bg-white dark:bg-zinc-950 border border-indigo-50 dark:border-zinc-800 p-5 rounded-lg whitespace-pre-line shadow-inner max-h-[300px] overflow-y-auto">
                         {aiSummary}
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         Click &quot;Analyze with AI&quot; to summarize the submissions and extract trends and actionable recommendations.
                       </p>
                     )}
                   </div>
 
-                  <div className="border rounded-xl overflow-x-auto w-full">
+                  <div className="border dark:border-zinc-800 rounded-xl overflow-x-auto w-full">
                     <table className="w-full text-sm text-left">
-                      <thead className="bg-gray-50 text-gray-600 font-medium border-b">
+                      <thead className="bg-gray-50 dark:bg-zinc-950 text-gray-700 dark:text-gray-300 font-semibold border-b dark:border-zinc-800">
                         <tr>
                           <th className="px-6 py-4">Date</th>
                           {requireGoogleSignIn && <th className="px-6 py-4">Verified Email</th>}
@@ -962,17 +982,17 @@ export default function FormBuilder() {
                           ))}
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody className="divide-y dark:divide-zinc-800">
                         {responses.map((item, index) => (
-                          <tr key={index} className="border-b last:border-0 hover:bg-gray-50">
-                            <td className="px-6 py-4 text-gray-500">{new Date(item.createdAt).toLocaleDateString()}</td>
+                          <tr key={index} className="border-b dark:border-zinc-800 last:border-0 hover:bg-gray-50 dark:hover:bg-zinc-950/60">
+                            <td className="px-6 py-4 text-gray-500 dark:text-gray-400">{new Date(item.createdAt).toLocaleDateString()}</td>
                             {requireGoogleSignIn && (
-                              <td className="px-6 py-4 font-medium text-indigo-600 truncate max-w-[150px]">
+                              <td className="px-6 py-4 font-medium text-indigo-600 dark:text-indigo-400 truncate max-w-[150px]">
                                 {item.respondentEmail || 'N/A'}
                               </td>
                             )}
                             {fields.slice(0, 3).map((f) => (
-                              <td key={f.id} className="px-6 py-4 font-medium truncate max-w-[150px]">
+                              <td key={f.id} className="px-6 py-4 font-medium text-gray-800 dark:text-gray-200 truncate max-w-[150px]">
                                 {item.answers && Array.isArray(item.answers[f.id]) 
                                   ? item.answers[f.id].join(', ') 
                                   : (item.answers && item.answers[f.id]?.toString()) || '-'}
