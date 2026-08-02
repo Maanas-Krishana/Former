@@ -3,34 +3,36 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Sparkles, ArrowRight, FileText, BarChart2, Copy, Eye, Star } from 'lucide-react';
 
 export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-gray-900 selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden relative">
+    <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-950 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-950 selection:text-indigo-900 dark:selection:text-indigo-200 overflow-x-hidden relative transition-colors duration-200">
       
       {/* Decorative ambient blobs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-200/30 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-[20%] right-[-10%] w-[45%] h-[45%] bg-purple-200/20 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-indigo-200/30 dark:bg-indigo-900/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[20%] right-[-10%] w-[45%] h-[45%] bg-purple-200/20 dark:bg-purple-900/20 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Header */}
       <header className="max-w-7xl mx-auto px-6 sm:px-8 py-6 flex items-center justify-between relative z-10">
         <div className="flex items-center space-x-3 cursor-pointer" onClick={() => router.push('/')}>
           <img src="/logo.png" alt="Former Logo" className="w-9 h-9 object-contain rounded-xl shadow-md" />
-          <span className="text-2xl font-black text-indigo-600 tracking-tight">Former</span>
+          <span className="text-2xl font-black text-indigo-600 dark:text-indigo-400 tracking-tight">Former</span>
         </div>
-        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
-          <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
-          <a href="#ai-generation" className="hover:text-indigo-600 transition-colors">AI Engine</a>
-          <a href="#analytics" className="hover:text-indigo-600 transition-colors">Analytics</a>
+        <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600 dark:text-gray-300">
+          <a href="#features" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Features</a>
+          <a href="#ai-generation" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">AI Engine</a>
+          <a href="#analytics" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Analytics</a>
         </nav>
-        <div className="flex items-center space-x-4">
-          <Button variant="ghost" onClick={() => router.push('/login')} className="text-gray-700 hover:text-indigo-600 font-semibold">
+        <div className="flex items-center space-x-3">
+          <ThemeToggle />
+          <Button variant="ghost" onClick={() => router.push('/login')} className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-semibold">
             Sign In
           </Button>
-          <Button onClick={() => router.push('/signup')} className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl px-5 shadow-md shadow-indigo-100 transition-all hover:translate-y-[-1px]">
+          <Button onClick={() => router.push('/signup')} className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl px-5 shadow-md shadow-indigo-100 dark:shadow-none transition-all hover:translate-y-[-1px]">
             Get Started
           </Button>
         </div>
