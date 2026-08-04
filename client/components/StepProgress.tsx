@@ -41,13 +41,13 @@ export function StepProgress({
 
   if (orientation === 'horizontal') {
     return (
-      <div className="w-full py-4 mb-6">
-        <div className="flex items-center justify-between relative max-w-xl mx-auto px-4">
+      <div className="w-full py-4 mb-6 overflow-x-auto scrollbar-none">
+        <div className="flex items-center justify-between relative min-w-[340px] max-w-xl mx-auto px-6">
           {/* Connector line */}
-          <div className="absolute top-1/2 left-8 right-8 -translate-y-1/2 h-[2px] bg-gray-200 dark:bg-zinc-800 -z-0" />
+          <div className="absolute top-4 left-8 right-8 h-[2px] bg-gray-200 dark:bg-zinc-800 -z-0" />
           <div 
-            className={cn("absolute top-1/2 left-8 -translate-y-1/2 h-[2px] transition-all duration-300 -z-0", activeTheme.bg)}
-            style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+            className={cn("absolute top-4 left-8 h-[2px] transition-all duration-300 -z-0", activeTheme.bg)}
+            style={{ width: `calc(${(currentStep / (steps.length - 1)) * 100}% - 16px)` }}
           />
 
           {steps.map((step, idx) => {
@@ -57,21 +57,21 @@ export function StepProgress({
             return (
               <div 
                 key={step.id} 
-                className="flex flex-col items-center relative z-10 cursor-pointer group"
+                className="flex flex-col items-center relative z-10 cursor-pointer group flex-1"
                 onClick={() => onStepClick && onStepClick(idx)}
               >
                 <div className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center font-semibold text-xs transition-all duration-200 border-2",
+                  "w-8 h-8 rounded-full flex items-center justify-center font-semibold text-xs transition-all duration-200 border-2 flex-shrink-0 bg-white dark:bg-zinc-900",
                   isCompleted ? `${activeTheme.bg} ${activeTheme.border} text-white` :
-                  isActive ? `bg-white dark:bg-zinc-900 ${activeTheme.border} ${activeTheme.text} ring-4 ring-indigo-100 dark:ring-indigo-950/60` :
-                  "bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700 text-gray-400"
+                  isActive ? `${activeTheme.border} ${activeTheme.text} ring-4 ring-indigo-100 dark:ring-indigo-950/60` :
+                  "border-gray-300 dark:border-zinc-700 text-gray-400"
                 )}>
                   {isCompleted ? <Check className="w-4 h-4 text-white" /> : idx + 1}
                 </div>
                 <span className={cn(
-                  "mt-2 text-xs font-medium max-w-[90px] text-center truncate transition-colors",
-                  isActive ? activeTheme.text :
-                  isCompleted ? "text-gray-800 dark:text-gray-200 font-semibold" :
+                  "mt-2 text-[10px] sm:text-xs font-medium w-full text-center px-1 truncate transition-colors",
+                  isActive ? `${activeTheme.text} font-semibold` :
+                  isCompleted ? "text-gray-800 dark:text-gray-200 font-medium" :
                   "text-gray-400 dark:text-gray-500"
                 )}>
                   {step.title}
