@@ -32,6 +32,7 @@ const FIELD_TYPES = [
   { type: 'textarea', label: 'Text Area', icon: AlignLeft },
   { type: 'file', label: 'File Upload', icon: UploadCloud },
   { type: 'rating', label: 'Star Rating', icon: Star },
+  { type: 'pageBreak', label: 'Page Break', icon: Layout },
 ];
 
 const THEME_COLORS = [
@@ -474,6 +475,33 @@ export default function FormBuilder() {
                       {fields.map((field, index) => (
                         <SortableField key={field.id} id={field.id}>
                           {(dragHandleProps: any) => (
+                            field.type === 'pageBreak' ? (
+                              <div className="group relative border-2 border-dashed border-indigo-300 dark:border-indigo-800 p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/30 transition-all flex items-center justify-between">
+                                <div className="flex items-center space-x-3 flex-1">
+                                  <div {...dragHandleProps} className="cursor-grab hover:text-indigo-600 text-indigo-400">
+                                    <GripVertical className="w-5 h-5" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <div className="flex items-center space-x-2">
+                                      <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider bg-indigo-600 text-white">Page Break</span>
+                                      <Input 
+                                        value={field.label || 'New Page'} 
+                                        onChange={(e) => {
+                                          const newFields = [...fields];
+                                          newFields[index].label = e.target.value;
+                                          setFields(newFields);
+                                        }}
+                                        className="font-bold text-indigo-900 dark:text-indigo-200 border-transparent hover:border-indigo-200 dark:hover:border-indigo-800 focus:border-indigo-500 px-1 py-0 h-auto text-sm bg-transparent"
+                                      />
+                                    </div>
+                                    <p className="text-xs text-indigo-600/70 dark:text-indigo-400/70 mt-0.5">Fields below this marker will appear on the next page/step</p>
+                                  </div>
+                                </div>
+                                <Button variant="ghost" size="icon" onClick={() => removeField(field.id)} className="h-8 w-8 text-indigo-400 hover:text-red-500">
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              </div>
+                            ) : (
                             <div className="group relative border border-transparent hover:border-gray-200 dark:hover:border-zinc-800 p-4 rounded-lg bg-white dark:bg-zinc-900 transition-all">
                               <div className="flex items-start">
                                 <div {...dragHandleProps} className="mt-2 mr-3 opacity-0 group-hover:opacity-100 cursor-grab hover:text-indigo-500 text-gray-400 dark:text-gray-500">
@@ -576,6 +604,7 @@ export default function FormBuilder() {
                                 </div>
                               </div>
                             </div>
+                            )
                           )}
                         </SortableField>
                       ))}

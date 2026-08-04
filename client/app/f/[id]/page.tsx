@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
-import { Star } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { StepProgress, StepInfo } from '@/components/StepProgress';
+import { cn } from '@/lib/utils';
 
 const THEME_COLORS: Record<string, any> = {
   'indigo': { bg: 'bg-indigo-600', hover: 'hover:bg-indigo-700', text: 'text-indigo-600', ring: 'focus:border-indigo-500 focus-visible:ring-indigo-500 focus-visible:border-indigo-500 focus:ring-indigo-500' },
@@ -25,6 +27,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [verifiedEmail, setVerifiedEmail] = useState<string | null>(null);
+  const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5001/api'}/forms/${params.id}`)
@@ -181,9 +184,63 @@ export default function PublicForm({ params }: { params: { id: string } }) {
     );
   }
 
+  // Group fields into pages separated by pageBreak fields
+  const pages: { title: string; fields: any[] }[] = [];
+  if (form && form.fields) {
+    let currentPageTitle = "Basic Details";
+    let currentPageFields: any[] = [];
+
+    form.fields.forEach((f: any) => {
+      if (f.type === 'pageBreak') {
+        pages.push({ title: currentPageTitle, fields: currentPageFields });
+        currentPageTitle = f.label || `Step ${pages.length + 1}`;
+        currentPageFields = [];
+      } else {
+        currentPageFields.push(f);
+      }
+    });
+    pages.push({ title: currentPageTitle, fields: currentPageFields });
+  }
+
+  const isMultiStep = pages.length > 1;
+  const activePage = isMultiStep ? pages[Math.min(currentStep, pages.length - 1)] : { title: '', fields: form?.fields || [] };
+
+  const validateCurrentStep = () => {
+    const fieldsToValidate = activePage.fields;
+    for (const field of fieldsToValidate) {
+      if (field.required) {
+        const answer = answers[field.id];
+        if (answer === undefined || answer === null || answer === '' || (Array.isArray(answer) && answer.length === 0)) {
+          alert(`Please complete required field: "${field.label}"`);
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const handleNextStep = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (validateCurrentStep()) {
+      setCurrentStep(prev => Math.min(prev + 1, pages.length - 1));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handlePrevStep = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setCurrentStep(prev => Math.max(prev - 1, 0));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const stepInfos: StepInfo[] = pages.map((p, idx) => ({ id: `step-${idx}`, title: p.title }));
+
   return (
     <div className="min-h-screen bg-[#F6F4EE] dark:bg-zinc-950 text-gray-900 dark:text-gray-100 py-6 sm:py-12 px-4 flex flex-col justify-center items-center space-y-6 transition-colors duration-200">
-      <div className="max-w-3xl w-full bg-white dark:bg-zinc-900 rounded-xl shadow-sm border dark:border-zinc-800 p-4 sm:p-8 space-y-8">
+      <div className={cn(
+        "w-full bg-white dark:bg-zinc-900 rounded-xl shadow-sm border dark:border-zinc-800 p-4 sm:p-8 space-y-8 transition-all",
+        isMultiStep ? "max-w-5xl" : "max-w-3xl"
+      )}>
         <div className="text-center mb-8 border-b dark:border-zinc-800 pb-6 space-y-3">
           <div className="flex items-center justify-center space-x-3">
             {form.logoUrl && (
@@ -196,171 +253,217 @@ export default function PublicForm({ params }: { params: { id: string } }) {
           )}
         </div>
 
-        <form onSubmit={submitResponse} className="space-y-6">
-          {form.fields.map((field: any) => (
-            <div key={field.id} className="space-y-2 p-4 sm:p-5 rounded-xl border border-gray-100 dark:border-zinc-800/80 bg-gray-50/50 dark:bg-zinc-950/40 hover:border-gray-200 dark:hover:border-zinc-800 transition-colors">
-              <Label className="text-base font-semibold text-gray-800 dark:text-gray-200 block mb-1">
-                {field.label} {field.required && <span className="text-red-500 font-bold ml-0.5">*</span>}
-              </Label>
-              
-              {['text', 'email', 'number'].includes(field.type) && (
-                <Input 
-                  type={field.type} 
-                  required={field.required}
-                  placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`} 
-                  value={answers[field.id] || ''}
-                  onChange={(e) => handleInputChange(field.id, e.target.value)}
-                  minLength={field.validation?.minLength}
-                  maxLength={field.validation?.maxLength}
-                  pattern={field.type === 'text' ? field.validation?.pattern : undefined}
-                  title={field.validation?.customError || (field.validation?.pattern ? `Please match the required format.` : undefined)}
-                  className={`w-full h-11 bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-sm ${theme.ring}`} 
-                />
-              )}
+        {isMultiStep && (
+          <div className="sm:hidden">
+            <StepProgress steps={stepInfos} currentStep={currentStep} orientation="horizontal" themeColor={form.themeColor} onStepClick={(idx) => idx <= currentStep && setCurrentStep(idx)} />
+          </div>
+        )}
 
-              {field.type === 'textarea' && (
-                <textarea 
-                  required={field.required}
-                  placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`} 
-                  value={answers[field.id] || ''}
-                  onChange={(e) => handleInputChange(field.id, e.target.value)}
-                  minLength={field.validation?.minLength}
-                  maxLength={field.validation?.maxLength}
-                  className={`w-full flex min-h-[110px] rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 shadow-sm focus-visible:outline-none ${theme.ring}`} 
-                />
-              )}
+        <div className={cn("grid gap-8", isMultiStep ? "grid-cols-1 md:grid-cols-4" : "grid-cols-1")}>
+          {isMultiStep && (
+            <div className="hidden md:block md:col-span-1 border-r dark:border-zinc-800 pr-6">
+              <StepProgress steps={stepInfos} currentStep={currentStep} orientation="vertical" themeColor={form.themeColor} onStepClick={(idx) => idx <= currentStep && setCurrentStep(idx)} />
+            </div>
+          )}
 
-              {['dropdown', 'select'].includes(field.type) && (
-                <select 
-                  required={field.required}
-                  value={answers[field.id] || ''}
-                  onChange={(e) => handleInputChange(field.id, e.target.value)}
-                  className={`w-full flex h-11 items-center justify-between rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none ${theme.ring}`}
-                >
-                  <option value="">Select an option...</option>
-                  {field.options?.map((opt: string, i: number) => (
-                    <option key={i} value={opt}>{opt}</option>
-                  ))}
-                </select>
-              )}
+          <div className={cn(isMultiStep ? "md:col-span-3" : "w-full")}>
+            {isMultiStep && (
+              <div className="mb-6 pb-3 border-b dark:border-zinc-800">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white">{activePage.title}</h2>
+                <p className="text-xs text-gray-400">Step {currentStep + 1} of {pages.length}</p>
+              </div>
+            )}
 
-              {field.type === 'checkbox' && (
-                <div className="space-y-2 pt-1">
-                  {field.options?.map((opt: string, i: number) => {
-                    const isChecked = (answers[field.id] || []).includes(opt);
-                    return (
-                      <label 
-                        key={i} 
-                        htmlFor={`${field.id}-${i}`}
-                        className={`flex items-center space-x-3 p-3 rounded-lg border transition-all cursor-pointer ${
-                          isChecked 
-                            ? 'bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700 shadow-sm' 
-                            : 'bg-white/60 dark:bg-zinc-950/60 border-gray-200/80 dark:border-zinc-800/80 hover:bg-white dark:hover:bg-zinc-900'
-                        }`}
-                      >
-                        <input 
-                          type="checkbox" 
-                          id={`${field.id}-${i}`} 
-                          checked={isChecked}
-                          onChange={(e) => handleCheckboxChange(field.id, opt, e.target.checked)}
-                          className={`h-4.5 w-4.5 rounded border-gray-300 dark:border-zinc-700 cursor-pointer ${theme.text} ${theme.ring}`} 
-                        />
-                        <span className="text-sm font-medium text-gray-800 dark:text-gray-200 select-none">{opt}</span>
-                      </label>
-                    );
-                  })}
-                </div>
-              )}
+            <form onSubmit={submitResponse} className="space-y-6">
+              {activePage.fields.map((field: any) => (
+                <div key={field.id} className="space-y-2 p-4 sm:p-5 rounded-xl border border-gray-100 dark:border-zinc-800/80 bg-gray-50/50 dark:bg-zinc-950/40 hover:border-gray-200 dark:hover:border-zinc-800 transition-colors">
+                  <Label className="text-base font-semibold text-gray-800 dark:text-gray-200 block mb-1">
+                    {field.label} {field.required && <span className="text-red-500 font-bold ml-0.5">*</span>}
+                  </Label>
+                  
+                  {['text', 'email', 'number'].includes(field.type) && (
+                    <Input 
+                      type={field.type} 
+                      required={field.required}
+                      placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`} 
+                      value={answers[field.id] || ''}
+                      onChange={(e) => handleInputChange(field.id, e.target.value)}
+                      minLength={field.validation?.minLength}
+                      maxLength={field.validation?.maxLength}
+                      pattern={field.type === 'text' ? field.validation?.pattern : undefined}
+                      title={field.validation?.customError || (field.validation?.pattern ? `Please match the required format.` : undefined)}
+                      className={`w-full h-11 bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-sm ${theme.ring}`} 
+                    />
+                  )}
 
-              {field.type === 'radio' && (
-                <div className="space-y-2 pt-1">
-                  {field.options?.map((opt: string, i: number) => {
-                    const isSelected = answers[field.id] === opt;
-                    return (
-                      <label 
-                        key={i} 
-                        htmlFor={`${field.id}-${i}`}
-                        className={`flex items-center space-x-3 p-3 rounded-lg border transition-all cursor-pointer ${
-                          isSelected 
-                            ? 'bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700 shadow-sm' 
-                            : 'bg-white/60 dark:bg-zinc-950/60 border-gray-200/80 dark:border-zinc-800/80 hover:bg-white dark:hover:bg-zinc-900'
-                        }`}
-                      >
-                        <input 
-                          type="radio" 
-                          name={field.id} 
-                          id={`${field.id}-${i}`} 
-                          required={field.required}
-                          checked={isSelected}
-                          onChange={() => handleInputChange(field.id, opt)}
-                          className={`h-4.5 w-4.5 border-gray-300 dark:border-zinc-700 cursor-pointer ${theme.text} ${theme.ring}`} 
-                        />
-                        <span className="text-sm font-medium text-gray-800 dark:text-gray-200 select-none">{opt}</span>
-                      </label>
-                    );
-                  })}
-                </div>
-              )}
+                  {field.type === 'textarea' && (
+                    <textarea 
+                      required={field.required}
+                      placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}...`} 
+                      value={answers[field.id] || ''}
+                      onChange={(e) => handleInputChange(field.id, e.target.value)}
+                      minLength={field.validation?.minLength}
+                      maxLength={field.validation?.maxLength}
+                      className={`w-full flex min-h-[110px] rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 shadow-sm focus-visible:outline-none ${theme.ring}`} 
+                    />
+                  )}
 
-              {field.type === 'date' && (
-                <Input 
-                  type="date" 
-                  required={field.required}
-                  value={answers[field.id] || ''}
-                  onChange={(e) => handleInputChange(field.id, e.target.value)}
-                  className={`w-full h-11 bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-sm ${theme.ring}`} 
-                />
-              )}
+                  {['dropdown', 'select'].includes(field.type) && (
+                    <select 
+                      required={field.required}
+                      value={answers[field.id] || ''}
+                      onChange={(e) => handleInputChange(field.id, e.target.value)}
+                      className={`w-full flex h-11 items-center justify-between rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2 text-sm text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none ${theme.ring}`}
+                    >
+                      <option value="">Select an option...</option>
+                      {field.options?.map((opt: string, i: number) => (
+                        <option key={i} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                  )}
 
-              {field.type === 'file' && (
-                <div className="space-y-2">
-                  <Input 
-                    type="file" 
-                    required={field.required && !answers[field.id]}
-                    onChange={(e) => handleFileChange(field.id, e)}
-                    className={`w-full h-11 bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-sm ${theme.ring}`} 
-                  />
-                  {answers[field.id] && (
-                    <div className="mt-2 text-sm">
-                      <a href={answers[field.id]} target="_blank" rel="noreferrer" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
-                        File successfully uploaded (View)
-                      </a>
+                  {field.type === 'checkbox' && (
+                    <div className="space-y-2 pt-1">
+                      {field.options?.map((opt: string, i: number) => {
+                        const isChecked = (answers[field.id] || []).includes(opt);
+                        return (
+                          <label 
+                            key={i} 
+                            htmlFor={`${field.id}-${i}`}
+                            className={`flex items-center space-x-3 p-3 rounded-lg border transition-all cursor-pointer ${
+                              isChecked 
+                                ? 'bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700 shadow-sm' 
+                                : 'bg-white/60 dark:bg-zinc-950/60 border-gray-200/80 dark:border-zinc-800/80 hover:bg-white dark:hover:bg-zinc-900'
+                            }`}
+                          >
+                            <input 
+                              type="checkbox" 
+                              id={`${field.id}-${i}`} 
+                              checked={isChecked}
+                              onChange={(e) => handleCheckboxChange(field.id, opt, e.target.checked)}
+                              className={`h-4.5 w-4.5 rounded border-gray-300 dark:border-zinc-700 cursor-pointer ${theme.text} ${theme.ring}`} 
+                            />
+                            <span className="text-sm font-medium text-gray-800 dark:text-gray-200 select-none">{opt}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {field.type === 'radio' && (
+                    <div className="space-y-2 pt-1">
+                      {field.options?.map((opt: string, i: number) => {
+                        const isSelected = answers[field.id] === opt;
+                        return (
+                          <label 
+                            key={i} 
+                            htmlFor={`${field.id}-${i}`}
+                            className={`flex items-center space-x-3 p-3 rounded-lg border transition-all cursor-pointer ${
+                              isSelected 
+                                ? 'bg-white dark:bg-zinc-900 border-gray-300 dark:border-zinc-700 shadow-sm' 
+                                : 'bg-white/60 dark:bg-zinc-950/60 border-gray-200/80 dark:border-zinc-800/80 hover:bg-white dark:hover:bg-zinc-900'
+                            }`}
+                          >
+                            <input 
+                              type="radio" 
+                              name={field.id} 
+                              id={`${field.id}-${i}`} 
+                              required={field.required}
+                              checked={isSelected}
+                              onChange={() => handleInputChange(field.id, opt)}
+                              className={`h-4.5 w-4.5 border-gray-300 dark:border-zinc-700 cursor-pointer ${theme.text} ${theme.ring}`} 
+                            />
+                            <span className="text-sm font-medium text-gray-800 dark:text-gray-200 select-none">{opt}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {field.type === 'date' && (
+                    <Input 
+                      type="date" 
+                      required={field.required}
+                      value={answers[field.id] || ''}
+                      onChange={(e) => handleInputChange(field.id, e.target.value)}
+                      className={`w-full h-11 bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-sm ${theme.ring}`} 
+                    />
+                  )}
+
+                  {field.type === 'file' && (
+                    <div className="space-y-2">
+                      <Input 
+                        type="file" 
+                        required={field.required && !answers[field.id]}
+                        onChange={(e) => handleFileChange(field.id, e)}
+                        className={`w-full h-11 bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-sm ${theme.ring}`} 
+                      />
+                      {answers[field.id] && (
+                        <div className="mt-2 text-sm">
+                          <a href={answers[field.id]} target="_blank" rel="noreferrer" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+                            File successfully uploaded (View)
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {field.type === 'rating' && (
+                    <div className="flex items-center space-x-2 pt-1.5 p-2 bg-white dark:bg-zinc-950 rounded-lg border border-gray-200/80 dark:border-zinc-800/80 w-fit">
+                      {[1, 2, 3, 4, 5].map((star) => {
+                        const ratingValue = answers[field.id] || 0;
+                        const isFilled = ratingValue >= star;
+                        return (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => handleInputChange(field.id, star)}
+                            className="focus:outline-none transition-transform hover:scale-110 p-1"
+                          >
+                            <Star className={`w-7 h-7 ${isFilled ? 'text-amber-400 fill-amber-400 drop-shadow-sm' : 'text-gray-300 dark:text-zinc-700 fill-transparent'} transition-colors`} />
+                          </button>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
-              )}
+              ))}
 
-              {field.type === 'rating' && (
-                <div className="flex items-center space-x-2 pt-1.5 p-2 bg-white dark:bg-zinc-950 rounded-lg border border-gray-200/80 dark:border-zinc-800/80 w-fit">
-                  {[1, 2, 3, 4, 5].map((star) => {
-                    const ratingValue = answers[field.id] || 0;
-                    const isFilled = ratingValue >= star;
-                    return (
-                      <button
-                        key={star}
-                        type="button"
-                        onClick={() => handleInputChange(field.id, star)}
-                        className="focus:outline-none transition-transform hover:scale-110 p-1"
-                      >
-                        <Star className={`w-7 h-7 ${isFilled ? 'text-amber-400 fill-amber-400 drop-shadow-sm' : 'text-gray-300 dark:text-zinc-700 fill-transparent'} transition-colors`} />
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          ))}
+              <div className="pt-6 border-t dark:border-zinc-800 mt-8 flex items-center justify-between gap-4">
+                {isMultiStep && currentStep > 0 ? (
+                  <Button 
+                    type="button" 
+                    onClick={handlePrevStep}
+                    variant="outline" 
+                    className="flex items-center space-x-2 border-gray-300 dark:border-zinc-700 font-medium"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span>Back</span>
+                  </Button>
+                ) : <div />}
 
-          <div className="pt-6 border-t dark:border-zinc-800 mt-8">
-            <Button 
-              type="submit"
-              disabled={isSubmitting || form.fields.length === 0} 
-              className={`w-full text-white py-6 text-base font-semibold rounded-xl shadow-md transition-all ${theme.bg} ${theme.hover}`}
-            >
-              {isSubmitting ? 'Submitting...' : 'Submit Response'}
-            </Button>
+                {isMultiStep && currentStep < pages.length - 1 ? (
+                  <Button 
+                    type="button" 
+                    onClick={handleNextStep}
+                    className={`flex items-center space-x-2 text-white font-semibold shadow-md ${theme.bg} ${theme.hover}`}
+                  >
+                    <span>Continue</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                ) : (
+                  <Button 
+                    type="submit"
+                    disabled={isSubmitting || form.fields.length === 0} 
+                    className={`text-white font-semibold shadow-md ${isMultiStep ? 'px-8' : 'w-full'} py-6 text-base rounded-xl ${theme.bg} ${theme.hover}`}
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Submit Response'}
+                  </Button>
+                )}
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
       <div className="text-center text-xs text-gray-400 dark:text-gray-500 font-medium tracking-wide">
         Powered by <span className="font-bold text-gray-600 dark:text-gray-400">Former</span> • Made with ❤️ in India
