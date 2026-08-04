@@ -132,11 +132,11 @@ export default function FormBuilder() {
 
   const publishForm = async () => {
     if (!token) {
-      alert("You must be logged in to publish forms.");
+      toast("You must be logged in to publish forms.", "warning");
       return;
     }
     if (fields.length === 0) {
-      alert("Please add at least one field before publishing.");
+      toast("Please add at least one field before publishing.", "warning");
       return;
     }
     setIsSaving(true);
@@ -171,13 +171,13 @@ export default function FormBuilder() {
         if (data.views) setFormViews(data.views);
         setIsPublished(true);
         setIsSaving(false);
-        alert("Form published successfully!");
+        toast("Form published successfully!", "success");
       } else {
-        alert("Failed to publish form.");
+        toast("Failed to publish form.", "destructive");
       }
     } catch (error) {
       console.error(error);
-      alert("Error publishing form. Is the backend running?");
+      toast("Error publishing form. Is the backend running?", "destructive");
     } finally {
       setIsSaving(false);
     }
@@ -205,13 +205,13 @@ export default function FormBuilder() {
       });
       if (response.ok) {
         setIsPublished(false);
-        alert("Form unpublished successfully!");
+        toast("Form unpublished successfully!", "success");
       } else {
-        alert("Failed to unpublish form.");
+        toast("Failed to unpublish form.", "destructive");
       }
     } catch (error) {
       console.error(error);
-      alert("Error unpublishing form.");
+      toast("Error unpublishing form.", "destructive");
     } finally {
       setIsSaving(false);
     }
@@ -270,11 +270,11 @@ export default function FormBuilder() {
         const data = await response.json();
         setAiSummary(data.summary);
       } else {
-        alert("Failed to generate AI summary.");
+        toast("Failed to generate AI summary.", "destructive");
       }
     } catch (err) {
       console.error(err);
-      alert("Error generating summary.");
+      toast("Error generating summary.", "destructive");
     } finally {
       setIsGeneratingSummary(false);
     }
