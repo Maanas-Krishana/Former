@@ -11,11 +11,12 @@ The JSON must be an object with two keys: "title" (string, a good title for the 
 
 Each field object MUST have these properties:
 - "id": a unique string (e.g., "name_field", "q1", etc)
-- "type": MUST be one of: "text", "email", "number", "textarea", "select", "radio", "checkbox", "date", "file", "rating"
-- "label": the question or label for the field (string)
-- "required": boolean
+- "type": MUST be one of: "text", "email", "number", "textarea", "select", "radio", "checkbox", "date", "file", "rating", "pageBreak"
+- "label": the question or label for the field (string). For "pageBreak" type, this represents the title of the next section/page (e.g. "Payment Information", "Preferences").
+- "required": boolean (always false for "pageBreak")
 - "options": (ONLY for "select", "radio", or "checkbox" types) an array of string options.
 - rating type represents a 1-5 star rating scale.
+- pageBreak type represents a visual division between steps/pages in a multi-page form. Use it to separate large collections of fields (more than 4-5 fields) into logical step pages.
 
 Example Prompt: "A quick feedback form for a restaurant"
 Example Output:
@@ -27,6 +28,12 @@ Example Output:
       "type": "text",
       "label": "What is your name?",
       "required": true
+    },
+    {
+      "id": "break_1",
+      "type": "pageBreak",
+      "label": "Meal Rating",
+      "required": false
     },
     {
       "id": "f_rating",
