@@ -22,6 +22,47 @@
   .text-balance {
     text-wrap: balance;
   }
+  .bg-dotted-grid {
+    background-image: radial-gradient(oklch(0.9 0 0) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  .dark .bg-dotted-grid {
+    background-image: radial-gradient(oklch(0.2 0 0) 1px, transparent 1px);
+  }
+  .shadow-neo-sm {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  .dark .shadow-neo-sm {
+    box-shadow: 0 1px 2px 0 rgba(255, 255, 255, 0.05);
+  }
+  .shadow-neo-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  }
+  .dark .shadow-neo-md {
+    box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.02), 0 2px 4px -2px rgba(255, 255, 255, 0.02);
+  }
+  .shadow-neo-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  }
+  .dark .shadow-neo-lg {
+    box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.03), 0 4px 6px -4px rgba(255, 255, 255, 0.03);
+  }
+  .shadow-neo-indigo {
+    box-shadow: 0 4px 12px 0 rgba(79, 70, 229, 0.08);
+  }
+  .shadow-neo-teal {
+    box-shadow: 0 4px 12px 0 rgba(13, 148, 136, 0.08);
+  }
+  .hover-neo-lift {
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hover-neo-lift:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.05), 0 3px 6px -3px rgba(0, 0, 0, 0.05);
+  }
+  .hover-neo-lift:active {
+    transform: translateY(0);
+  }
 }
 
 @layer base {
