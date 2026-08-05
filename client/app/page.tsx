@@ -10,23 +10,23 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-955 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-950 selection:text-indigo-900 dark:selection:text-indigo-200 overflow-x-hidden relative transition-colors duration-200 bg-dotted-grid">
+    <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-950 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-950 selection:text-indigo-900 dark:selection:text-indigo-200 overflow-x-hidden relative transition-colors duration-200 bg-dotted-grid">
       
       {/* Header */}
       <header className="border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3 cursor-pointer border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-1.5 rounded-xl shadow-sm hover-neo-lift" onClick={() => router.push('/')}>
             <img src="/logo.png" alt="Former Logo" className="w-8 h-8 object-contain rounded-lg" />
-            <span className="text-xl font-bold text-indigo-650 dark:text-indigo-400 tracking-tight">Former</span>
+            <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">Former</span>
           </div>
           <nav className="hidden md:flex items-center space-x-8 text-sm font-bold text-gray-600 dark:text-gray-400">
-            <a href="#features" className="hover:text-indigo-650 dark:hover:text-indigo-400 transition-colors">Features</a>
-            <a href="#ai-generation" className="hover:text-indigo-650 dark:hover:text-indigo-400 transition-colors">AI Engine</a>
-            <a href="#analytics" className="hover:text-indigo-650 dark:hover:text-indigo-400 transition-colors">Analytics</a>
+            <a href="#features" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Features</a>
+            <a href="#ai-generation" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">AI Engine</a>
+            <a href="#analytics" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Analytics</a>
           </nav>
           <div className="flex items-center space-x-3">
             <ThemeToggle />
-            <Button variant="ghost" onClick={() => router.push('/login')} className="text-gray-600 dark:text-gray-300 hover:text-indigo-650 dark:hover:text-indigo-400 font-bold">
+            <Button variant="ghost" onClick={() => router.push('/login')} className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-bold">
               Sign In
             </Button>
             <Button onClick={() => router.push('/signup')} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl px-5 border border-transparent shadow-sm hover:translate-y-[-1px] active:translate-y-[0px] transition-all">
@@ -44,7 +44,7 @@ export default function Home() {
         </div>
 
         <h1 className="text-5xl sm:text-7xl font-black tracking-tight text-gray-900 dark:text-white max-w-4xl leading-[1.1] mb-6">
-          Build beautiful forms in <span className="bg-gradient-to-r from-indigo-650 to-purple-650 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">seconds</span>.
+          Build beautiful forms in <span className="bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">seconds</span>.
         </h1>
         
         <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed mb-10 font-semibold">
@@ -56,7 +56,7 @@ export default function Home() {
             Start Building Free
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
-          <Button variant="outline" onClick={() => router.push('/login')} className="w-full sm:w-auto border border-gray-250 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-800 text-base font-bold py-6 rounded-2xl bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-200 px-8 shadow-sm hover:translate-y-[-1px] active:translate-y-[0px] transition-all">
+          <Button variant="outline" onClick={() => router.push('/login')} className="w-full sm:w-auto border border-gray-200 dark:border-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-800 text-base font-bold py-6 rounded-2xl bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-200 px-8 shadow-sm hover:translate-y-[-1px] active:translate-y-[0px] transition-all">
             Manage Forms
           </Button>
         </div>
@@ -76,12 +76,12 @@ export default function Home() {
             {/* Visual simulation of dashboard - Bento Grid Layout */}
             <div className="p-6 space-y-6">
               {/* Gretting row */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-gray-200 dark:border-zinc-850 pb-4 gap-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-gray-200 dark:border-zinc-800 pb-4 gap-4">
                 <div>
                   <h4 className="text-xl font-black text-gray-900 dark:text-white">Workspace Analytics</h4>
                   <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">Telemetry details for active campaigns.</p>
                 </div>
-                <div className="bg-indigo-50 dark:bg-indigo-950 text-indigo-650 dark:text-indigo-300 font-mono text-xs font-bold px-3 py-1.5 rounded-lg border border-indigo-100 dark:border-indigo-900">
+                <div className="bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300 font-mono text-xs font-bold px-3 py-1.5 rounded-lg border border-indigo-100 dark:border-indigo-900">
                   LIVE RESPONSE CAPTURE
                 </div>
               </div>
@@ -90,10 +90,10 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 
                 {/* Panel 1: Stats Monospace */}
-                <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-150 dark:border-zinc-850 p-5 shadow-sm hover-neo-lift space-y-3">
+                <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-800 p-5 shadow-sm hover-neo-lift space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-black tracking-wider uppercase text-gray-400 dark:text-gray-500">TOTAL SUBMISSIONS</span>
-                    <FileText className="w-4 h-4 text-indigo-650 dark:text-indigo-400" />
+                    <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                   </div>
                   <div className="space-y-1">
                     <div className="text-3xl font-black font-mono text-gray-900 dark:text-white">1,284</div>
@@ -102,7 +102,7 @@ export default function Home() {
                 </div>
 
                 {/* Panel 2: Completion Monospace */}
-                <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-150 dark:border-zinc-850 p-5 shadow-sm hover-neo-lift space-y-3">
+                <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-800 p-5 shadow-sm hover-neo-lift space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-black tracking-wider uppercase text-gray-400 dark:text-gray-500">COMPLETION RATE</span>
                     <BarChart2 className="w-4 h-4 text-purple-600 dark:text-purple-400" />
@@ -110,17 +110,17 @@ export default function Home() {
                   <div className="space-y-1">
                     <div className="text-3xl font-black font-mono text-gray-900 dark:text-white">92.4%</div>
                     {/* Linear bar meter */}
-                    <div className="w-full bg-gray-100 dark:bg-zinc-800 h-2 rounded-full border border-gray-150 dark:border-zinc-700 overflow-hidden">
-                      <div className="bg-purple-650 h-full w-[92.4%] rounded-full" />
+                    <div className="w-full bg-gray-100 dark:bg-zinc-800 h-2 rounded-full border border-gray-200 dark:border-zinc-700 overflow-hidden">
+                      <div className="bg-purple-600 h-full w-[92.4%] rounded-full" />
                     </div>
                   </div>
                 </div>
 
                 {/* Panel 3: Quick Action */}
-                <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-150 dark:border-zinc-850 p-5 shadow-sm hover-neo-lift space-y-3">
+                <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-200 dark:border-zinc-800 p-5 shadow-sm hover-neo-lift space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-black tracking-wider uppercase text-gray-400 dark:text-gray-500">AI TEMPLATE STATUS</span>
-                    <Sparkles className="w-4 h-4 text-teal-650 dark:text-teal-400" />
+                    <Sparkles className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                   </div>
                   <div className="space-y-1">
                     <div className="text-lg font-bold text-gray-900 dark:text-white">Coffee Shop Survey</div>
@@ -143,31 +143,31 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl p-8 hover-neo-lift shadow-sm space-y-4">
-            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-650 dark:text-indigo-400 rounded-xl flex items-center justify-center border border-indigo-100 dark:border-indigo-900">
+            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-xl flex items-center justify-center border border-indigo-100 dark:border-indigo-900">
               <Sparkles className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">AI Form Generation</h3>
-            <p className="text-gray-655 dark:text-gray-400 text-sm leading-relaxed font-semibold">
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed font-semibold">
               Describe your objective in plain English and watch Former create the inputs, text areas, ratings, and dropdowns instantly.
             </p>
           </div>
 
           <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl p-8 hover-neo-lift shadow-sm space-y-4">
-            <div className="w-12 h-12 bg-purple-50 dark:bg-purple-950/60 text-purple-650 dark:text-purple-400 rounded-xl flex items-center justify-center border border-purple-100 dark:border-purple-900">
+            <div className="w-12 h-12 bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 rounded-xl flex items-center justify-center border border-purple-100 dark:border-purple-900">
               <BarChart2 className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">Real-Time Insights</h3>
-            <p className="text-gray-655 dark:text-gray-400 text-sm leading-relaxed font-semibold">
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed font-semibold">
               Monitor conversion rates, views, and raw submission tallies immediately. Export collected feedback to CSV with one click.
             </p>
           </div>
 
           <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl p-8 hover-neo-lift shadow-sm space-y-4">
-            <div className="w-12 h-12 bg-teal-50 dark:bg-teal-950/60 text-teal-650 dark:text-teal-400 rounded-xl flex items-center justify-center border border-teal-100 dark:border-teal-900">
+            <div className="w-12 h-12 bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 rounded-xl flex items-center justify-center border border-teal-100 dark:border-teal-900">
               <Copy className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">Instant Duplication</h3>
-            <p className="text-gray-655 dark:text-gray-400 text-sm leading-relaxed font-semibold">
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed font-semibold">
               Clone structures, settings, and question layouts in real time from your dashboard to spin up variations in seconds.
             </p>
           </div>
@@ -175,13 +175,13 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white dark:bg-zinc-950 border-t border-gray-200 dark:border-zinc-850 py-12 relative z-10">
+      <footer className="bg-white dark:bg-zinc-950 border-t border-gray-200 dark:border-zinc-800 py-12 relative z-10">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center space-x-2 border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-1.5 rounded-lg shadow-sm">
             <img src="/logo.png" alt="Former Logo" className="w-6 h-6 object-contain rounded-md" />
-            <span className="font-bold text-indigo-650 dark:text-indigo-400 text-lg">Former</span>
+            <span className="font-bold text-indigo-600 dark:text-indigo-400 text-lg">Former</span>
           </div>
-          <p className="text-xs text-gray-450 dark:text-gray-500 font-mono">© 2026 Former. Proudly made in India.</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 font-mono">© 2026 Former. Proudly made in India.</p>
         </div>
       </footer>
     </div>

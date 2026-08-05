@@ -313,14 +313,14 @@ export default function FormBuilder() {
             <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors hidden md:block">Former</span>
           </a>
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-auto flex-1">
-            <TabsList className="bg-white dark:bg-zinc-955 p-0 rounded-xl flex items-center border border-gray-200 dark:border-zinc-800 shadow-sm overflow-hidden h-10">
+            <TabsList className="bg-white dark:bg-zinc-950 p-0 rounded-xl flex items-center border border-gray-200 dark:border-zinc-800 shadow-sm overflow-hidden h-10">
               <TabsTrigger 
                 value="build" 
                 className={cn(
                   "px-4 py-2 text-sm font-bold transition-all duration-150 flex items-center gap-2 cursor-pointer border-r border-gray-200 dark:border-zinc-800 rounded-none h-full",
                   activeTab === "build" 
-                    ? "bg-indigo-650 text-white font-bold" 
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-gray-205 hover:bg-gray-50 dark:hover:bg-zinc-900"
+                    ? "bg-indigo-600 text-white font-bold" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-900"
                 )}
               >
                 <Layout className="w-4 h-4" />
@@ -331,8 +331,8 @@ export default function FormBuilder() {
                 className={cn(
                   "px-4 py-2 text-sm font-bold transition-all duration-150 flex items-center gap-2 cursor-pointer border-r border-gray-200 dark:border-zinc-800 rounded-none h-full",
                   activeTab === "settings" 
-                    ? "bg-indigo-650 text-white font-bold" 
-                    : "text-gray-600 dark:text-gray-400 hover:text-gray-955 dark:hover:text-gray-205 hover:bg-gray-50 dark:hover:bg-zinc-900"
+                    ? "bg-indigo-600 text-white font-bold" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-900"
                 )}
               >
                 <Settings className="w-4 h-4" />
@@ -343,8 +343,8 @@ export default function FormBuilder() {
                 className={cn(
                   "px-4 py-2 text-sm font-bold transition-all duration-150 flex items-center gap-2 cursor-pointer border-r border-gray-200 dark:border-zinc-800 rounded-none h-full",
                   activeTab === "share" 
-                    ? "bg-indigo-650 text-white font-bold" 
-                    : "text-gray-600 dark:text-gray-450 hover:text-gray-955 dark:hover:text-gray-205 hover:bg-gray-50 dark:hover:bg-zinc-900"
+                    ? "bg-indigo-600 text-white font-bold" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-900"
                 )}
               >
                 <Share2 className="w-4 h-4" />
@@ -355,8 +355,8 @@ export default function FormBuilder() {
                 className={cn(
                   "px-4 py-2 text-sm font-bold transition-all duration-150 flex items-center gap-2 cursor-pointer border-none rounded-none h-full",
                   activeTab === "responses" 
-                    ? "bg-indigo-650 text-white font-bold" 
-                    : "text-gray-600 dark:text-gray-455 hover:text-gray-955 dark:hover:text-gray-205 hover:bg-gray-50 dark:hover:bg-zinc-900"
+                    ? "bg-indigo-600 text-white font-bold" 
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-zinc-900"
                 )}
               >
                 <BarChart2 className="w-4 h-4" />
@@ -419,7 +419,7 @@ export default function FormBuilder() {
                     }}
                     className="flex items-center w-full p-3 border border-gray-200 dark:border-zinc-800 rounded-xl bg-white dark:bg-zinc-900 hover-neo-lift shadow-sm transition-all text-left text-sm font-bold text-gray-800 dark:text-gray-200 group cursor-pointer"
                   >
-                    <Icon className="w-4 h-4 mr-3 text-gray-500 dark:text-gray-400 group-hover:text-indigo-650 dark:group-hover:text-indigo-400" />
+                    <Icon className="w-4 h-4 mr-3 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400" />
                     {field.label}
                   </button>
                 );
@@ -435,7 +435,7 @@ export default function FormBuilder() {
               {/* Mobile Sidebar Toggle */}
               <Button 
                 onClick={() => setShowSidebar(true)} 
-                className="md:hidden w-full mb-4 bg-indigo-650 hover:bg-indigo-700 text-white font-bold border border-transparent shadow-sm flex items-center justify-center rounded-xl"
+                className="md:hidden w-full mb-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold border border-transparent shadow-sm flex items-center justify-center rounded-xl"
               >
                 <Plus className="w-4 h-4 mr-2" /> Add Form Fields
               </Button>
@@ -451,14 +451,14 @@ export default function FormBuilder() {
                   <Input 
                     value={formTitle} 
                     onChange={(e) => setFormTitle(e.target.value)} 
-                    className="text-2xl font-black text-center text-gray-900 dark:text-white border-b border-dashed border-transparent hover:border-gray-250 dark:hover:border-zinc-700 focus:border-indigo-600 px-0 h-auto py-2 shadow-none w-auto min-w-[200px] bg-transparent rounded-none"
+                    className="text-2xl font-black text-center text-gray-900 dark:text-white border-b border-dashed border-transparent hover:border-gray-200 dark:hover:border-zinc-700 focus:border-indigo-600 px-0 h-auto py-2 shadow-none w-auto min-w-[200px] bg-transparent rounded-none"
                   />
                 </div>
                 <Input 
                   placeholder="Form description (optional)"
                   value={formDescription}
                   onChange={(e) => setFormDescription(e.target.value)}
-                  className="text-gray-500 dark:text-gray-400 text-sm text-center border-b border-dashed border-transparent hover:border-gray-250 dark:hover:border-zinc-700 focus:border-indigo-600 px-0 h-auto py-1 shadow-none bg-transparent rounded-none font-medium"
+                  className="text-gray-500 dark:text-gray-400 text-sm text-center border-b border-dashed border-transparent hover:border-gray-200 dark:hover:border-zinc-700 focus:border-indigo-600 px-0 h-auto py-1 shadow-none bg-transparent rounded-none font-medium"
                 />
               </div>
 
@@ -466,8 +466,8 @@ export default function FormBuilder() {
               <div className="space-y-4">
                 {fields.length === 0 ? (
                   <div className="text-center py-12 border-2 border-dashed border-gray-900 dark:border-zinc-800 rounded-2xl bg-gray-50 dark:bg-zinc-950">
-                    <Layout className="w-12 h-12 text-gray-455 dark:text-zinc-600 mx-auto mb-3" />
-                    <p className="text-gray-655 dark:text-gray-400 font-bold">Click on fields in the sidebar to add them</p>
+                    <Layout className="w-12 h-12 text-gray-400 dark:text-zinc-600 mx-auto mb-3" />
+                    <p className="text-gray-600 dark:text-gray-400 font-bold">Click on fields in the sidebar to add them</p>
                   </div>
                 ) : (
                   <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -504,7 +504,7 @@ export default function FormBuilder() {
                             ) : (
                             <div className="group relative border border-gray-200 dark:border-zinc-800 p-5 rounded-2xl bg-white dark:bg-zinc-900 shadow-sm hover:shadow-md hover:translate-y-[-1px] transition-all">
                               <div className="flex items-start">
-                                <div {...dragHandleProps} className="mt-2 mr-3 opacity-0 group-hover:opacity-100 cursor-grab hover:text-indigo-650 text-gray-400 dark:text-gray-500">
+                                <div {...dragHandleProps} className="mt-2 mr-3 opacity-0 group-hover:opacity-100 cursor-grab hover:text-indigo-600 text-gray-400 dark:text-gray-500">
                                   <GripVertical className="w-5 h-5" />
                                 </div>
                                 <div className="flex-1 space-y-3">
@@ -532,7 +532,7 @@ export default function FormBuilder() {
                                         />
                                         Required
                                       </label>
-                                      <Button variant="ghost" size="icon" onClick={() => removeField(field.id)} className="h-8 w-8 text-gray-455 hover:text-red-650 hover:border-gray-900 dark:hover:border-zinc-700 rounded-lg flex items-center justify-center transition-all">
+                                      <Button variant="ghost" size="icon" onClick={() => removeField(field.id)} className="h-8 w-8 text-gray-400 hover:text-red-600 hover:border-gray-900 dark:hover:border-zinc-700 rounded-lg flex items-center justify-center transition-all">
                                         <Trash2 className="w-4 h-4" />
                                       </Button>
                                     </div>
@@ -874,10 +874,10 @@ export default function FormBuilder() {
 
           {activeTab === "share" && (
             <div className="max-w-3xl w-full h-fit bg-white dark:bg-zinc-900 rounded-2xl shadow-md border border-gray-200 dark:border-zinc-800 p-6 sm:p-12 text-center space-y-6">
-              <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-950 text-indigo-655 dark:text-indigo-400 rounded-full border border-gray-200 dark:border-zinc-700 flex items-center justify-center mx-auto mb-6 shadow-sm">
+              <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-full border border-gray-200 dark:border-zinc-700 flex items-center justify-center mx-auto mb-6 shadow-sm">
                 <Share2 className="w-8 h-8" />
               </div>
-              <h2 className="text-3xl font-black text-gray-950 dark:text-white">Share Your Form</h2>
+              <h2 className="text-3xl font-black text-gray-900 dark:text-white">Share Your Form</h2>
               {!formId ? (
                 <div className="p-8 border dark:border-zinc-800 rounded-xl bg-gray-50 dark:bg-zinc-950 text-gray-500 dark:text-gray-400">
                   You must publish the form before you can share it.
@@ -926,22 +926,22 @@ export default function FormBuilder() {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4 border-b border-gray-200 dark:border-zinc-800 pb-4">
                 <h2 className="text-2xl font-black text-gray-900 dark:text-white">Form Responses</h2>
                 {responses.length > 0 && (
-                  <Button onClick={exportToCSV} variant="outline" className="flex items-center space-x-2 border border-gray-200 dark:border-zinc-750 dark:text-gray-200 bg-white dark:bg-zinc-900 font-bold shadow-sm hover:translate-y-[-1px] transition-all">
+                  <Button onClick={exportToCSV} variant="outline" className="flex items-center space-x-2 border border-gray-200 dark:border-zinc-700 dark:text-gray-200 bg-white dark:bg-zinc-900 font-bold shadow-sm hover:translate-y-[-1px] transition-all">
                     <Download className="w-4 h-4" />
                     <span>Export CSV</span>
                   </Button>
                 )}
               </div>
               {!formId ? (
-                <div className="text-center p-12 border border-dashed border-gray-200 dark:border-zinc-800 rounded-2xl bg-gray-50 dark:bg-zinc-955 text-gray-500 dark:text-gray-450 font-bold">
+                <div className="text-center p-12 border border-dashed border-gray-200 dark:border-zinc-800 rounded-2xl bg-gray-50 dark:bg-zinc-950 text-gray-500 dark:text-gray-400 font-bold">
                   You must publish the form before you can view responses.
                 </div>
               ) : isLoadingResponses ? (
                 <div className="text-center p-12 text-gray-500 dark:text-gray-400 font-mono font-bold">Loading responses...</div>
               ) : responses.length === 0 ? (
-                <div className="text-center p-12 border border-dashed border-gray-200 dark:border-zinc-800 rounded-2xl bg-gray-50 dark:bg-zinc-950 text-gray-655 dark:text-gray-400 font-bold">
+                <div className="text-center p-12 border border-dashed border-gray-200 dark:border-zinc-800 rounded-2xl bg-gray-50 dark:bg-zinc-950 text-gray-600 dark:text-gray-400 font-bold">
                   No responses yet. Share your form link! <br />
-                  <span className="font-mono text-xs mt-3 inline-block bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-gray-200 dark:border-zinc-800 text-gray-855 dark:text-gray-200 break-all max-w-full shadow-sm">
+                  <span className="font-mono text-xs mt-3 inline-block bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-gray-200 dark:border-zinc-800 text-gray-800 dark:text-gray-200 break-all max-w-full shadow-sm">
                     {typeof window !== 'undefined' ? `${window.location.origin}/f/${formId}` : `https://former-six.vercel.app/f/${formId}`}
                   </span>
                 </div>
@@ -954,13 +954,13 @@ export default function FormBuilder() {
                     </div>
                     <div className="p-4 sm:p-6 border border-gray-200 dark:border-zinc-800 rounded-2xl flex flex-col items-center justify-center bg-white dark:bg-zinc-900 shadow-sm">
                       <div className="text-3xl sm:text-4xl font-black text-blue-600 dark:text-blue-400 mb-2">{formViews}</div>
-                      <div className="text-xs text-gray-555 dark:text-gray-400 font-bold text-center uppercase tracking-wider">Total Views</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 font-bold text-center uppercase tracking-wider">Total Views</div>
                     </div>
                     <div className="p-4 sm:p-6 border border-gray-200 dark:border-zinc-800 rounded-2xl flex flex-col items-center justify-center bg-white dark:bg-zinc-900 shadow-sm">
                       <div className="text-3xl sm:text-4xl font-black text-purple-600 dark:text-purple-400 mb-2">
                         {formViews > 0 ? Math.round((responses.length / formViews) * 100) : 0}%
                       </div>
-                      <div className="text-xs text-gray-555 dark:text-gray-400 font-bold text-center uppercase tracking-wider">Conversion Rate</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 font-bold text-center uppercase tracking-wider">Conversion Rate</div>
                     </div>
                   </div>
 
@@ -968,10 +968,10 @@ export default function FormBuilder() {
                   <div className="mb-8 p-6 bg-[#FEFBF0] dark:bg-zinc-900 border border-amber-200 dark:border-zinc-800 rounded-2xl space-y-4 shadow-sm relative overflow-hidden">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full">
                       <div className="flex items-center space-x-2">
-                        <div className="p-1.5 bg-amber-50 dark:bg-indigo-950 border border-amber-250 dark:border-zinc-700 text-indigo-755 dark:text-indigo-400 rounded-lg flex-shrink-0">
+                        <div className="p-1.5 bg-amber-50 dark:bg-indigo-950 border border-amber-200 dark:border-zinc-700 text-indigo-600 dark:text-indigo-400 rounded-lg flex-shrink-0">
                           <Sparkles className="w-5 h-5" />
                         </div>
-                        <h3 className="font-black text-gray-955 dark:text-white text-lg leading-tight">AI Response Analysis</h3>
+                        <h3 className="font-black text-gray-900 dark:text-white text-lg leading-tight">AI Response Analysis</h3>
                       </div>
                       <Button 
                         onClick={generateAISummary} 
@@ -990,11 +990,11 @@ export default function FormBuilder() {
                       </Button>
                     </div>
                     {aiSummary ? (
-                      <div className="text-sm text-gray-850 dark:text-gray-200 leading-relaxed bg-white dark:bg-zinc-955 border border-gray-150 dark:border-zinc-800 p-5 rounded-xl whitespace-pre-line shadow-inner max-h-[300px] overflow-y-auto">
+                      <div className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 p-5 rounded-xl whitespace-pre-line shadow-inner max-h-[300px] overflow-y-auto">
                         {aiSummary}
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-655 dark:text-gray-400 font-medium">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                         Click &quot;Analyze with AI&quot; to summarize the submissions and extract trends and actionable recommendations.
                       </p>
                     )}

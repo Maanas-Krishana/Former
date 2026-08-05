@@ -185,7 +185,7 @@ export default function Dashboard() {
       <header className="bg-white dark:bg-zinc-900 border-b border-gray-200 dark:border-zinc-800 px-4 sm:px-8 py-4 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center space-x-2 cursor-pointer border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 py-1.5 rounded-lg shadow-sm hover-neo-lift" onClick={() => router.push('/dashboard')}>
           <img src="/logo.png" alt="Former Logo" className="w-6 h-6 object-contain rounded-md" />
-          <h1 className="text-lg font-bold text-indigo-650 dark:text-indigo-400 tracking-tight">Former</h1>
+          <h1 className="text-lg font-bold text-indigo-600 dark:text-indigo-400 tracking-tight">Former</h1>
         </div>
         <div className="flex items-center space-x-3 sm:space-x-4">
           <ThemeToggle />
@@ -203,7 +203,7 @@ export default function Dashboard() {
             {(user?.name || 'U').charAt(0).toUpperCase()}
           </button>
           <span className="text-sm font-bold text-gray-800 dark:text-gray-200 hidden xs:inline">Hello, {user?.name || 'User'}</span>
-          <Button variant="ghost" size="sm" onClick={() => { logout(); window.location.href = '/login'; }} className="text-red-650 dark:text-red-400 hover:text-red-750 dark:hover:text-red-300 font-bold hover:bg-red-50 dark:hover:bg-red-955/20">
+          <Button variant="ghost" size="sm" onClick={() => { logout(); window.location.href = '/login'; }} className="text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-bold hover:bg-red-50 dark:hover:bg-red-950/20">
             Logout
           </Button>
         </div>
@@ -212,7 +212,7 @@ export default function Dashboard() {
       <main className="max-w-6xl mx-auto py-8 px-4 sm:py-12 sm:px-8">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 border-b border-gray-200 dark:border-zinc-800 pb-8">
           <div>
-            <h2 className="text-sm font-bold text-indigo-650 dark:text-indigo-400 mb-1">
+            <h2 className="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-1">
               Hi {user?.name || 'User'}, {getGreeting()}!
             </h2>
             <h3 className="text-3xl font-black text-gray-900 dark:text-white">My Forms</h3>
@@ -220,7 +220,7 @@ export default function Dashboard() {
           </div>
           
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full lg:w-auto">
-            <div className="relative flex-1 w-full lg:w-[350px] border border-gray-250 dark:border-zinc-800 rounded-xl overflow-hidden bg-white dark:bg-zinc-900 shadow-sm">
+            <div className="relative flex-1 w-full lg:w-[350px] border border-gray-200 dark:border-zinc-800 rounded-xl overflow-hidden bg-white dark:bg-zinc-900 shadow-sm">
               <Input 
                 placeholder="E.g. Create a feedback survey..." 
                 value={aiPrompt}
@@ -242,7 +242,7 @@ export default function Dashboard() {
             <Button 
               onClick={() => window.location.href = '/builder'} 
               variant="outline" 
-              className="border border-gray-250 dark:border-zinc-800 text-gray-800 dark:text-gray-200 bg-white dark:bg-zinc-900 font-bold hover:bg-gray-50 dark:hover:bg-zinc-800 shadow-sm hover:translate-y-[-1px] transition-all w-full sm:w-auto cursor-pointer"
+              className="border border-gray-200 dark:border-zinc-800 text-gray-800 dark:text-gray-200 bg-white dark:bg-zinc-900 font-bold hover:bg-gray-50 dark:hover:bg-zinc-800 shadow-sm hover:translate-y-[-1px] transition-all w-full sm:w-auto cursor-pointer"
             >
               <Plus className="w-4 h-4 mr-2" /> Blank Form
             </Button>
@@ -267,21 +267,21 @@ export default function Dashboard() {
             {forms.map(form => (
               <div key={form._id} className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm hover-neo-lift flex flex-col justify-between h-[230px] group transition-all">
                 <div className="flex items-start justify-between">
-                  <div className="w-10 h-10 bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/60 rounded-lg flex items-center justify-center text-indigo-650 dark:text-indigo-400">
+                  <div className="w-10 h-10 bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/60 rounded-lg flex items-center justify-center text-indigo-600 dark:text-indigo-400">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div className="flex items-center space-x-1">
-                    <Button variant="ghost" size="icon" onClick={() => handleDuplicate(form)} className="text-gray-400 hover:text-indigo-650 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 h-8 w-8 border border-transparent hover:border-gray-200 dark:hover:border-zinc-700 rounded-lg transition-all flex items-center justify-center" title="Duplicate">
+                    <Button variant="ghost" size="icon" onClick={() => handleDuplicate(form)} className="text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 h-8 w-8 border border-transparent hover:border-gray-200 dark:hover:border-zinc-700 rounded-lg transition-all flex items-center justify-center" title="Duplicate">
                       <Copy className="w-4 h-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDelete(form._id)} className="text-gray-400 hover:text-red-650 hover:bg-red-50 dark:hover:bg-red-955/30 h-8 w-8 border border-transparent hover:border-gray-200 dark:hover:border-zinc-700 rounded-lg transition-all flex items-center justify-center" title="Delete">
+                    <Button variant="ghost" size="icon" onClick={() => handleDelete(form._id)} className="text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 h-8 w-8 border border-transparent hover:border-gray-200 dark:hover:border-zinc-700 rounded-lg transition-all flex items-center justify-center" title="Delete">
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
                 <div className="my-2">
                   <h3 className="text-md font-bold text-gray-900 dark:text-white line-clamp-1">{form.title}</h3>
-                  <p className="text-[10px] text-gray-450 dark:text-gray-500 font-mono mt-0.5">Created {new Date(form.createdAt).toLocaleDateString()}</p>
+                  <p className="text-[10px] text-gray-400 dark:text-gray-500 font-mono mt-0.5">Created {new Date(form.createdAt).toLocaleDateString()}</p>
                 </div>
                 
                 {/* Telemetry info */}
@@ -303,10 +303,10 @@ export default function Dashboard() {
                 </div>
 
                 <div className="pt-2 border-t border-gray-200 dark:border-zinc-800 flex items-center justify-between">
-                  <a href={`/builder?id=${form._id}`} className="text-xs font-semibold text-gray-505 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white underline">
+                  <a href={`/builder?id=${form._id}`} className="text-xs font-semibold text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white underline">
                     Manage
                   </a>
-                  <a href={`/f/${form._id}`} target="_blank" rel="noreferrer" className="text-xs font-bold text-indigo-650 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300">
+                  <a href={`/f/${form._id}`} target="_blank" rel="noreferrer" className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300">
                     View Live →
                   </a>
                 </div>
@@ -335,7 +335,7 @@ export default function Dashboard() {
                   value={newUsername} 
                   onChange={(e) => setNewUsername(e.target.value)} 
                   placeholder="Your Name"
-                  className="bg-white dark:bg-zinc-850 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 font-medium"
+                  className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 font-medium"
                 />
               </div>
 
@@ -346,9 +346,9 @@ export default function Dashboard() {
                   value={newPassword} 
                   onChange={(e) => setNewPassword(e.target.value)} 
                   placeholder="••••••••"
-                  className="bg-white dark:bg-zinc-855 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 font-medium"
+                  className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 font-medium"
                 />
-                <p className="text-[10px] text-gray-450 dark:text-gray-500 font-mono">Leave blank if you do not want to change your password.</p>
+                <p className="text-[10px] text-gray-400 dark:text-gray-500 font-mono">Leave blank if you do not want to change your password.</p>
               </div>
             </div>
 

@@ -120,7 +120,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-955 flex flex-col items-center justify-center p-4 space-y-6 bg-dotted-grid transition-colors duration-200">
+      <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-950 flex flex-col items-center justify-center p-4 space-y-6 bg-dotted-grid transition-colors duration-200">
         <div className="max-w-xl w-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl shadow-md p-6 sm:p-12 text-center">
           <div className="w-16 h-16 bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300 rounded-xl border border-gray-200 dark:border-zinc-700 flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-sm">✓</div>
           <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-4">Thank You!</h1>
@@ -141,7 +141,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
     return (
       <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-950 flex flex-col items-center justify-center p-4 space-y-6 bg-dotted-grid transition-colors duration-200">
         <div className="max-w-xl w-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl shadow-md p-6 sm:p-12 text-center">
-          <div className="w-16 h-16 bg-amber-50 dark:bg-amber-955 text-amber-700 dark:text-amber-300 rounded-xl border border-gray-200 dark:border-zinc-700 flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-sm">⚠️</div>
+          <div className="w-16 h-16 bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300 rounded-xl border border-gray-200 dark:border-zinc-700 flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-sm">⚠️</div>
           <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-4">Form Inactive</h1>
           <p className="text-gray-600 dark:text-gray-400 font-semibold">This form is no longer accepting responses.</p>
         </div>
@@ -156,7 +156,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
 
   if (form.requireGoogleSignIn && !verifiedEmail) {
     return (
-      <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-955 py-12 px-4 flex flex-col justify-center items-center space-y-6 bg-dotted-grid transition-colors duration-200">
+      <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-950 py-12 px-4 flex flex-col justify-center items-center space-y-6 bg-dotted-grid transition-colors duration-200">
         <div className="max-w-md w-full bg-white dark:bg-zinc-900 rounded-2xl shadow-md border border-gray-200 dark:border-zinc-800 p-6 sm:p-8 text-center space-y-6">
           <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-400 rounded-xl border border-gray-200 dark:border-zinc-700 flex items-center justify-center mx-auto mb-4 text-2xl font-bold shadow-sm">🔒</div>
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">Sign in to continue</h1>
@@ -246,15 +246,15 @@ export default function PublicForm({ params }: { params: { id: string } }) {
             {form.logoUrl && (
               <img src={form.logoUrl} alt="Logo" className="w-12 h-12 object-contain rounded-md" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
             )}
-            <h1 className="text-3xl font-bold text-gray-950 dark:text-white">{form.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{form.title}</h1>
           </div>
           {form.description && (
-            <p className="text-sm text-gray-655 dark:text-gray-400 max-w-md mx-auto font-medium">{form.description}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto font-medium">{form.description}</p>
           )}
         </div>
 
         {isMultiStep && (
-          <div className="sm:hidden border-b border-gray-200 dark:border-zinc-850 pb-4">
+          <div className="sm:hidden border-b border-gray-200 dark:border-zinc-800 pb-4">
             <StepProgress steps={stepInfos} currentStep={currentStep} orientation="horizontal" themeColor={form.themeColor} onStepClick={(idx) => idx <= currentStep && setCurrentStep(idx)} />
           </div>
         )}
@@ -292,7 +292,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                       maxLength={field.validation?.maxLength}
                       pattern={field.type === 'text' ? field.validation?.pattern : undefined}
                       title={field.validation?.customError || (field.validation?.pattern ? `Please match the required format.` : undefined)}
-                      className={`w-full h-11 bg-white dark:bg-zinc-950 border border-gray-250 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus-visible:ring-0 focus:border-indigo-650 font-medium shadow-inner`} 
+                      className={`w-full h-11 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus-visible:ring-0 focus:border-indigo-600 font-medium shadow-inner`} 
                     />
                   )}
 
@@ -304,7 +304,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
                       minLength={field.validation?.minLength}
                       maxLength={field.validation?.maxLength}
-                      className={`w-full flex min-h-[110px] rounded-lg border border-gray-250 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 focus-visible:outline-none focus:border-indigo-655 font-medium shadow-inner`} 
+                      className={`w-full flex min-h-[110px] rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 focus-visible:outline-none focus:border-indigo-600 font-medium shadow-inner`} 
                     />
                   )}
 
@@ -313,7 +313,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                       required={field.required}
                       value={answers[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full flex h-11 items-center justify-between rounded-lg border border-gray-250 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:border-indigo-655 font-medium shadow-inner`}
+                      className={`w-full flex h-11 items-center justify-between rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:border-indigo-600 font-medium shadow-inner`}
                     >
                       <option value="">Select an option...</option>
                       {field.options?.map((opt: string, i: number) => (
@@ -330,14 +330,14 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                           <label 
                             key={i} 
                             htmlFor={`${field.id}-${i}`}
-                            className={`flex items-center space-x-3 p-3 rounded-lg border border-gray-200 dark:border-zinc-800 transition-all cursor-pointer bg-white dark:bg-zinc-955 shadow-sm hover:translate-y-[-1px]`}
+                            className={`flex items-center space-x-3 p-3 rounded-lg border border-gray-200 dark:border-zinc-800 transition-all cursor-pointer bg-white dark:bg-zinc-950 shadow-sm hover:translate-y-[-1px]`}
                           >
                             <input 
                               type="checkbox" 
                               id={`${field.id}-${i}`} 
                               checked={isChecked}
                               onChange={(e) => handleCheckboxChange(field.id, opt, e.target.checked)}
-                              className={`h-4.5 w-4.5 rounded border border-gray-200 dark:border-zinc-700 cursor-pointer text-indigo-650 focus:ring-0`} 
+                              className={`h-4.5 w-4.5 rounded border border-gray-200 dark:border-zinc-700 cursor-pointer text-indigo-600 focus:ring-0`} 
                             />
                             <span className="text-sm font-bold text-gray-800 dark:text-gray-200 select-none">{opt}</span>
                           </label>
@@ -354,7 +354,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                           <label 
                             key={i} 
                             htmlFor={`${field.id}-${i}`}
-                            className={`flex items-center space-x-3 p-3 rounded-lg border border-gray-200 dark:border-zinc-800 transition-all cursor-pointer bg-white dark:bg-zinc-955 shadow-sm hover:translate-y-[-1px]`}
+                            className={`flex items-center space-x-3 p-3 rounded-lg border border-gray-200 dark:border-zinc-800 transition-all cursor-pointer bg-white dark:bg-zinc-950 shadow-sm hover:translate-y-[-1px]`}
                           >
                             <input 
                               type="radio" 
@@ -363,7 +363,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                               required={field.required}
                               checked={isSelected}
                               onChange={() => handleInputChange(field.id, opt)}
-                              className={`h-4.5 w-4.5 border border-gray-200 dark:border-zinc-700 cursor-pointer text-indigo-650 focus:ring-0`} 
+                              className={`h-4.5 w-4.5 border border-gray-200 dark:border-zinc-700 cursor-pointer text-indigo-600 focus:ring-0`} 
                             />
                             <span className="text-sm font-bold text-gray-800 dark:text-gray-200 select-none">{opt}</span>
                           </label>
@@ -378,7 +378,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                       required={field.required}
                       value={answers[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full h-11 bg-white dark:bg-zinc-950 border border-gray-250 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus-visible:ring-0 focus:border-indigo-655 font-medium shadow-inner`} 
+                      className={`w-full h-11 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus-visible:ring-0 focus:border-indigo-600 font-medium shadow-inner`} 
                     />
                   )}
 
@@ -388,7 +388,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                         type="file" 
                         required={field.required && !answers[field.id]}
                         onChange={(e) => handleFileChange(field.id, e)}
-                        className={`w-full h-11 bg-white dark:bg-zinc-950 border border-gray-255 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus-visible:ring-0 focus:border-indigo-655 font-medium shadow-inner`} 
+                        className={`w-full h-11 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus-visible:ring-0 focus:border-indigo-600 font-medium shadow-inner`} 
                       />
                       {answers[field.id] && (
                         <div className="mt-2 text-sm border border-gray-200 dark:border-zinc-700 bg-indigo-50/50 dark:bg-indigo-950/30 p-2.5 rounded-lg font-mono">
@@ -401,7 +401,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   )}
 
                   {field.type === 'rating' && (
-                    <div className="flex items-center space-x-2 pt-1.5 p-2 bg-white dark:bg-zinc-955 rounded-lg border border-gray-200 dark:border-zinc-800 w-fit shadow-sm">
+                    <div className="flex items-center space-x-2 pt-1.5 p-2 bg-white dark:bg-zinc-950 rounded-lg border border-gray-200 dark:border-zinc-800 w-fit shadow-sm">
                       {[1, 2, 3, 4, 5].map((star) => {
                         const ratingValue = answers[field.id] || 0;
                         const isFilled = ratingValue >= star;
@@ -427,7 +427,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                     type="button" 
                     onClick={handlePrevStep}
                     variant="outline" 
-                    className="flex items-center space-x-2 border border-gray-250 dark:border-zinc-700 text-gray-800 bg-white hover:bg-gray-50 dark:bg-zinc-900 dark:text-gray-200 font-bold shadow-sm hover:translate-y-[-1px] transition-all rounded-lg h-11"
+                    className="flex items-center space-x-2 border border-gray-200 dark:border-zinc-700 text-gray-800 bg-white hover:bg-gray-50 dark:bg-zinc-900 dark:text-gray-200 font-bold shadow-sm hover:translate-y-[-1px] transition-all rounded-lg h-11"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     <span>Back</span>
@@ -438,7 +438,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   <Button 
                     type="button" 
                     onClick={handleNextStep}
-                    className="flex items-center space-x-2 text-white font-bold border border-transparent bg-indigo-650 hover:bg-indigo-700 shadow-sm hover:translate-y-[-1px] transition-all rounded-lg h-11"
+                    className="flex items-center space-x-2 text-white font-bold border border-transparent bg-indigo-600 hover:bg-indigo-700 shadow-sm hover:translate-y-[-1px] transition-all rounded-lg h-11"
                   >
                     <span>Continue</span>
                     <ChevronRight className="w-4 h-4" />
@@ -447,7 +447,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   <Button 
                     type="submit"
                     disabled={isSubmitting || form.fields.length === 0} 
-                    className={`text-white font-bold border border-transparent bg-indigo-655 hover:bg-indigo-750 shadow-sm hover:translate-y-[-1px] transition-all py-6 text-base rounded-xl cursor-pointer ${isMultiStep ? 'px-8' : 'w-full'}`}
+                    className={`text-white font-bold border border-transparent bg-indigo-600 hover:bg-indigo-700 shadow-sm hover:translate-y-[-1px] transition-all py-6 text-base rounded-xl cursor-pointer ${isMultiStep ? 'px-8' : 'w-full'}`}
                   >
                     {isSubmitting ? 'Submitting...' : 'Submit Response'}
                   </Button>

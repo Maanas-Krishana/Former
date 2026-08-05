@@ -67,7 +67,7 @@ export default function Signup() {
       <div className="sm:mx-auto sm:w-full sm:max-w-[390px] flex flex-col items-center">
         <div className="flex items-center space-x-2 border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-2.5 rounded-xl shadow-sm mb-4 cursor-pointer" onClick={() => window.location.href = '/'}>
           <img src="/logo.png" alt="Former Logo" className="w-10 h-10 object-contain rounded-lg" />
-          <span className="text-lg font-bold text-indigo-650 dark:text-indigo-400">Former</span>
+          <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">Former</span>
         </div>
         <h2 className="mt-2 text-center text-2xl font-black tracking-tight text-gray-900 dark:text-white">Create an account</h2>
       </div>
@@ -84,7 +84,7 @@ export default function Signup() {
                 required 
                 value={name} 
                 onChange={(e) => setName(e.target.value)} 
-                className="h-10 text-sm bg-white dark:bg-zinc-955 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 focus-visible:ring-0 focus:border-indigo-600 rounded-lg shadow-inner font-medium"
+                className="h-10 text-sm bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 focus-visible:ring-0 focus:border-indigo-600 rounded-lg shadow-inner font-medium"
               />
             </div>
 
@@ -95,7 +95,7 @@ export default function Signup() {
                 required 
                 value={email} 
                 onChange={(e) => setEmail(e.target.value)} 
-                className="h-10 text-sm bg-white dark:bg-zinc-955 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 focus-visible:ring-0 focus:border-indigo-600 rounded-lg shadow-inner font-medium"
+                className="h-10 text-sm bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 focus-visible:ring-0 focus:border-indigo-600 rounded-lg shadow-inner font-medium"
               />
             </div>
 
@@ -106,7 +106,7 @@ export default function Signup() {
                 required 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)} 
-                className="h-10 text-sm bg-white dark:bg-zinc-955 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 focus-visible:ring-0 focus:border-indigo-600 rounded-lg shadow-inner font-medium"
+                className="h-10 text-sm bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 focus-visible:ring-0 focus:border-indigo-600 rounded-lg shadow-inner font-medium"
               />
             </div>
 
