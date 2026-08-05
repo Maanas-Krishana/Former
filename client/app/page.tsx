@@ -10,7 +10,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-950 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-950 selection:text-indigo-900 dark:selection:text-indigo-200 overflow-x-hidden relative transition-colors duration-200 bg-dotted-grid pb-20">
+    <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-955 text-gray-900 dark:text-gray-100 selection:bg-indigo-100 dark:selection:bg-indigo-950 selection:text-indigo-900 dark:selection:text-indigo-200 overflow-x-hidden relative transition-colors duration-200 bg-dotted-grid">
       
       {/* Header */}
       <header className="border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 sticky top-0 z-50">
