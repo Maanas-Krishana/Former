@@ -54,6 +54,7 @@ export default function FormBuilder() {
   const [formDescription, setFormDescription] = useState("");
   const [logoUrl, setLogoUrl] = useState("");
   const [themeColor, setThemeColor] = useState("indigo");
+  const [formStyle, setFormStyle] = useState<'normal' | 'funky'>('normal');
   const [requireGoogleSignIn, setRequireGoogleSignIn] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [formId, setFormId] = useState<string | null>(null);
@@ -84,6 +85,7 @@ export default function FormBuilder() {
               if (data.description) setFormDescription(data.description);
               if (data.logoUrl) setLogoUrl(data.logoUrl);
               if (data.themeColor) setThemeColor(data.themeColor);
+              if (data.formStyle) setFormStyle(data.formStyle);
               if (data.requireGoogleSignIn !== undefined) setRequireGoogleSignIn(data.requireGoogleSignIn);
               if (data.published !== undefined) setIsPublished(data.published);
             }
@@ -157,6 +159,7 @@ export default function FormBuilder() {
           description: formDescription,
           logoUrl: logoUrl,
           themeColor: themeColor,
+          formStyle: formStyle,
           requireGoogleSignIn: requireGoogleSignIn,
           fields: fields,
           published: true,
@@ -750,6 +753,82 @@ export default function FormBuilder() {
                         title={color.id}
                       />
                     ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-6 border-t dark:border-zinc-800">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label className="text-base font-bold text-gray-900 dark:text-white block">Form Visual Style</Label>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Select how end users will experience your form visually.</p>
+                    </div>
+                    <span className={cn(
+                      "px-3 py-1 text-xs font-black rounded-full uppercase tracking-wider",
+                      formStyle === 'funky' 
+                        ? "bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white shadow-sm" 
+                        : "bg-gray-100 text-gray-700 dark:bg-zinc-800 dark:text-zinc-300"
+                    )}>
+                      {formStyle === 'funky' ? '✨ Funky Mode' : 'Standard'}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    {/* Normal Option Card */}
+                    <div 
+                      onClick={() => setFormStyle('normal')}
+                      className={cn(
+                        "cursor-pointer rounded-2xl border-2 p-4 transition-all duration-200 space-y-3 relative bg-white dark:bg-zinc-950",
+                        formStyle === 'normal' 
+                          ? "border-indigo-600 ring-2 ring-indigo-500/20 shadow-md" 
+                          : "border-gray-200 dark:border-zinc-800 hover:border-gray-300 dark:hover:border-zinc-700 opacity-70 hover:opacity-100"
+                      )}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-sm text-gray-900 dark:text-white flex items-center gap-2">
+                          📄 Normal (Classic)
+                        </span>
+                        {formStyle === 'normal' && (
+                          <span className="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">✓</span>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                        Clean, minimal, standard form layout. Ideal for professional surveys, feedback, and enterprise workflows.
+                      </p>
+                      <div className="p-2.5 rounded-lg bg-gray-50 dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 space-y-1.5 pointer-events-none">
+                        <div className="h-2 w-1/3 bg-gray-300 dark:bg-zinc-700 rounded" />
+                        <div className="h-6 w-full bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 rounded" />
+                      </div>
+                    </div>
+
+                    {/* Funky Option Card */}
+                    <div 
+                      onClick={() => setFormStyle('funky')}
+                      className={cn(
+                        "cursor-pointer rounded-2xl border-2 p-4 transition-all duration-200 space-y-3 relative overflow-hidden",
+                        formStyle === 'funky' 
+                          ? "border-purple-500 ring-4 ring-purple-500/20 shadow-lg bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-amber-500/10 dark:from-purple-950/50 dark:to-pink-950/50" 
+                          : "border-gray-200 dark:border-zinc-800 hover:border-purple-300 dark:hover:border-purple-900 bg-white dark:bg-zinc-950 opacity-70 hover:opacity-100"
+                      )}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-black text-sm text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 flex items-center gap-2">
+                          🚀 Modern Energetic Funky
+                        </span>
+                        {formStyle === 'funky' && (
+                          <span className="w-5 h-5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white flex items-center justify-center text-xs font-bold shadow-sm">✓</span>
+                        )}
+                      </div>
+                      <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                        High-energy visual aesthetic featuring vibrant glassmorphism, bold playful typography, glowing inputs, and micro-interactions!
+                      </p>
+                      <div className="p-2.5 rounded-lg bg-gradient-to-r from-indigo-500/15 via-purple-500/15 to-pink-500/15 border border-purple-400/40 space-y-1.5 pointer-events-none">
+                        <div className="flex items-center justify-between">
+                          <div className="h-2 w-1/3 bg-purple-500 rounded font-bold" />
+                          <span className="text-[9px] font-black tracking-widest text-pink-500 uppercase">⚡ FUNKY</span>
+                        </div>
+                        <div className="h-6 w-full bg-white/90 dark:bg-zinc-900/90 border-2 border-purple-400/60 rounded-lg shadow-inner" />
+                      </div>
+                    </div>
                   </div>
                 </div>
 
