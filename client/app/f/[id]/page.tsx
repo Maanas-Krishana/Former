@@ -235,21 +235,60 @@ export default function PublicForm({ params }: { params: { id: string } }) {
 
   const stepInfos: StepInfo[] = pages.map((p, idx) => ({ id: `step-${idx}`, title: p.title }));
 
+  const isFunky = form?.formStyle === 'funky';
+
   return (
-    <div className="min-h-screen bg-[#FDFBF7] dark:bg-zinc-950 text-gray-900 dark:text-gray-100 py-6 sm:py-12 px-4 flex flex-col justify-center items-center space-y-6 transition-colors duration-200 bg-dotted-grid pb-20">
+    <div className={cn(
+      "min-h-screen text-gray-900 dark:text-gray-100 py-6 sm:py-12 px-4 flex flex-col justify-center items-center space-y-6 transition-colors duration-300 relative overflow-hidden pb-20",
+      isFunky 
+        ? "bg-gradient-to-br from-purple-950 via-zinc-950 to-pink-950 text-white selection:bg-pink-500 selection:text-white" 
+        : "bg-[#FDFBF7] dark:bg-zinc-950 bg-dotted-grid"
+    )}>
+      {/* Ambient background blur elements for funky mode */}
+      {isFunky && (
+        <>
+          <div className="absolute top-10 left-10 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none animate-pulse" />
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl pointer-events-none animate-pulse" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+        </>
+      )}
+
       <div className={cn(
-        "w-full bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-200 dark:border-zinc-800 p-6 sm:p-10 space-y-8 transition-all",
+        "w-full transition-all duration-300 relative z-10",
+        isFunky
+          ? "bg-white/90 dark:bg-zinc-900/90 backdrop-blur-2xl rounded-3xl shadow-[0_20px_50px_rgba(168,85,247,0.2)] border-2 border-purple-500/30 p-6 sm:p-12 space-y-8"
+          : "bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-gray-200 dark:border-zinc-800 p-6 sm:p-10 space-y-8",
         isMultiStep ? "max-w-5xl" : "max-w-3xl"
       )}>
-        <div className="text-center mb-8 border-b border-dashed border-gray-200 dark:border-zinc-800 pb-6 space-y-3">
+        <div className={cn(
+          "text-center mb-8 pb-6 space-y-3",
+          isFunky ? "border-b-2 border-purple-500/20" : "border-b border-dashed border-gray-200 dark:border-zinc-800"
+        )}>
+          {isFunky && (
+            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white shadow-md uppercase tracking-wider mb-2 animate-bounce">
+              ⚡ Live Interactive Form
+            </div>
+          )}
           <div className="flex items-center justify-center space-x-3">
             {form.logoUrl && (
-              <img src={form.logoUrl} alt="Logo" className="w-12 h-12 object-contain rounded-md" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
+              <img src={form.logoUrl} alt="Logo" className={cn("object-contain rounded-xl", isFunky ? "w-14 h-14 ring-2 ring-purple-500/50 shadow-md" : "w-12 h-12")} onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
             )}
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{form.title}</h1>
+            <h1 className={cn(
+              "font-black tracking-tight",
+              isFunky 
+                ? "text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 dark:from-purple-400 dark:via-pink-400 dark:to-amber-300" 
+                : "text-3xl text-gray-900 dark:text-white font-bold"
+            )}>
+              {form.title}
+            </h1>
           </div>
           {form.description && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto font-medium">{form.description}</p>
+            <p className={cn(
+              "text-sm max-w-md mx-auto font-medium",
+              isFunky ? "text-purple-950/80 dark:text-purple-200/90 font-semibold" : "text-gray-600 dark:text-gray-400"
+            )}>
+              {form.description}
+            </p>
           )}
         </div>
 
@@ -276,9 +315,27 @@ export default function PublicForm({ params }: { params: { id: string } }) {
 
             <form onSubmit={submitResponse} className="space-y-6">
               {activePage.fields.map((field: any) => (
-                <div key={field.id} className="space-y-2 p-5 rounded-2xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm hover:shadow-md transition-all">
-                  <Label className="text-base font-bold text-gray-900 dark:text-gray-200 block mb-1">
-                    {field.label} {field.required && <span className="text-red-500 font-bold ml-0.5">*</span>}
+                <div 
+                  key={field.id} 
+                  className={cn(
+                    "space-y-2.5 p-5 sm:p-6 transition-all duration-200",
+                    isFunky 
+                      ? "rounded-2xl border-2 border-purple-200/80 dark:border-purple-900/50 bg-white/90 dark:bg-zinc-950/80 shadow-md hover:shadow-xl hover:border-pink-400 dark:hover:border-pink-600 transform hover:-translate-y-0.5" 
+                      : "rounded-2xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/60 shadow-sm hover:shadow-md"
+                  )}
+                >
+                  <Label className={cn(
+                    "text-base font-extrabold block mb-1",
+                    isFunky ? "text-purple-950 dark:text-purple-100 flex items-center justify-between" : "text-gray-900 dark:text-gray-200"
+                  )}>
+                    <span>
+                      {field.label} {field.required && <span className="text-pink-500 font-black ml-0.5">*</span>}
+                    </span>
+                    {isFunky && (
+                      <span className="text-[10px] uppercase font-black px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300">
+                        {field.type}
+                      </span>
+                    )}
                   </Label>
                   
                   {['text', 'email', 'number'].includes(field.type) && (
@@ -292,7 +349,12 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                       maxLength={field.validation?.maxLength}
                       pattern={field.type === 'text' ? field.validation?.pattern : undefined}
                       title={field.validation?.customError || (field.validation?.pattern ? `Please match the required format.` : undefined)}
-                      className={`w-full h-11 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus-visible:ring-0 focus:border-indigo-600 font-medium shadow-inner`} 
+                      className={cn(
+                        "w-full h-11 text-gray-900 dark:text-gray-100 rounded-xl font-medium shadow-inner transition-all",
+                        isFunky 
+                          ? "bg-purple-50/50 dark:bg-zinc-950 border-2 border-purple-200 dark:border-purple-900/60 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/20 font-semibold" 
+                          : "bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 focus-visible:ring-0 focus:border-indigo-600"
+                      )} 
                     />
                   )}
 
@@ -304,7 +366,12 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
                       minLength={field.validation?.minLength}
                       maxLength={field.validation?.maxLength}
-                      className={`w-full flex min-h-[110px] rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2.5 text-sm text-gray-900 dark:text-gray-100 focus-visible:outline-none focus:border-indigo-600 font-medium shadow-inner`} 
+                      className={cn(
+                        "w-full flex min-h-[110px] rounded-xl text-sm text-gray-900 dark:text-gray-100 font-medium p-3.5 shadow-inner transition-all focus-visible:outline-none",
+                        isFunky 
+                          ? "bg-purple-50/50 dark:bg-zinc-950 border-2 border-purple-200 dark:border-purple-900/60 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/20 font-semibold" 
+                          : "bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 focus:border-indigo-600"
+                      )} 
                     />
                   )}
 
@@ -313,7 +380,12 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                       required={field.required}
                       value={answers[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full flex h-11 items-center justify-between rounded-lg border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3.5 py-2 text-sm text-gray-900 dark:text-gray-100 focus:outline-none focus:border-indigo-600 font-medium shadow-inner`}
+                      className={cn(
+                        "w-full flex h-11 items-center justify-between rounded-xl text-sm text-gray-900 dark:text-gray-100 font-medium px-3.5 shadow-inner focus:outline-none transition-all",
+                        isFunky 
+                          ? "bg-purple-50/50 dark:bg-zinc-950 border-2 border-purple-200 dark:border-purple-900/60 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/20 font-semibold" 
+                          : "bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 focus:border-indigo-600"
+                      )}
                     >
                       <option value="">Select an option...</option>
                       {field.options?.map((opt: string, i: number) => (
@@ -330,14 +402,24 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                           <label 
                             key={i} 
                             htmlFor={`${field.id}-${i}`}
-                            className={`flex items-center space-x-3 p-3 rounded-lg border border-gray-200 dark:border-zinc-800 transition-all cursor-pointer bg-white dark:bg-zinc-950 shadow-sm hover:translate-y-[-1px]`}
+                            className={cn(
+                              "flex items-center space-x-3 p-3.5 rounded-xl border transition-all cursor-pointer shadow-sm",
+                              isFunky 
+                                ? isChecked 
+                                  ? "border-pink-500 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-950/70 dark:to-pink-950/70 shadow-md ring-2 ring-pink-500/30 scale-[1.01]" 
+                                  : "border-purple-200/80 dark:border-purple-900/50 bg-purple-50/30 dark:bg-zinc-950 hover:border-pink-400" 
+                                : "border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 hover:translate-y-[-1px]"
+                            )}
                           >
                             <input 
                               type="checkbox" 
                               id={`${field.id}-${i}`} 
                               checked={isChecked}
                               onChange={(e) => handleCheckboxChange(field.id, opt, e.target.checked)}
-                              className={`h-4.5 w-4.5 rounded border border-gray-200 dark:border-zinc-700 cursor-pointer text-indigo-600 focus:ring-0`} 
+                              className={cn(
+                                "h-5 w-5 rounded cursor-pointer transition-all",
+                                isFunky ? "accent-pink-500" : "text-indigo-600 border-gray-200 dark:border-zinc-700"
+                              )} 
                             />
                             <span className="text-sm font-bold text-gray-800 dark:text-gray-200 select-none">{opt}</span>
                           </label>
@@ -354,7 +436,14 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                           <label 
                             key={i} 
                             htmlFor={`${field.id}-${i}`}
-                            className={`flex items-center space-x-3 p-3 rounded-lg border border-gray-200 dark:border-zinc-800 transition-all cursor-pointer bg-white dark:bg-zinc-950 shadow-sm hover:translate-y-[-1px]`}
+                            className={cn(
+                              "flex items-center space-x-3 p-3.5 rounded-xl border transition-all cursor-pointer shadow-sm",
+                              isFunky 
+                                ? isSelected 
+                                  ? "border-pink-500 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-950/70 dark:to-pink-950/70 shadow-md ring-2 ring-pink-500/30 scale-[1.01]" 
+                                  : "border-purple-200/80 dark:border-purple-900/50 bg-purple-50/30 dark:bg-zinc-950 hover:border-pink-400" 
+                                : "border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 hover:translate-y-[-1px]"
+                            )}
                           >
                             <input 
                               type="radio" 
@@ -363,7 +452,10 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                               required={field.required}
                               checked={isSelected}
                               onChange={() => handleInputChange(field.id, opt)}
-                              className={`h-4.5 w-4.5 border border-gray-200 dark:border-zinc-700 cursor-pointer text-indigo-600 focus:ring-0`} 
+                              className={cn(
+                                "h-5 w-5 cursor-pointer transition-all",
+                                isFunky ? "accent-pink-500" : "text-indigo-600 border-gray-200 dark:border-zinc-700"
+                              )} 
                             />
                             <span className="text-sm font-bold text-gray-800 dark:text-gray-200 select-none">{opt}</span>
                           </label>
@@ -378,7 +470,12 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                       required={field.required}
                       value={answers[field.id] || ''}
                       onChange={(e) => handleInputChange(field.id, e.target.value)}
-                      className={`w-full h-11 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus-visible:ring-0 focus:border-indigo-600 font-medium shadow-inner`} 
+                      className={cn(
+                        "w-full h-11 text-gray-900 dark:text-gray-100 rounded-xl font-medium shadow-inner transition-all",
+                        isFunky 
+                          ? "bg-purple-50/50 dark:bg-zinc-950 border-2 border-purple-200 dark:border-purple-900/60 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/20 font-semibold" 
+                          : "bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 focus-visible:ring-0 focus:border-indigo-600"
+                      )} 
                     />
                   )}
 
@@ -388,11 +485,16 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                         type="file" 
                         required={field.required && !answers[field.id]}
                         onChange={(e) => handleFileChange(field.id, e)}
-                        className={`w-full h-11 bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 text-gray-900 dark:text-gray-100 rounded-lg focus-visible:ring-0 focus:border-indigo-600 font-medium shadow-inner`} 
+                        className={cn(
+                          "w-full h-11 text-gray-900 dark:text-gray-100 rounded-xl font-medium shadow-inner transition-all",
+                          isFunky 
+                            ? "bg-purple-50/50 dark:bg-zinc-950 border-2 border-purple-200 dark:border-purple-900/60 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/20 font-semibold" 
+                            : "bg-white dark:bg-zinc-950 border border-gray-200 dark:border-zinc-800 focus-visible:ring-0 focus:border-indigo-600"
+                        )} 
                       />
                       {answers[field.id] && (
-                        <div className="mt-2 text-sm border border-gray-200 dark:border-zinc-700 bg-indigo-50/50 dark:bg-indigo-950/30 p-2.5 rounded-lg font-mono">
-                          <a href={answers[field.id]} target="_blank" rel="noreferrer" className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline">
+                        <div className="mt-2 text-sm border border-purple-300 dark:border-purple-700 bg-purple-50 dark:bg-purple-950/50 p-3 rounded-xl font-mono flex items-center justify-between">
+                          <a href={answers[field.id]} target="_blank" rel="noreferrer" className="text-pink-600 dark:text-pink-400 font-bold hover:underline">
                             File uploaded successfully (Click to View)
                           </a>
                         </div>
@@ -401,7 +503,10 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   )}
 
                   {field.type === 'rating' && (
-                    <div className="flex items-center space-x-2 pt-1.5 p-2 bg-white dark:bg-zinc-950 rounded-lg border border-gray-200 dark:border-zinc-800 w-fit shadow-sm">
+                    <div className={cn(
+                      "flex items-center space-x-2 pt-1.5 p-2.5 rounded-xl border w-fit shadow-sm",
+                      isFunky ? "bg-purple-50/50 dark:bg-zinc-950 border-purple-200 dark:border-purple-900/60" : "bg-white dark:bg-zinc-950 border-gray-200 dark:border-zinc-800"
+                    )}>
                       {[1, 2, 3, 4, 5].map((star) => {
                         const ratingValue = answers[field.id] || 0;
                         const isFilled = ratingValue >= star;
@@ -410,9 +515,14 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                             key={star}
                             type="button"
                             onClick={() => handleInputChange(field.id, star)}
-                            className="focus:outline-none transition-transform hover:scale-110 p-1"
+                            className="focus:outline-none transition-transform hover:scale-125 p-1"
                           >
-                            <Star className={`w-7 h-7 ${isFilled ? 'text-amber-400 fill-amber-400 drop-shadow-sm' : 'text-gray-300 dark:text-zinc-700 fill-transparent'} transition-colors`} />
+                            <Star className={cn(
+                              "w-7 h-7 transition-colors duration-200",
+                              isFilled 
+                                ? isFunky ? "text-pink-500 fill-pink-500 drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]" : "text-amber-400 fill-amber-400 drop-shadow-sm" 
+                                : "text-gray-300 dark:text-zinc-700 fill-transparent"
+                            )} />
                           </button>
                         );
                       })}
@@ -427,7 +537,7 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                     type="button" 
                     onClick={handlePrevStep}
                     variant="outline" 
-                    className="flex items-center space-x-2 border border-gray-200 dark:border-zinc-700 text-gray-800 bg-white hover:bg-gray-50 dark:bg-zinc-900 dark:text-gray-200 font-bold shadow-sm hover:translate-y-[-1px] transition-all rounded-lg h-11"
+                    className="flex items-center space-x-2 border border-gray-200 dark:border-zinc-700 text-gray-800 bg-white hover:bg-gray-50 dark:bg-zinc-900 dark:text-gray-200 font-bold shadow-sm hover:translate-y-[-1px] transition-all rounded-xl h-11"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     <span>Back</span>
@@ -438,7 +548,12 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   <Button 
                     type="button" 
                     onClick={handleNextStep}
-                    className="flex items-center space-x-2 text-white font-bold border border-transparent bg-indigo-600 hover:bg-indigo-700 shadow-sm hover:translate-y-[-1px] transition-all rounded-lg h-11"
+                    className={cn(
+                      "flex items-center space-x-2 text-white font-bold shadow-md hover:translate-y-[-1px] transition-all rounded-xl h-11",
+                      isFunky 
+                        ? "bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:from-purple-500 hover:to-pink-500" 
+                        : "bg-indigo-600 hover:bg-indigo-700"
+                    )}
                   >
                     <span>Continue</span>
                     <ChevronRight className="w-4 h-4" />
@@ -447,9 +562,15 @@ export default function PublicForm({ params }: { params: { id: string } }) {
                   <Button 
                     type="submit"
                     disabled={isSubmitting || form.fields.length === 0} 
-                    className={`text-white font-bold border border-transparent bg-indigo-600 hover:bg-indigo-700 shadow-sm hover:translate-y-[-1px] transition-all py-6 text-base rounded-xl cursor-pointer ${isMultiStep ? 'px-8' : 'w-full'}`}
+                    className={cn(
+                      "text-white font-black shadow-lg transition-all py-6 text-base rounded-2xl cursor-pointer transform hover:-translate-y-0.5 active:translate-y-0 uppercase tracking-wider",
+                      isFunky 
+                        ? "bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:from-purple-500 hover:to-pink-500 shadow-purple-500/25 ring-2 ring-pink-500/50" 
+                        : "bg-indigo-600 hover:bg-indigo-700 shadow-sm",
+                      isMultiStep ? 'px-8' : 'w-full'
+                    )}
                   >
-                    {isSubmitting ? 'Submitting...' : 'Submit Response'}
+                    {isSubmitting ? 'Submitting...' : '🚀 Submit Response'}
                   </Button>
                 )}
               </div>
@@ -457,8 +578,8 @@ export default function PublicForm({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
-      <div className="text-center text-xs text-gray-400 dark:text-gray-500 font-mono tracking-wide">
-        Powered by <span className="font-bold text-gray-500 dark:text-gray-400">Former</span> • Made with ❤️ in India
+      <div className="text-center text-xs text-gray-400 dark:text-gray-500 font-mono tracking-wide relative z-10">
+        Powered by <span className={cn("font-bold", isFunky ? "text-pink-400" : "text-gray-500 dark:text-gray-400")}>Former</span> • Made with ❤️ in India
       </div>
     </div>
   );

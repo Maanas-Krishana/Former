@@ -21,6 +21,7 @@ export interface IForm extends Document {
   description?: string;
   logoUrl?: string;
   themeColor?: string;
+  formStyle?: 'normal' | 'funky';
   requireGoogleSignIn: boolean;
   published: boolean;
   views: number;
@@ -50,6 +51,7 @@ const formSchema = new Schema({
   description: { type: String, default: '' },
   logoUrl: { type: String, default: '' },
   themeColor: { type: String, default: 'indigo' },
+  formStyle: { type: String, enum: ['normal', 'funky'], default: 'normal' },
   requireGoogleSignIn: { type: Boolean, default: false },
   published: { type: Boolean, default: true },
   views: { type: Number, default: 0 },
