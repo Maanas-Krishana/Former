@@ -14,6 +14,7 @@ Former is a modern, full-stack application that allows you to instantly generate
 
 ## ✨ Core Features
 
+
 ### 📑 Multi-Page Forms & Step Progress Stepper
 - **Page Break Field:** Split complex forms into intuitive, multi-step workflows by simply dropping a `Page Break` divider anywhere in your form canvas.
 - **Dynamic Step Progress:** Interactive step indicators with completion checkmarks, customizable section titles, and active step styling.
@@ -53,6 +54,7 @@ Former is a modern, full-stack application that allows you to instantly generate
 
 ## 🛠 Tech Stack
 
+
 **Frontend (Client)**
 - **Framework:** Next.js 14 (App Router)
 - **Styling:** Tailwind CSS & Lucide Icons
@@ -71,6 +73,7 @@ Former is a modern, full-stack application that allows you to instantly generate
 ---
 
 ## 🚀 Getting Started
+
 
 Former uses a **Zero-Setup Backend** via `mongodb-memory-server`. You don't need to configure a cloud database to run this locally!
 
@@ -114,6 +117,7 @@ npm run dev
 
 ## 🚀 Production Deployment
 
+
 - **Production App URL:** [https://former-six.vercel.app](https://former-six.vercel.app)
 - **Frontend Host:** Vercel (Root directory: `client`)
 - **Backend Host:** Render (Root directory: `server`)
@@ -121,6 +125,7 @@ npm run dev
 ---
 
 ## ⚡ Recent Updates (v2.2)
+
 
 1. **📑 Multi-Page Forms & Step Navigation:** Added `Page Break` fields, horizontal & vertical step indicators, and page-by-page field validation.
 2. **✨ Form Visual Style Presets:** Choose between **Normal (Classic Bento)** and **Modern Energetic Funky** modes with glassmorphic backgrounds and glowing accent cards.
